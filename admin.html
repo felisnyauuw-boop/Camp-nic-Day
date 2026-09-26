@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Portal Panitia | Camp-nic Day 2026 PPI Sivas</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Scanner Kamera Barcode (html5-qrcode) & Generator PDF Tiket -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #0F2318;
+      --forest-dark: #142E20;
+      --forest-accent: #224732;
+      --gold-sand: #D4A373;
+      --gold-hover: #BE8B59;
+      --sage: #8A9A86;
+      --warm-cream: #FAF8F5;
+      --warm-beige: #F2ECE1;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      background-color: #F4EFE6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #19241D;
+      line-height: 1.5;
+    }
+
+    .admin-header {
+      background: var(--bg-dark);
+      color: #FFFFFF;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--gold-sand);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 16px 16px 8px 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      background: #FFFFFF;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid #DCE3DE;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-val { font-size: 22px; font-weight: 700; }
+    .stat-label { font-size: 11px; color: #666; text-transform: uppercase; }
+
+    .admin-tabs {
+      background: #FFFFFF;
+      display: flex;
+      border-bottom: 1px solid #D5DBD6;
+      padding: 0 16px;
+      overflow-x: auto;
+      gap: 4px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      min-height: 46px;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      color: var(--forest-accent);
+      border-bottom-color: var(--forest-accent);
+      font-weight: 700;
+    }
+
+    .admin-card-item {
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      border: 1px solid #DCE3DE;
+      padding: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    .scanner-view-box {
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      padding: 18px;
+      border: 1px solid #DCE3DE;
+      max-width: 480px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #qr-camera-stream {
+      width: 100% !important;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 35, 24, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      max-width: 340px;
+      width: 100%;
+      padding: 26px 20px;
+      text-align: center;
+      border: 1px solid var(--gold-sand);
+    }
+
+    .toast-box {
+      position: fixed;
+      top: 20px;
+      left: 16px;
+      right: 16px;
+      z-index: 4000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast-alert {
+      background: var(--bg-dark);
+      color: var(--warm-cream);
+      border-left: 4px solid var(--gold-sand);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Floating Alert -->
+  <div class="toast-box" id="toastContainer"></div>
+
+  <!-- MODAL PIN GERBANG RAHASIA (DEFAULT PIN: 2026) -->
+  <div class="modal-overlay" id="pinGateModal">
+    <div class="modal-box">
+      <i class="fa-solid fa-shield-halved" style="font-size:32px; color:var(--gold-sand); margin-bottom:10px;"></i>
+      <h3 style="font-size:20px; margin-bottom:4px;">Portal Panitia PPI Sivas</h3>
+      <p style="font-size:12px; color:#666; margin-bottom:18px;">Masukkan PIN Admin untuk mengakses verifikasi & scanner presensi (Default: 2026).</p>
+      
+      <form onsubmit="event.preventDefault(); verifyPin();">
+        <input type="password" id="adminPinInput" placeholder="PIN" style="width:100%; padding:10px; border:1px solid #CCC; border-radius:8px; text-align:center; font-size:22px; letter-spacing:4px; margin-bottom:14px;" required>
+        <button type="submit" style="background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); padding:12px 20px; border-radius:25px; font-size:13px; font-weight:700; width:100%; cursor:pointer;">
+          Buka Portal
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="adminMainContent" style="display:none;">
+    <div class="admin-header">
+      <div>
+        <div style="font-size:14px; font-weight:700;">PANEL PANITIA PPI SIVAS</div>
+        <div style="font-size:10px; color:var(--gold-sand);">Camp-nic Day 2026 &bull; Hafik Gölü</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <a href="index.html" style="background:rgba(255,255,255,0.12); color:#FFF; padding:6px 12px; border-radius:20px; font-size:11px; text-decoration:none;">
+          <i class="fa-solid fa-arrow-left"></i> Beranda
+        </a>
+        <button onclick="lockAdmin();" style="background:none; border:1px solid var(--gold-sand); color:var(--gold-sand); padding:6px 12px; border-radius:20px; font-size:11px; font-weight:bold; cursor:pointer;">
+          <i class="fa-solid fa-lock"></i> Kunci
+        </button>
+      </div>
+    </div>
+
+    <!-- Metrik Counter Real-Time -->
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Total Terdaftar</div>
+          <div class="stat-val" id="metricTotal">0</div>
+        </div>
+        <i class="fa-solid fa-users" style="color:#0d6efd; font-size:22px;"></i>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Terverifikasi Lunas</div>
+          <div class="stat-val" style="color:#0F5132;" id="metricLunas">0</div>
+        </div>
+        <i class="fa-solid fa-receipt" style="color:#0F5132; font-size:22px;"></i>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Hadir (Check-In)</div>
+          <div class="stat-val" style="color:#198754;" id="metricHadir">0</div>
+        </div>
+        <i class="fa-solid fa-user-check" style="color:#198754; font-size:22px;"></i>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Belum Hadir</div>
+          <div class="stat-val" style="color:#DC3545;" id="metricBelumHadir">0</div>
+        </div>
+        <i class="fa-solid fa-user-clock" style="color:#DC3545; font-size:22px;"></i>
+      </div>
+    </div>
+
+    <!-- Navigasi Tab Admin -->
+    <div class="admin-tabs">
+      <button class="tab-btn active" id="tabBtn1" onclick="switchTab('paneVerifikasi');">
+        <i class="fa-solid fa-list-check"></i> Verifikasi Pembayaran
+      </button>
+      <button class="tab-btn" id="tabBtn2" onclick="switchTab('paneScanner');">
+        <i class="fa-solid fa-qrcode"></i> Kamera Scanner Presensi
+      </button>
+      <button class="tab-btn" id="tabBtn3" onclick="switchTab('paneNotice');">
+        <i class="fa-solid fa-triangle-exclamation"></i> Belum Hadir
+      </button>
+    </div>
+
+    <!-- TAB 1: VERIFIKASI PEMBAYARAN & UNDUH PDF TIKET -->
+    <div id="paneVerifikasi" style="padding:16px; max-width:900px; margin:0 auto;">
+      <div style="display:flex; gap:8px; margin-bottom:12px;">
+        <input type="text" id="adminSearchInput" placeholder="Cari nama, ID, WA..." style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; font-size:13px;" oninput="renderAdminList();">
+        <select id="adminStatusFilter" style="padding:9px; border:1px solid #CCC; border-radius:6px; font-size:13px;" onchange="renderAdminList();">
+          <option value="ALL">Semua Status</option>
+          <option value="PENDING">Menunggu Verifikasi</option>
+          <option value="LUNAS">Terverifikasi Lunas</option>
+        </select>
+      </div>
+
+      <div id="adminCardListContainer"></div>
+    </div>
+
+    <!-- TAB 2: KAMERA SCANNER PRESENSI HARI-H (100% LANCAR DI GITHUB PAGES) -->
+    <div id="paneScanner" style="padding:16px; max-width:900px; margin:0 auto; display:none;">
+      <div class="scanner-view-box">
+        <h4 style="font-size:16px; margin-bottom:4px; color:var(--bg-dark);">
+          <i class="fa-solid fa-camera"></i> Pemindai Barcode Presensi Hari-H
+        </h4>
+        <p style="font-size:12px; color:#666; margin-bottom:12px;">
+          Arahkan kamera smartphone ke QR Code pada E-Ticket fisik peserta saat masuk bus/lokasi.
+        </p>
+
+        <!-- Kamera HTML5 Stream -->
+        <div id="qr-camera-stream"></div>
+
+        <div style="margin-top:14px; text-align:left;">
+          <label style="font-size:11px; font-weight:700; color:#555; text-transform:uppercase;">Input Manual ID Registrasi:</label>
+          <div style="display:flex; gap:6px; margin-top:4px;">
+            <input type="text" id="manualScanInput" placeholder="CAMP-20261031-XXXX" style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
+            <button onclick="submitManualScan();" style="background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:6px; padding:8px 14px; font-size:12px; font-weight:bold; cursor:pointer;">Check-In</button>
+          </div>
+        </div>
+
+        <div id="scanResultFeedback" style="display:none; margin-top:14px; padding:12px; border-radius:8px;"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: NOTICE LIST PESERTA BELUM HADIR -->
+    <div id="paneNotice" style="padding:16px; max-width:900px; margin:0 auto; display:none;">
+      <div style="margin-bottom:12px;">
+        <h4 style="font-size:16px; color:#DC3545;"><i class="fa-solid fa-user-clock"></i> Daftar Peserta Belum Hadir</h4>
+        <p style="font-size:12px; color:#666;">Pantau keberangkatan peserta dan kirim pesan pengingat langsung via WhatsApp.</p>
+      </div>
+      <div id="noticeListContainer"></div>
+    </div>
+  </div>
+
+  <!-- Hidden Div untuk Konversi QR PDF -->
+  <div id="hiddenQrCanvas" style="display:none;"></div>
+
+  <script>
+    var html5Scanner = null;
+
+    // Database Sinkronisasi Lokal (Berbagi data otomatis dengan index.html)
+    var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || 'null');
+    if (!participantsDb || participantsDb.length === 0) {
+      participantsDb = [
+        {
+          id: 'CAMP-20261031-0001',
+          timestamp: '31/10/2026 08:15:00',
+          nama: 'Aufa Azkia',
+          email: 'aufa@example.com',
+          wa: '+905076382358',
+          institusi: 'Sivas Cumhuriyet Univ',
+          kategori: 'Pelajar / Mahasiswa (₺350)',
+          nominal: '₺350',
+          statusBayar: 'Terverifikasi Lunas',
+          statusHadir: 'Belum Hadir',
+          checkinTime: '-'
+        },
+        {
+          id: 'CAMP-20261031-0002',
+          timestamp: '31/10/2026 08:30:00',
+          nama: 'Rara Ingrid',
+          email: 'rara@example.com',
+          wa: '081272629990',
+          institusi: 'PPI Sivas',
+          kategori: 'Pelajar / Mahasiswa (₺350)',
+          nominal: '₺350',
+          statusBayar: 'Menunggu Verifikasi',
+          statusHadir: 'Belum Hadir',
+          checkinTime: '-'
+        },
+        {
+          id: 'CAMP-20261031-0003',
+          timestamp: '31/10/2026 08:45:00',
+          nama: 'Emirhan Yılmaz',
+          email: 'emirhan@example.com',
+          wa: '+905559876543',
+          institusi: 'Malatya İnönü Univ',
+          kategori: 'Umum & Simpatisan (₺450)',
+          nominal: '₺450',
+          statusBayar: 'Terverifikasi Lunas',
+          statusHadir: 'Hadir',
+          checkinTime: '08:52:10'
+        }
+      ];
+      saveData();
+    }
+
+    function saveData() {
+      localStorage.setItem('CAMPNIC_2026_DATA', JSON.stringify(participantsDb));
+      updateMetrics();
+    }
+
+    function showToast(msg, icon) {
+      var c = document.getElementById('toastContainer');
+      var t = document.createElement('div');
+      t.className = 'toast-alert';
+      t.innerHTML = '<i class="' + (icon || 'fa-solid fa-circle-info') + '" style="color:var(--gold-sand);"></i><span>' + msg + '</span>';
+      c.appendChild(t);
+      setTimeout(function() { if (t.parentNode) t.parentNode.removeChild(t); }, 4000);
+    }
+
+    function verifyPin() {
+      var pin = document.getElementById('adminPinInput').value.trim();
+      if (pin === '2026') {
+        document.getElementById('pinGateModal').style.display = 'none';
+        document.getElementById('adminMainContent').style.display = 'block';
+        updateMetrics();
+        renderAdminList();
+        showToast('Panel Panitia Terbuka', 'fa-solid fa-shield-halved');
+      } else {
+        showToast('PIN Admin Salah! (Default: 2026)', 'fa-solid fa-lock');
+      }
+    }
+
+    function lockAdmin() {
+      document.getElementById('pinGateModal').style.display = 'flex';
+      document.getElementById('adminMainContent').style.display = 'none';
+      if (html5Scanner) html5Scanner.stop().catch(function(){});
+      document.getElementById('adminPinInput').value = '';
+    }
+
+    function updateMetrics() {
+      var total = participantsDb.length;
+      var lunas = 0, hadir = 0, belum = 0;
+      for (var i = 0; i < participantsDb.length; i++) {
+        if (participantsDb[i].statusBayar === 'Terverifikasi Lunas') lunas++;
+        if (participantsDb[i].statusHadir === 'Hadir') hadir++;
+        if (participantsDb[i].statusHadir === 'Belum Hadir') belum++;
+      }
+      document.getElementById('metricTotal').textContent = total;
+      document.getElementById('metricLunas').textContent = lunas;
+      document.getElementById('metricHadir').textContent = hadir;
+      document.getElementById('metricBelumHadir').textContent = belum;
+    }
+
+    function switchTab(paneId) {
+      var tabs = ['paneVerifikasi', 'paneScanner', 'paneNotice'];
+      var btns = ['tabBtn1', 'tabBtn2', 'tabBtn3'];
+
+      tabs.forEach(function(t, idx) {
+        var el = document.getElementById(t);
+        var btn = document.getElementById(btns[idx]);
+        if (t === paneId) {
+          el.style.display = 'block';
+          btn.classList.add('active');
+        } else {
+          el.style.display = 'none';
+          btn.classList.remove('active');
+        }
+      });
+
+      if (paneId === 'paneScanner') {
+        startCameraScanner();
+      } else {
+        if (html5Scanner) html5Scanner.stop().catch(function(){});
+        if (paneId === 'paneNotice') renderNoticeList();
+      }
+    }
+
+    function renderAdminList() {
+      var query = (document.getElementById('adminSearchInput').value || '').toLowerCase().trim();
+      var filter = document.getElementById('adminStatusFilter').value;
+      var container = document.getElementById('adminCardListContainer');
+
+      var filtered = participantsDb.filter(function(it) {
+        var matchStatus = true;
+        if (filter === 'PENDING' && it.statusBayar !== 'Menunggu Verifikasi') matchStatus = false;
+        if (filter === 'LUNAS' && it.statusBayar !== 'Terverifikasi Lunas') matchStatus = false;
+
+        var matchQuery = true;
+        if (query) {
+          var text = (it.id + ' ' + it.nama + ' ' + it.wa + ' ' + it.institusi).toLowerCase();
+          if (text.indexOf(query) === -1) matchQuery = false;
+        }
+        return matchStatus && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:24px; color:#888;">Tidak ada data peserta ditemukan.</div>';
+        return;
+      }
+
+      var html = '';
+      for (var i = 0; i < filtered.length; i++) {
+        var p = filtered[i];
+        var isLunas = p.statusBayar === 'Terverifikasi Lunas';
+        var badgeBg = isLunas ? '#D1E7DD' : '#FFF3CD';
+        var badgeColor = isLunas ? '#0F5132' : '#664D03';
+
+        html += '<div class="admin-card-item">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+            '<strong style="color:var(--forest-accent);">' + p.id + '</strong>' +
+            '<span style="background:' + badgeBg + '; color:' + badgeColor + '; padding:3px 8px; border-radius:10px; font-size:11px; font-weight:700;">' + p.statusBayar + '</span>' +
+          '</div>' +
+          '<div style="font-weight:700; font-size:14px;">' + p.nama + '</div>' +
+          '<div style="font-size:12px; color:#666;"><i class="fa-solid fa-school"></i> ' + p.institusi + ' &bull; <i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>' +
+          '<div style="font-size:12px; color:#555;">Kategori: ' + p.kategori + ' (' + p.nominal + ')</div>' +
+          '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:8px; margin-top:4px;">';
+
+        if (!isLunas) {
+          html += '<button onclick="verifyParticipant(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:11.5px; font-weight:700; padding:7px 10px; cursor:pointer;">' +
+                    '<i class="fa-solid fa-check"></i> Verifikasi Lunas' +
+                  '</button>';
+        } else {
+          html += '<button onclick="downloadTicketPdf(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:11px; font-weight:700; padding:6px 10px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:4px;">' +
+                    '<i class="fa-solid fa-file-pdf"></i> Unduh PDF Tiket' +
+                  '</button>' +
+                  '<button onclick="sendTicketWhatsapp(\'' + p.id + '\');" style="flex:1; background:#25D366; color:#FFF; border:none; border-radius:20px; font-size:11px; font-weight:700; padding:6px 10px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:4px;">' +
+                    '<i class="fa-brands fa-whatsapp"></i> Kirim WA' +
+                  '</button>';
+        }
+
+        html += '</div></div>';
+      }
+      container.innerHTML = html;
+    }
+
+    function verifyParticipant(id) {
+      for (var i = 0; i < participantsDb.length; i++) {
+        if (participantsDb[i].id === id) {
+          participantsDb[i].statusBayar = 'Terverifikasi Lunas';
+          break;
+        }
+      }
+      saveData();
+      renderAdminList();
+      showToast('Peserta ' + id + ' berhasil diverifikasi!', 'fa-solid fa-circle-check');
+    }
+
+    function generateTicketPdfBlob(p) {
+      return new Promise(function(resolve) {
+        var qrDiv = document.getElementById('hiddenQrCanvas');
+        qrDiv.innerHTML = '';
+        
+        new QRCode(qrDiv, {
+          text: p.id,
+          width: 140,
+          height: 140,
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        setTimeout(function() {
+          var img = qrDiv.querySelector('img') || qrDiv.querySelector('canvas');
+          var qrDataUrl = img.tagName.toLowerCase() === 'img' ? img.src : img.toDataURL('image/png');
+
+          var { jsPDF } = window.jspdf;
+          var doc = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm',
+            format: 'a5'
+          });
+
+          doc.setFillColor(250, 248, 245);
+          doc.rect(0, 0, 210, 148, 'F');
+
+          doc.setDrawColor(212, 163, 115);
+          doc.setLineWidth(1.2);
+          doc.roundedRect(8, 8, 194, 132, 4, 4, 'S');
+
+          doc.setFillColor(15, 35, 24);
+          doc.rect(9, 9, 192, 28, 'F');
+
+          doc.setTextColor(212, 163, 115);
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'bold');
+          doc.text('PERHIMPUNAN PELAJAR INDONESIA DI SIVAS (PPI SIVAS) • AKSARA SENADA', 15, 17);
+
+          doc.setTextColor(255, 255, 255);
+          doc.setFontSize(18);
+          doc.text("CAMP-NIC DAY 2026 • OFFICIAL E-TICKET", 15, 26);
+
+          doc.setTextColor(212, 163, 115);
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'italic');
+          doc.text("Sabtu, 31 Oktober 2026 | Hafik Golu, Sivas (08.00 - 21.00)", 15, 33);
+
+          doc.setTextColor(138, 154, 134);
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
+          doc.text('ID REGISTRASI', 16, 48);
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(212, 163, 115);
+          doc.text(p.id, 16, 54);
+
+          doc.setTextColor(138, 154, 134);
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
+          doc.text('NAMA PESERTA', 16, 64);
+          doc.setFontSize(13);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(15, 35, 24);
+          doc.text(p.nama, 16, 70);
+
+          doc.setTextColor(138, 154, 134);
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
+          doc.text('UNIVERSITAS / WILAYAH', 16, 80);
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(15, 35, 24);
+          doc.text(p.institusi || 'Umum', 16, 86);
+
+          doc.setTextColor(138, 154, 134);
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
+          doc.text('KATEGORI & STATUS', 16, 96);
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(15, 81, 50);
+          doc.text(p.kategori + ' — LUNAS', 16, 102);
+
+          doc.setDrawColor(220, 225, 220);
+          doc.setLineDash([2, 2], 0);
+          doc.line(135, 42, 135, 124);
+          doc.setLineDash([]);
+
+          doc.addImage(qrDataUrl, 'PNG', 145, 46, 48, 48);
+
+          doc.setTextColor(120, 130, 120);
+          doc.setFontSize(8);
+          doc.setFont('helvetica', 'normal');
+          doc.text('Tunjukkan QR Code ini kepada panitia', 142, 100);
+          doc.text('saat registrasi bus keberangkatan.', 144, 105);
+
+          doc.setFillColor(242, 236, 225);
+          doc.rect(9, 126, 192, 13, 'F');
+          doc.setTextColor(92, 110, 98);
+          doc.setFontSize(8);
+          doc.text('Tiket ini sah dan diterbitkan resmi oleh Panitia Camp-nic Day 2026 PPI Sivas. Harap bawa pakaian hangat.', 16, 134);
+
+          resolve(doc);
+        }, 150);
+      });
+    }
+
+    function downloadTicketPdf(id) {
+      var p = participantsDb.find(function(it){ return it.id === id; });
+      if (!p) return;
+      showToast('Menghasilkan file PDF E-Ticket...', 'fa-solid fa-spinner fa-spin');
+      generateTicketPdfBlob(p).then(function(doc) {
+        doc.save(p.id + '_ETicket_' + p.nama.replace(/\s+/g, '_') + '.pdf');
+        showToast('File PDF E-Ticket berhasil diunduh!', 'fa-solid fa-circle-check');
+      });
+    }
+
+    function sendTicketWhatsapp(id) {
+      var p = participantsDb.find(function(it){ return it.id === id; });
+      if (!p) return;
+      downloadTicketPdf(id);
+
+      var cleanPhone = p.wa.replace(/[^0-9]/g, '');
+      var msg = 'Halo ' + p.nama + ',\n\n' +
+        'Pembayaran registrasi *Camp-nic Day 2026 (Hafik Golu, Sivas)* Anda dengan ID: *' + p.id + '* telah diverifikasi LUNAS oleh panitia PPI Sivas.\n\n' +
+        'File resmi E-Ticket PDF ber-QR Code telah diterbitkan. Harap simpan tiket tersebut untuk scan presensi saat keberangkatan bus pada Sabtu, 31 Oktober 2026.\n\n' +
+        'Sampai jumpa di Hafik Golu!\n' +
+        'Salam hangat,\n*PPI Sivas - Aksara Senada*';
+
+      var url = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(msg);
+      window.open(url, '_blank');
+    }
+
+    // KAMERA SCANNER HTML5-QRCODE (100% LANCAR DI GITHUB PAGES)
+    function startCameraScanner() {
+      var feedback = document.getElementById('scanResultFeedback');
+      feedback.style.display = 'none';
+
+      if (!html5Scanner) {
+        html5Scanner = new Html5Qrcode('qr-camera-stream');
+      }
+
+      var config = { fps: 10, qrbox: { width: 220, height: 220 } };
+      html5Scanner.start(
+        { facingMode: 'environment' },
+        config,
+        function(decodedText) {
+          if (html5Scanner) html5Scanner.pause();
+          processCheckIn(decodedText);
+          setTimeout(function() {
+            if (html5Scanner) html5Scanner.resume();
+          }, 2500);
+        },
+        function(err) {}
+      ).catch(function(err) {
+        showToast('Kamera tidak dapat diakses: ' + err.toString(), 'fa-solid fa-triangle-exclamation');
+      });
+    }
+
+    function submitManualScan() {
+      var input = document.getElementById('manualScanInput').value.trim();
+      if (!input) {
+        showToast('Masukkan ID Registrasi!', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+      processCheckIn(input);
+    }
+
+    function processCheckIn(idText) {
+      var clean = idText.toUpperCase().trim();
+      var feedback = document.getElementById('scanResultFeedback');
+      feedback.style.display = 'block';
+
+      var found = null;
+      for (var i = 0; i < participantsDb.length; i++) {
+        if (participantsDb[i].id.toUpperCase() === clean) {
+          found = participantsDb[i];
+          break;
+        }
+      }
+
+      if (!found) {
+        feedback.style.background = '#F8D7DA';
+        feedback.style.color = '#842029';
+        feedback.innerHTML = '<i class="fa-solid fa-xmark" style="font-size:24px;"></i>' +
+                             '<div style="font-weight:700;">ID TIDAK TERDAFTAR</div>' +
+                             '<div style="font-size:12px;">' + clean + ' tidak ada dalam database.</div>';
+        showToast('ID tidak valid!', 'fa-solid fa-xmark');
+        return;
+      }
+
+      if (found.statusBayar !== 'Terverifikasi Lunas') {
+        feedback.style.background = '#FFF3CD';
+        feedback.style.color = '#664D03';
+        feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="font-size:24px;"></i>' +
+                             '<div style="font-weight:700;">BELUM LUNAS</div>' +
+                             '<div style="font-size:12px;">' + found.nama + ' (' + found.statusBayar + ')</div>';
+        showToast('Peserta belum melunasi biaya!', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+
+      if (found.statusHadir === 'Hadir') {
+        feedback.style.background = '#CFF4FC';
+        feedback.style.color = '#055160';
+        feedback.innerHTML = '<i class="fa-solid fa-circle-info" style="font-size:24px;"></i>' +
+                             '<div style="font-weight:700;">SUDAH CHECK-IN</div>' +
+                             '<div style="font-size:12px;">Telah check-in pada pukul ' + found.checkinTime + '</div>';
+        showToast('Peserta sudah check-in!', 'fa-solid fa-circle-info');
+        return;
+      }
+
+      var now = new Date();
+      var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
+      found.statusHadir = 'Hadir';
+      found.checkinTime = timeStr;
+      saveData();
+
+      feedback.style.background = '#D1E7DD';
+      feedback.style.color = '#0F5132';
+      feedback.innerHTML = '<i class="fa-solid fa-circle-check" style="font-size:24px;"></i>' +
+                           '<div style="font-weight:700; margin-top:4px;">CHECK-IN BERHASIL!</div>' +
+                           '<div style="font-size:14px; font-weight:600;">' + found.nama + ' (' + found.id + ')</div>' +
+                           '<div style="font-size:11px;">Pukul ' + timeStr + ' &bull; ' + found.kategori + '</div>';
+      showToast('Hadir: ' + found.nama, 'fa-solid fa-check');
+    }
+
+    function renderNoticeList() {
+      var container = document.getElementById('noticeListContainer');
+      var belumList = participantsDb.filter(function(it){ return it.statusHadir === 'Belum Hadir'; });
+
+      if (belumList.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:24px; color:#0F5132; font-weight:700;"><i class="fa-solid fa-circle-check"></i> Seluruh peserta telah hadir di lokasi!</div>';
+        return;
+      }
+
+      var html = '';
+      for (var i = 0; i < belumList.length; i++) {
+        var p = belumList[i];
+        var cleanPhone = p.wa.replace(/[^0-9]/g, '');
+        var waMsg = encodeURIComponent('Halo ' + p.nama + ', panitia Camp-nic Day 2026 PPI Sivas ingin menanyakan apakah Anda sudah dalam perjalanan menuju titik kumpul bus?');
+        var waUrl = 'https://wa.me/' + cleanPhone + '?text=' + waMsg;
+
+        html += '<div class="admin-card-item">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+            '<strong>' + p.nama + '</strong>' +
+            '<span style="color:#DC3545; font-size:11px; font-weight:700;">Belum Hadir</span>' +
+          '</div>' +
+          '<div style="font-size:12px; color:#666;">ID: ' + p.id + ' &bull; ' + p.institusi + '</div>' +
+          '<a href="' + waUrl + '" target="_blank" style="margin-top:6px; background:#25D366; color:#FFF; padding:8px 12px; border-radius:20px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px; text-decoration:none;">' +
+            '<i class="fa-brands fa-whatsapp"></i> Hubungi WhatsApp Peserta' +
+          '</a>' +
+        '</div>';
+      }
+      container.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
