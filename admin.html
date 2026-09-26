@@ -42,7 +42,7 @@
     .admin-header {
       background: var(--bg-dark);
       color: #FFFFFF;
-      padding: 14px 18px;
+      padding: 12px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -189,7 +189,7 @@
   <!-- MODAL PIN GERBANG RAHASIA (DEFAULT PIN: 2026) -->
   <div class="modal-overlay" id="pinGateModal">
     <div class="modal-box">
-      <i class="fa-solid fa-shield-halved" style="font-size:32px; color:var(--gold-sand); margin-bottom:10px;"></i>
+      <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" style="width:54px; height:54px; border-radius:50%; background:#FFF; padding:3px; margin:0 auto 12px auto; display:block; border:1px solid var(--gold-sand);" onerror="this.src='https://placehold.co/100x100/142E20/D4A373?text=PPI';">
       <h3 style="font-size:20px; margin-bottom:4px;">Portal Panitia PPI Sivas</h3>
       <p style="font-size:12px; color:#666; margin-bottom:18px;">Masukkan PIN Admin untuk mengakses verifikasi & scanner presensi (Default: 2026).</p>
       
@@ -204,9 +204,12 @@
 
   <div id="adminMainContent" style="display:none;">
     <div class="admin-header">
-      <div>
-        <div style="font-size:14px; font-weight:700;">PANEL PANITIA PPI SIVAS</div>
-        <div style="font-size:10px; color:var(--gold-sand);">Camp-nic Day 2026 &bull; Hafik Gölü</div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="Logo PPI Sivas" style="width:32px; height:32px; border-radius:50%; background:#FFF;" onerror="this.src='https://placehold.co/100x100/142E20/D4A373?text=PPI';">
+        <div>
+          <div style="font-size:13.5px; font-weight:700;">PANEL PANITIA PPI SIVAS</div>
+          <div style="font-size:10px; color:var(--gold-sand);">Camp-nic Day 2026 &bull; Hafik Gölü</div>
+        </div>
       </div>
       <div style="display:flex; gap:8px;">
         <a href="index.html" style="background:rgba(255,255,255,0.12); color:#FFF; padding:6px 12px; border-radius:20px; font-size:11px; text-decoration:none;">
@@ -277,7 +280,7 @@
       <div id="adminCardListContainer"></div>
     </div>
 
-    <!-- TAB 2: KAMERA SCANNER PRESENSI HARI-H (100% LANCAR DI GITHUB PAGES) -->
+    <!-- TAB 2: KAMERA SCANNER PRESENSI HARI-H -->
     <div id="paneScanner" style="padding:16px; max-width:900px; margin:0 auto; display:none;">
       <div class="scanner-view-box">
         <h4 style="font-size:16px; margin-bottom:4px; color:var(--bg-dark);">
@@ -318,7 +321,7 @@
   <script>
     var html5Scanner = null;
 
-    // Database Sinkronisasi Lokal (Berbagi data otomatis dengan index.html)
+    // Database Sinkronisasi Lokal
     var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || 'null');
     if (!participantsDb || participantsDb.length === 0) {
       participantsDb = [
@@ -541,7 +544,7 @@
           doc.rect(9, 9, 192, 28, 'F');
 
           doc.setTextColor(212, 163, 115);
-          doc.setFontSize(10);
+          doc.setFontSize(9.5);
           doc.setFont('helvetica', 'bold');
           doc.text('PERHIMPUNAN PELAJAR INDONESIA DI SIVAS (PPI SIVAS) • AKSARA SENADA', 15, 17);
 
@@ -640,7 +643,7 @@
       window.open(url, '_blank');
     }
 
-    // KAMERA SCANNER HTML5-QRCODE (100% LANCAR DI GITHUB PAGES)
+    // KAMERA SCANNER HTML5-QRCODE
     function startCameraScanner() {
       var feedback = document.getElementById('scanResultFeedback');
       feedback.style.display = 'none';
