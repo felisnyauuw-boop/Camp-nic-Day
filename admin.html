@@ -52,6 +52,48 @@
       z-index: 1000;
     }
 
+    .admin-header-logo {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .session-toggle-bar {
+      background: #E8EDE7;
+      border-bottom: 1px solid #CFD8CD;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .session-btn {
+      background: #FFFFFF;
+      border: 1px solid #BDC7BC;
+      color: #444;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .session-btn.active {
+      background: var(--forest-dark);
+      color: var(--gold-sand);
+      border-color: var(--forest-dark);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(20, 46, 32, 0.2);
+    }
+
     .admin-stats {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -121,16 +163,23 @@
       border-radius: var(--radius-md);
       padding: 18px;
       border: 1px solid #DCE3DE;
-      max-width: 480px;
+      max-width: 500px;
       margin: 0 auto;
       text-align: center;
     }
 
     #qr-camera-stream {
       width: 100% !important;
+      min-height: 240px;
+      background: #111;
       border-radius: 12px;
       overflow: hidden;
       margin: 12px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #AAA;
+      font-size: 12px;
     }
 
     .modal-overlay {
@@ -179,6 +228,23 @@
       gap: 10px;
       pointer-events: auto;
     }
+
+    .filter-badge-btn {
+      background: #FFFFFF;
+      border: 1px solid #CCC;
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .filter-badge-btn.active {
+      background: var(--forest-dark);
+      color: var(--gold-sand);
+      border-color: var(--forest-dark);
+    }
   </style>
 </head>
 <body>
@@ -189,7 +255,7 @@
   <!-- MODAL PIN GERBANG RAHASIA (DEFAULT PIN: 2026) -->
   <div class="modal-overlay" id="pinGateModal">
     <div class="modal-box">
-      <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" style="width:54px; height:54px; border-radius:50%; background:#FFF; padding:3px; margin:0 auto 12px auto; display:block; border:1px solid var(--gold-sand);" onerror="this.src='https://placehold.co/100x100/142E20/D4A373?text=PPI';">
+      <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" style="width:50px; height:50px; object-fit:contain; margin:0 auto 12px auto; display:block;">
       <h3 style="font-size:20px; margin-bottom:4px;">Portal Panitia PPI Sivas</h3>
       <p style="font-size:12px; color:#666; margin-bottom:18px;">Masukkan PIN Admin untuk mengakses verifikasi & scanner presensi (Default: 2026).</p>
       
@@ -205,7 +271,7 @@
   <div id="adminMainContent" style="display:none;">
     <div class="admin-header">
       <div style="display:flex; align-items:center; gap:8px;">
-        <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="Logo PPI Sivas" style="width:32px; height:32px; border-radius:50%; background:#FFF;" onerror="this.src='https://placehold.co/100x100/142E20/D4A373?text=PPI';">
+        <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="Logo PPI Sivas" class="admin-header-logo">
         <div>
           <div style="font-size:13.5px; font-weight:700;">PANEL PANITIA PPI SIVAS</div>
           <div style="font-size:10px; color:var(--gold-sand);">Camp-nic Day 2026 &bull; Hafik Gölü</div>
@@ -221,7 +287,22 @@
       </div>
     </div>
 
-    <!-- Metrik Counter Real-Time -->
+    <!-- BILAH PENGALIH SESI ABSENSI (BERANGKAT PAGI VS PULANG MALAM) -->
+    <div class="session-toggle-bar">
+      <div style="font-size:11px; font-weight:700; color:var(--forest-dark); text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+        <i class="fa-solid fa-clock-rotate-left"></i> SESI ABSENSI:
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button id="adminBtnSesiBerangkat" class="session-btn active" onclick="setAttendanceSession('BERANGKAT');">
+          <i class="fa-solid fa-bus"></i> 1. Berangkat (Pagi)
+        </button>
+        <button id="adminBtnSesiPulang" class="session-btn" onclick="setAttendanceSession('PULANG');">
+          <i class="fa-solid fa-moon"></i> 2. Pulang (Malam)
+        </button>
+      </div>
+    </div>
+
+    <!-- Metrik Counter Real-Time Berdasarkan Sesi Aktif -->
     <div class="admin-stats">
       <div class="stat-card">
         <div>
@@ -239,14 +320,14 @@
       </div>
       <div class="stat-card">
         <div>
-          <div class="stat-label">Hadir (Check-In)</div>
+          <div class="stat-label" id="lblMetricHadir">Hadir (Berangkat)</div>
           <div class="stat-val" style="color:#198754;" id="metricHadir">0</div>
         </div>
         <i class="fa-solid fa-user-check" style="color:#198754; font-size:22px;"></i>
       </div>
       <div class="stat-card">
         <div>
-          <div class="stat-label">Belum Hadir</div>
+          <div class="stat-label" id="lblMetricBelum">Belum Hadir (Berangkat)</div>
           <div class="stat-val" style="color:#DC3545;" id="metricBelumHadir">0</div>
         </div>
         <i class="fa-solid fa-user-clock" style="color:#DC3545; font-size:22px;"></i>
@@ -262,14 +343,14 @@
         <i class="fa-solid fa-qrcode"></i> Kamera Scanner Presensi
       </button>
       <button class="tab-btn" id="tabBtn3" onclick="switchTab('paneNotice');">
-        <i class="fa-solid fa-triangle-exclamation"></i> Belum Hadir
+        <i class="fa-solid fa-triangle-exclamation"></i> Belum Hadir (<span id="adminTabNoticeCount">0</span>)
       </button>
     </div>
 
-    <!-- TAB 1: VERIFIKASI PEMBAYARAN & UNDUH PDF TIKET -->
+    <!-- TAB 1: VERIFIKASI PEMBAYARAN -->
     <div id="paneVerifikasi" style="padding:16px; max-width:900px; margin:0 auto;">
       <div style="display:flex; gap:8px; margin-bottom:12px;">
-        <input type="text" id="adminSearchInput" placeholder="Cari nama, ID, WA..." style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; font-size:13px;" oninput="renderAdminList();">
+        <input type="text" id="adminSearchInput" placeholder="Cari nama, ID, WA, wilayah..." style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; font-size:13px;" oninput="renderAdminList();">
         <select id="adminStatusFilter" style="padding:9px; border:1px solid #CCC; border-radius:6px; font-size:13px;" onchange="renderAdminList();">
           <option value="ALL">Semua Status</option>
           <option value="PENDING">Menunggu Verifikasi</option>
@@ -280,9 +361,12 @@
       <div id="adminCardListContainer"></div>
     </div>
 
-    <!-- TAB 2: KAMERA SCANNER PRESENSI HARI-H -->
+    <!-- TAB 2: KAMERA SCANNER PRESENSI HARI-H DENGAN SINKRONISASI TINGGI -->
     <div id="paneScanner" style="padding:16px; max-width:900px; margin:0 auto; display:none;">
       <div class="scanner-view-box">
+        <div style="display:inline-block; background:#E2E8F0; padding:4px 12px; border-radius:12px; font-size:11px; font-weight:700; color:#333; margin-bottom:6px;" id="badgeStandaloneScanSession">
+          <i class="fa-solid fa-bus"></i> MODE SCAN: SESI 1 (BERANGKAT PAGI)
+        </div>
         <h4 style="font-size:16px; margin-bottom:4px; color:var(--bg-dark);">
           <i class="fa-solid fa-camera"></i> Pemindai Barcode Presensi Hari-H
         </h4>
@@ -290,10 +374,24 @@
           Arahkan kamera smartphone ke QR Code pada E-Ticket fisik peserta saat masuk bus/lokasi.
         </p>
 
-        <!-- Kamera HTML5 Stream -->
-        <div id="qr-camera-stream"></div>
+        <!-- KONTROL KAMERA -->
+        <div style="display:flex; gap:8px; justify-content:center; margin-bottom:10px;">
+          <button id="btnAdminStartCam" onclick="startCameraScanner();" style="background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; padding:7px 14px; font-size:12px; font-weight:700; cursor:pointer;">
+            <i class="fa-solid fa-video"></i> Mulai Kamera
+          </button>
+          <button id="btnAdminSwitchCam" onclick="switchCameraFacing();" style="background:#E2E8F0; color:#333; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:600; cursor:pointer;">
+            <i class="fa-solid fa-arrows-rotate"></i> Ganti Kamera
+          </button>
+          <button id="btnAdminStopCam" onclick="stopCameraScanner();" style="background:#F8D7DA; color:#842029; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:600; cursor:pointer; display:none;">
+            <i class="fa-solid fa-stop"></i> Matikan
+          </button>
+        </div>
 
-        <div style="margin-top:14px; text-align:left;">
+        <div id="qr-camera-stream">
+          <span>Kamera belum aktif. Tekan tombol "Mulai Kamera" di atas.</span>
+        </div>
+
+        <div style="margin-top:14px; text-align:left; border-top:1px dashed #DDD; padding-top:12px;">
           <label style="font-size:11px; font-weight:700; color:#555; text-transform:uppercase;">Input Manual ID Registrasi:</label>
           <div style="display:flex; gap:6px; margin-top:4px;">
             <input type="text" id="manualScanInput" placeholder="CAMP-20261031-XXXX" style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
@@ -305,23 +403,58 @@
       </div>
     </div>
 
-    <!-- TAB 3: NOTICE LIST PESERTA BELUM HADIR -->
+    <!-- TAB 3: NOTICE LIST PESERTA BELUM DATANG LENGKAP -->
     <div id="paneNotice" style="padding:16px; max-width:900px; margin:0 auto; display:none;">
       <div style="margin-bottom:12px;">
-        <h4 style="font-size:16px; color:#DC3545;"><i class="fa-solid fa-user-clock"></i> Daftar Peserta Belum Hadir</h4>
-        <p style="font-size:12px; color:#666;">Pantau keberangkatan peserta dan kirim pesan pengingat langsung via WhatsApp.</p>
+        <h4 style="font-size:16px; color:#DC3545;" id="titleStandaloneNotice">
+          <i class="fa-solid fa-user-clock"></i> Daftar Peserta Belum Hadir (Sesi Berangkat)
+        </h4>
+        <p style="font-size:12px; color:#666;" id="descStandaloneNotice">
+          Pantau keberangkatan peserta dan kirim pesan pengingat langsung via WhatsApp.
+        </p>
       </div>
+
+      <!-- FILTER KOTA / WILAYAH -->
+      <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:12px;">
+        <button class="filter-badge-btn active" onclick="setNoticeFilter('ALL', this);">Semua</button>
+        <button class="filter-badge-btn" onclick="setNoticeFilter('Sivas', this);">Sivas</button>
+        <button class="filter-badge-btn" onclick="setNoticeFilter('Yozgat', this);">Yozgat</button>
+        <button class="filter-badge-btn" onclick="setNoticeFilter('Tokat', this);">Tokat</button>
+        <button class="filter-badge-btn" onclick="setNoticeFilter('Malatya', this);">Malatya</button>
+        <button class="filter-badge-btn" onclick="setNoticeFilter('Elazığ', this);">Elazığ</button>
+      </div>
+
       <div id="noticeListContainer"></div>
     </div>
   </div>
 
-  <!-- Hidden Div untuk Konversi QR PDF -->
   <div id="hiddenQrCanvas" style="display:none;"></div>
 
   <script>
-    var html5Scanner = null;
+    // URL WEBHOOK APPS SCRIPT PERMANEN
+    var APPS_SCRIPT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby2G41zIieHPVGg0OFnzZim4PcxevC9oNMiq75XPT1sbHRkPmJNnCqk6zMJBjTirkxL/exec';
 
-    // Database Sinkronisasi Lokal
+    var html5Scanner = null;
+    var currentCameraFacing = 'environment';
+    var currentNoticeWilayahFilter = 'ALL';
+    var currentAttendanceSession = 'BERANGKAT';
+
+    function playBeepSound() {
+      try {
+        var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = 920;
+        gain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+        osc.start();
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.16);
+        osc.stop(audioCtx.currentTime + 0.16);
+      } catch(e){}
+    }
+
     var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || 'null');
     if (!participantsDb || participantsDb.length === 0) {
       participantsDb = [
@@ -330,41 +463,52 @@
           timestamp: '31/10/2026 08:15:00',
           nama: 'Aufa Azkia',
           email: 'aufa@example.com',
-          wa: '+905076382358',
-          institusi: 'Sivas Cumhuriyet Univ',
-          kategori: 'Pelajar / Mahasiswa (₺350)',
-          nominal: '₺350',
+          wa: '+90 507 638 23 58',
+          statusPeserta: 'Pelajar / Mahasiswa',
+          wilayah: 'Sivas',
           statusBayar: 'Terverifikasi Lunas',
-          statusHadir: 'Belum Hadir',
-          checkinTime: '-'
+          hadirBerangkat: true,
+          timeBerangkat: '08:45:10',
+          hadirPulang: false,
+          timePulang: '-'
         },
         {
           id: 'CAMP-20261031-0002',
           timestamp: '31/10/2026 08:30:00',
           nama: 'Rara Ingrid',
           email: 'rara@example.com',
-          wa: '081272629990',
-          institusi: 'PPI Sivas',
-          kategori: 'Pelajar / Mahasiswa (₺350)',
-          nominal: '₺350',
+          wa: '+62 812 7262 9990',
+          statusPeserta: 'Pelajar / Mahasiswa',
+          wilayah: 'Yozgat',
           statusBayar: 'Menunggu Verifikasi',
-          statusHadir: 'Belum Hadir',
-          checkinTime: '-'
+          hadirBerangkat: false,
+          timeBerangkat: '-',
+          hadirPulang: false,
+          timePulang: '-'
         },
         {
           id: 'CAMP-20261031-0003',
           timestamp: '31/10/2026 08:45:00',
           nama: 'Emirhan Yılmaz',
           email: 'emirhan@example.com',
-          wa: '+905559876543',
-          institusi: 'Malatya İnönü Univ',
-          kategori: 'Umum & Simpatisan (₺450)',
-          nominal: '₺450',
+          wa: '+90 555 987 65 43',
+          statusPeserta: 'Non-Pelajar / Umum',
+          wilayah: 'Malatya',
           statusBayar: 'Terverifikasi Lunas',
-          statusHadir: 'Hadir',
-          checkinTime: '08:52:10'
+          hadirBerangkat: true,
+          timeBerangkat: '08:52:10',
+          hadirPulang: false,
+          timePulang: '-'
         }
       ];
+      saveData();
+    } else {
+      participantsDb.forEach(function(it) {
+        if (it.hadirBerangkat === undefined) it.hadirBerangkat = (it.statusHadir === 'Hadir');
+        if (it.hadirPulang === undefined) it.hadirPulang = false;
+        if (it.timeBerangkat === undefined) it.timeBerangkat = it.checkinTime || '-';
+        if (it.timePulang === undefined) it.timePulang = '-';
+      });
       saveData();
     }
 
@@ -398,22 +542,61 @@
     function lockAdmin() {
       document.getElementById('pinGateModal').style.display = 'flex';
       document.getElementById('adminMainContent').style.display = 'none';
-      if (html5Scanner) html5Scanner.stop().catch(function(){});
+      stopCameraScanner();
       document.getElementById('adminPinInput').value = '';
+    }
+
+    function setAttendanceSession(sessionKey) {
+      currentAttendanceSession = sessionKey;
+      var btnBerangkat = document.getElementById('adminBtnSesiBerangkat');
+      var btnPulang = document.getElementById('adminBtnSesiPulang');
+      var badgeScan = document.getElementById('badgeStandaloneScanSession');
+
+      if (sessionKey === 'BERANGKAT') {
+        btnBerangkat.classList.add('active');
+        btnPulang.classList.remove('active');
+        badgeScan.innerHTML = '<i class="fa-solid fa-bus"></i> MODE SCAN: SESI 1 (BERANGKAT PAGI)';
+        document.getElementById('lblMetricHadir').textContent = 'Hadir (Berangkat)';
+        document.getElementById('lblMetricBelum').textContent = 'Belum Hadir (Berangkat)';
+        document.getElementById('titleStandaloneNotice').innerHTML = '<i class="fa-solid fa-user-clock"></i> Peserta Belum Hadir (Sesi Berangkat)';
+        document.getElementById('descStandaloneNotice').textContent = 'Pantau keberangkatan peserta dan kirim pesan pengingat langsung via WhatsApp.';
+      } else {
+        btnPulang.classList.add('active');
+        btnBerangkat.classList.remove('active');
+        badgeScan.innerHTML = '<i class="fa-solid fa-moon"></i> MODE SCAN: SESI 2 (PULANG MALAM)';
+        document.getElementById('lblMetricHadir').textContent = 'Hadir (Kepulangan)';
+        document.getElementById('lblMetricBelum').textContent = 'Belum Hadir (Kepulangan)';
+        document.getElementById('titleStandaloneNotice').innerHTML = '<i class="fa-solid fa-user-clock"></i> Peserta Belum Hadir (Sesi Pulang)';
+        document.getElementById('descStandaloneNotice').textContent = 'Pastikan seluruh peserta sudah kumpul di bus sebelum meninggalkan Hafik Gölü!';
+      }
+
+      updateMetrics();
+      renderNoticeList();
+      showToast('Beralih ke ' + (sessionKey === 'BERANGKAT' ? 'Sesi 1: Keberangkatan' : 'Sesi 2: Kepulangan (Hitungan dimulai dari 0)'), 'fa-solid fa-clock-rotate-left');
     }
 
     function updateMetrics() {
       var total = participantsDb.length;
       var lunas = 0, hadir = 0, belum = 0;
+
       for (var i = 0; i < participantsDb.length; i++) {
-        if (participantsDb[i].statusBayar === 'Terverifikasi Lunas') lunas++;
-        if (participantsDb[i].statusHadir === 'Hadir') hadir++;
-        if (participantsDb[i].statusHadir === 'Belum Hadir') belum++;
+        var p = participantsDb[i];
+        if (p.statusBayar === 'Terverifikasi Lunas') lunas++;
+
+        var isHadirThisSession = (currentAttendanceSession === 'BERANGKAT') ? p.hadirBerangkat : p.hadirPulang;
+        if (isHadirThisSession) {
+          hadir++;
+        } else {
+          belum++;
+        }
       }
+
       document.getElementById('metricTotal').textContent = total;
       document.getElementById('metricLunas').textContent = lunas;
       document.getElementById('metricHadir').textContent = hadir;
       document.getElementById('metricBelumHadir').textContent = belum;
+      var noticeCount = document.getElementById('adminTabNoticeCount');
+      if (noticeCount) noticeCount.textContent = belum;
     }
 
     function switchTab(paneId) {
@@ -435,7 +618,7 @@
       if (paneId === 'paneScanner') {
         startCameraScanner();
       } else {
-        if (html5Scanner) html5Scanner.stop().catch(function(){});
+        stopCameraScanner();
         if (paneId === 'paneNotice') renderNoticeList();
       }
     }
@@ -452,7 +635,7 @@
 
         var matchQuery = true;
         if (query) {
-          var text = (it.id + ' ' + it.nama + ' ' + it.wa + ' ' + it.institusi).toLowerCase();
+          var text = (it.id + ' ' + it.nama + ' ' + it.wa + ' ' + (it.wilayah || '') + ' ' + (it.statusPeserta || '')).toLowerCase();
           if (text.indexOf(query) === -1) matchQuery = false;
         }
         return matchStatus && matchQuery;
@@ -470,14 +653,18 @@
         var badgeBg = isLunas ? '#D1E7DD' : '#FFF3CD';
         var badgeColor = isLunas ? '#0F5132' : '#664D03';
 
+        var checkStatusStr = '<span style="font-size:11px; color:#666;">Absen Berangkat: ' + (p.hadirBerangkat ? ('<b style="color:#0F5132;">Hadir (' + p.timeBerangkat + ')</b>') : 'Belum') +
+                             ' &bull; Absen Pulang: ' + (p.hadirPulang ? ('<b style="color:#0F5132;">Hadir (' + p.timePulang + ')</b>') : 'Belum') + '</span>';
+
         html += '<div class="admin-card-item">' +
           '<div style="display:flex; justify-content:space-between; align-items:center;">' +
             '<strong style="color:var(--forest-accent);">' + p.id + '</strong>' +
             '<span style="background:' + badgeBg + '; color:' + badgeColor + '; padding:3px 8px; border-radius:10px; font-size:11px; font-weight:700;">' + p.statusBayar + '</span>' +
           '</div>' +
           '<div style="font-weight:700; font-size:14px;">' + p.nama + '</div>' +
-          '<div style="font-size:12px; color:#666;"><i class="fa-solid fa-school"></i> ' + p.institusi + ' &bull; <i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>' +
-          '<div style="font-size:12px; color:#555;">Kategori: ' + p.kategori + ' (' + p.nominal + ')</div>' +
+          '<div style="font-size:12px; color:#666;"><i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; <i class="fa-solid fa-user-tag"></i> ' + (p.statusPeserta || 'Pelajar') + '</div>' +
+          '<div style="font-size:12px; color:#555;"><i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>' +
+          '<div style="margin-top:2px;">' + checkStatusStr + '</div>' +
           '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:8px; margin-top:4px;">';
 
         if (!isLunas) {
@@ -517,8 +704,8 @@
         
         new QRCode(qrDiv, {
           text: p.id,
-          width: 140,
-          height: 140,
+          width: 240,
+          height: 240,
           correctLevel: QRCode.CorrectLevel.H
         });
 
@@ -578,42 +765,51 @@
           doc.setTextColor(138, 154, 134);
           doc.setFontSize(9);
           doc.setFont('helvetica', 'normal');
-          doc.text('UNIVERSITAS / WILAYAH', 16, 80);
+          doc.text('ASAL WILAYAH', 16, 80);
           doc.setFontSize(11);
           doc.setFont('helvetica', 'bold');
           doc.setTextColor(15, 35, 24);
-          doc.text(p.institusi || 'Umum', 16, 86);
+          doc.text((p.wilayah || 'Sivas') + ' (Turki)', 16, 86);
 
           doc.setTextColor(138, 154, 134);
           doc.setFontSize(9);
           doc.setFont('helvetica', 'normal');
-          doc.text('KATEGORI & STATUS', 16, 96);
+          doc.text('STATUS & KEHADIRAN', 16, 96);
           doc.setFontSize(11);
           doc.setFont('helvetica', 'bold');
           doc.setTextColor(15, 81, 50);
-          doc.text(p.kategori + ' — LUNAS', 16, 102);
+          doc.text((p.statusPeserta || 'Pelajar') + ' — LUNAS', 16, 102);
 
           doc.setDrawColor(220, 225, 220);
           doc.setLineDash([2, 2], 0);
           doc.line(135, 42, 135, 124);
           doc.setLineDash([]);
 
-          doc.addImage(qrDataUrl, 'PNG', 145, 46, 48, 48);
+          // KOTAK PUTIH DENGAN QUIET-ZONE PADDING (SINKRON DENGAN KAMERA SCANNER)
+          doc.setFillColor(255, 255, 255);
+          doc.roundedRect(141, 43, 56, 56, 3, 3, 'F');
+          doc.setDrawColor(212, 163, 115);
+          doc.setLineWidth(0.4);
+          doc.roundedRect(141, 43, 56, 56, 3, 3, 'S');
 
-          doc.setTextColor(120, 130, 120);
-          doc.setFontSize(8);
+          doc.addImage(qrDataUrl, 'PNG', 144, 46, 50, 50);
+
+          doc.setTextColor(100, 110, 100);
+          doc.setFontSize(7.5);
+          doc.setFont('helvetica', 'bold');
+          doc.text('VALID UNTUK 2X CHECK-IN:', 142, 104);
           doc.setFont('helvetica', 'normal');
-          doc.text('Tunjukkan QR Code ini kepada panitia', 142, 100);
-          doc.text('saat registrasi bus keberangkatan.', 144, 105);
+          doc.text('1. Bus Berangkat (Pagi)', 142, 109);
+          doc.text('2. Bus Pulang (Malam)', 142, 114);
 
           doc.setFillColor(242, 236, 225);
           doc.rect(9, 126, 192, 13, 'F');
           doc.setTextColor(92, 110, 98);
           doc.setFontSize(8);
-          doc.text('Tiket ini sah dan diterbitkan resmi oleh Panitia Camp-nic Day 2026 PPI Sivas. Harap bawa pakaian hangat.', 16, 134);
+          doc.text('Tiket ini sah diterbitkan resmi oleh Panitia Camp-nic Day 2026 PPI Sivas. Tunjukkan barcode saat naik bus.', 16, 134);
 
           resolve(doc);
-        }, 150);
+        }, 180);
       });
     }
 
@@ -635,7 +831,7 @@
       var cleanPhone = p.wa.replace(/[^0-9]/g, '');
       var msg = 'Halo ' + p.nama + ',\n\n' +
         'Pembayaran registrasi *Camp-nic Day 2026 (Hafik Golu, Sivas)* Anda dengan ID: *' + p.id + '* telah diverifikasi LUNAS oleh panitia PPI Sivas.\n\n' +
-        'File resmi E-Ticket PDF ber-QR Code telah diterbitkan. Harap simpan tiket tersebut untuk scan presensi saat keberangkatan bus pada Sabtu, 31 Oktober 2026.\n\n' +
+        'File resmi E-Ticket PDF ber-QR Code telah diterbitkan. Tiket ini berlaku untuk 2x check-in (Bus Berangkat pagi & Bus Pulang malam).\n\n' +
         'Sampai jumpa di Hafik Golu!\n' +
         'Salam hangat,\n*PPI Sivas - Aksara Senada*';
 
@@ -643,30 +839,69 @@
       window.open(url, '_blank');
     }
 
-    // KAMERA SCANNER HTML5-QRCODE
+    // KAMERA SCANNER DENGAN KONTROL & SINKRONISASI CEPAT
     function startCameraScanner() {
       var feedback = document.getElementById('scanResultFeedback');
       feedback.style.display = 'none';
+
+      document.getElementById('btnAdminStartCam').style.display = 'none';
+      document.getElementById('btnAdminStopCam').style.display = 'inline-block';
 
       if (!html5Scanner) {
         html5Scanner = new Html5Qrcode('qr-camera-stream');
       }
 
-      var config = { fps: 10, qrbox: { width: 220, height: 220 } };
+      var config = {
+        fps: 15,
+        qrbox: function(viewfinderWidth, viewfinderHeight) {
+          var minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+          return { width: Math.floor(minEdge * 0.72), height: Math.floor(minEdge * 0.72) };
+        },
+        aspectRatio: 1.0
+      };
+
       html5Scanner.start(
-        { facingMode: 'environment' },
+        { facingMode: currentCameraFacing },
         config,
         function(decodedText) {
+          playBeepSound();
           if (html5Scanner) html5Scanner.pause();
-          processCheckIn(decodedText);
+
+          var match = decodedText.match(/CAMP-\d{8}-\d{4}/i);
+          var cleanId = match ? match[0].toUpperCase() : decodedText.trim().toUpperCase();
+
+          processCheckIn(cleanId);
           setTimeout(function() {
             if (html5Scanner) html5Scanner.resume();
-          }, 2500);
+          }, 2600);
         },
         function(err) {}
       ).catch(function(err) {
         showToast('Kamera tidak dapat diakses: ' + err.toString(), 'fa-solid fa-triangle-exclamation');
+        document.getElementById('btnAdminStartCam').style.display = 'inline-block';
+        document.getElementById('btnAdminStopCam').style.display = 'none';
       });
+    }
+
+    function switchCameraFacing() {
+      currentCameraFacing = currentCameraFacing === 'environment' ? 'user' : 'environment';
+      if (html5Scanner && html5Scanner.isScanning) {
+        html5Scanner.stop().then(function() {
+          startCameraScanner();
+        }).catch(function(){});
+      } else {
+        startCameraScanner();
+      }
+    }
+
+    function stopCameraScanner() {
+      if (html5Scanner && html5Scanner.isScanning) {
+        html5Scanner.stop().then(function() {
+          document.getElementById('btnAdminStartCam').style.display = 'inline-block';
+          document.getElementById('btnAdminStopCam').style.display = 'none';
+          document.getElementById('qr-camera-stream').innerHTML = '<span>Kamera dimatikan. Tekan "Mulai Kamera" untuk mengaktifkan kembali.</span>';
+        }).catch(function(){});
+      }
     }
 
     function submitManualScan() {
@@ -679,7 +914,9 @@
     }
 
     function processCheckIn(idText) {
-      var clean = idText.toUpperCase().trim();
+      var match = idText.match(/CAMP-\d{8}-\d{4}/i);
+      var clean = match ? match[0].toUpperCase() : idText.toUpperCase().trim();
+
       var feedback = document.getElementById('scanResultFeedback');
       feedback.style.display = 'block';
 
@@ -711,37 +948,63 @@
         return;
       }
 
-      if (found.statusHadir === 'Hadir') {
+      var sessionTitle = currentAttendanceSession === 'BERANGKAT' ? 'Keberangkatan Pagi' : 'Kepulangan Malam';
+      var alreadyChecked = (currentAttendanceSession === 'BERANGKAT') ? found.hadirBerangkat : found.hadirPulang;
+      var previousTime = (currentAttendanceSession === 'BERANGKAT') ? found.timeBerangkat : found.timePulang;
+
+      if (alreadyChecked) {
         feedback.style.background = '#CFF4FC';
         feedback.style.color = '#055160';
         feedback.innerHTML = '<i class="fa-solid fa-circle-info" style="font-size:24px;"></i>' +
-                             '<div style="font-weight:700;">SUDAH CHECK-IN</div>' +
-                             '<div style="font-size:12px;">Telah check-in pada pukul ' + found.checkinTime + '</div>';
-        showToast('Peserta sudah check-in!', 'fa-solid fa-circle-info');
+                             '<div style="font-weight:700;">SUDAH CHECK-IN (' + sessionTitle + ')</div>' +
+                             '<div style="font-size:12px;">Telah check-in pada pukul ' + previousTime + '</div>';
+        showToast('Peserta sudah check-in pada sesi ini!', 'fa-solid fa-circle-info');
         return;
       }
 
       var now = new Date();
       var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
-      found.statusHadir = 'Hadir';
-      found.checkinTime = timeStr;
+
+      if (currentAttendanceSession === 'BERANGKAT') {
+        found.hadirBerangkat = true;
+        found.timeBerangkat = timeStr;
+      } else {
+        found.hadirPulang = true;
+        found.timePulang = timeStr;
+      }
+
       saveData();
 
       feedback.style.background = '#D1E7DD';
       feedback.style.color = '#0F5132';
       feedback.innerHTML = '<i class="fa-solid fa-circle-check" style="font-size:24px;"></i>' +
-                           '<div style="font-weight:700; margin-top:4px;">CHECK-IN BERHASIL!</div>' +
+                           '<div style="font-weight:700; margin-top:4px;">CHECK-IN ' + sessionTitle.toUpperCase() + ' BERHASIL!</div>' +
                            '<div style="font-size:14px; font-weight:600;">' + found.nama + ' (' + found.id + ')</div>' +
-                           '<div style="font-size:11px;">Pukul ' + timeStr + ' &bull; ' + found.kategori + '</div>';
-      showToast('Hadir: ' + found.nama, 'fa-solid fa-check');
+                           '<div style="font-size:11px;">Pukul ' + timeStr + ' &bull; Wilayah: ' + (found.wilayah || 'Sivas') + '</div>';
+      showToast('Hadir: ' + found.nama + ' (' + sessionTitle + ')', 'fa-solid fa-check');
+    }
+
+    function setNoticeFilter(wilayah, btnEl) {
+      currentNoticeWilayahFilter = wilayah;
+      var btns = document.querySelectorAll('.filter-badge-btn');
+      btns.forEach(function(b){ b.classList.remove('active'); });
+      if (btnEl) btnEl.classList.add('active');
+      renderNoticeList();
     }
 
     function renderNoticeList() {
       var container = document.getElementById('noticeListContainer');
-      var belumList = participantsDb.filter(function(it){ return it.statusHadir === 'Belum Hadir'; });
+      var belumList = participantsDb.filter(function(it){
+        var isHadirThisSession = (currentAttendanceSession === 'BERANGKAT') ? it.hadirBerangkat : it.hadirPulang;
+        var matchStatus = !isHadirThisSession;
+        var matchWilayah = (currentNoticeWilayahFilter === 'ALL' || (it.wilayah || 'Sivas') === currentNoticeWilayahFilter);
+        return matchStatus && matchWilayah;
+      });
+
+      var sessionTitle = currentAttendanceSession === 'BERANGKAT' ? 'sesi keberangkatan' : 'sesi kepulangan';
 
       if (belumList.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:24px; color:#0F5132; font-weight:700;"><i class="fa-solid fa-circle-check"></i> Seluruh peserta telah hadir di lokasi!</div>';
+        container.innerHTML = '<div style="text-align:center; padding:24px; color:#0F5132; font-weight:700;"><i class="fa-solid fa-circle-check"></i> Seluruh peserta telah hadir di ' + sessionTitle + (currentNoticeWilayahFilter === 'ALL' ? '!' : ' dari wilayah ' + currentNoticeWilayahFilter + '!') + '</div>';
         return;
       }
 
@@ -749,18 +1012,27 @@
       for (var i = 0; i < belumList.length; i++) {
         var p = belumList[i];
         var cleanPhone = p.wa.replace(/[^0-9]/g, '');
-        var waMsg = encodeURIComponent('Halo ' + p.nama + ', panitia Camp-nic Day 2026 PPI Sivas ingin menanyakan apakah Anda sudah dalam perjalanan menuju titik kumpul bus?');
-        var waUrl = 'https://wa.me/' + cleanPhone + '?text=' + waMsg;
+
+        var waText = (currentAttendanceSession === 'BERANGKAT')
+          ? ('Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas ingin menanyakan apakah Anda sudah dalam perjalanan menuju titik kumpul bus?')
+          : ('Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas sedang mendata kepulangan bus dari Hafik Golu menuju Sivas. Apakah Anda sudah berada di area kumpul bus?');
+
+        var waUrl = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(waText);
 
         html += '<div class="admin-card-item">' +
           '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-            '<strong>' + p.nama + '</strong>' +
-            '<span style="color:#DC3545; font-size:11px; font-weight:700;">Belum Hadir</span>' +
+            '<strong style="font-size:14px;">' + p.nama + '</strong>' +
+            '<span style="color:#DC3545; background:#FFE5E7; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">Belum Absen ' + (currentAttendanceSession === 'BERANGKAT' ? 'Berangkat' : 'Pulang') + '</span>' +
           '</div>' +
-          '<div style="font-size:12px; color:#666;">ID: ' + p.id + ' &bull; ' + p.institusi + '</div>' +
-          '<a href="' + waUrl + '" target="_blank" style="margin-top:6px; background:#25D366; color:#FFF; padding:8px 12px; border-radius:20px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px; text-decoration:none;">' +
-            '<i class="fa-brands fa-whatsapp"></i> Hubungi WhatsApp Peserta' +
-          '</a>' +
+          '<div style="font-size:12px; color:#666;">ID: ' + p.id + ' &bull; <i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; ' + (p.statusPeserta || 'Pelajar') + '</div>' +
+          '<div style="display:flex; gap:8px; margin-top:6px;">' +
+            '<a href="' + waUrl + '" target="_blank" style="flex:1; background:#25D366; color:#FFF; padding:8px 12px; border-radius:20px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px; text-decoration:none;">' +
+              '<i class="fa-brands fa-whatsapp"></i> Hubungi WA' +
+            '</a>' +
+            '<button onclick="processCheckIn(\'' + p.id + '\'); renderNoticeList();" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
+              '<i class="fa-solid fa-check"></i> Tandai Hadir' +
+            '</button>' +
+          '</div>' +
         '</div>';
       }
       container.innerHTML = html;
