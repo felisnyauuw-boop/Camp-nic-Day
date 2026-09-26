@@ -42,7 +42,7 @@
     .admin-header {
       background: var(--bg-dark);
       color: #FFFFFF;
-      padding: 12px 18px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -59,51 +59,120 @@
       display: block;
     }
 
-    .session-toggle-bar {
-      background: #E8EDE7;
-      border-bottom: 1px solid #CFD8CD;
-      padding: 8px 16px;
+    /* NAVIGASI BESAR PEMISAH 2 MODE KERJA UTAMA */
+    .workflow-nav-bar {
+      background: #FFFFFF;
+      border-bottom: 2px solid #DCE3DE;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
       max-width: 900px;
       margin: 0 auto;
       width: 100%;
+      position: sticky;
+      top: 62px;
+      z-index: 990;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
 
-    .session-btn {
-      background: #FFFFFF;
-      border: 1px solid #BDC7BC;
-      color: #444;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 11.5px;
-      font-weight: 600;
+    .workflow-tab-btn {
+      flex: 1;
+      padding: 13px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #666;
+      background: #F8FAF8;
+      border: none;
+      border-bottom: 3.5px solid transparent;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 0.2s;
+    }
+
+    .workflow-tab-btn.active {
+      color: var(--forest-dark);
+      background: #FFFFFF;
+      border-bottom-color: var(--gold-sand);
+      font-weight: 800;
+    }
+
+    /* PENGALIH SESI ABSENSI (BERANGKAT VS PULANG) */
+    .session-toggle-card {
+      background: var(--forest-dark);
+      color: #FFFFFF;
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      border: 1px solid var(--gold-sand);
+    }
+
+    .session-btn-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .session-toggle-btn {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(212, 163, 115, 0.4);
+      color: #FFF;
+      padding: 9px 8px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       gap: 6px;
       transition: all 0.2s;
     }
 
-    .session-btn.active {
-      background: var(--forest-dark);
-      color: var(--gold-sand);
-      border-color: var(--forest-dark);
-      font-weight: 700;
-      box-shadow: 0 2px 8px rgba(20, 46, 32, 0.2);
+    .session-toggle-btn.active {
+      background: linear-gradient(135deg, var(--gold-sand), var(--gold-hover));
+      color: #0F2318;
+      border-color: var(--gold-sand);
+      box-shadow: 0 4px 12px rgba(212, 163, 115, 0.35);
     }
 
-    .admin-stats {
+    /* KAMERA VIEWPORT YANG LANGSUNG MUNCUL DI ATAS */
+    .scanner-hero-box {
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      border: 1px solid #DCE3DE;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    #qr-camera-stream {
+      width: 100% !important;
+      min-height: 250px;
+      max-height: 340px;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #AAA;
+      font-size: 12px;
+      position: relative;
+    }
+
+    /* COUNTER REAL-TIME KHUSUS SCANNER */
+    .scanner-metrics-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
-      padding: 16px 16px 8px 16px;
-      max-width: 900px;
-      margin: 0 auto;
+      margin-bottom: 14px;
     }
 
-    .stat-card {
+    .metric-chip {
       background: #FFFFFF;
       padding: 12px 14px;
       border-radius: var(--radius-md);
@@ -113,40 +182,10 @@
       align-items: center;
     }
 
-    .stat-val { font-size: 22px; font-weight: 700; }
-    .stat-label { font-size: 11px; color: #666; text-transform: uppercase; }
+    .metric-chip-val { font-size: 24px; font-weight: 800; line-height: 1.1; }
+    .metric-chip-lbl { font-size: 11px; font-weight: 700; color: #666; text-transform: uppercase; }
 
-    .admin-tabs {
-      background: #FFFFFF;
-      display: flex;
-      border-bottom: 1px solid #D5DBD6;
-      padding: 0 16px;
-      overflow-x: auto;
-      gap: 4px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .tab-btn {
-      background: none;
-      border: none;
-      padding: 12px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #666;
-      border-bottom: 3px solid transparent;
-      white-space: nowrap;
-      min-height: 46px;
-      cursor: pointer;
-    }
-
-    .tab-btn.active {
-      color: var(--forest-accent);
-      border-bottom-color: var(--forest-accent);
-      font-weight: 700;
-    }
-
-    .admin-card-item {
+    .participant-card {
       background: #FFFFFF;
       border-radius: var(--radius-md);
       border: 1px solid #DCE3DE;
@@ -156,36 +195,13 @@
       flex-direction: column;
       gap: 6px;
       font-size: 13px;
-    }
-
-    .scanner-view-box {
-      background: #FFFFFF;
-      border-radius: var(--radius-md);
-      padding: 18px;
-      border: 1px solid #DCE3DE;
-      max-width: 500px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    #qr-camera-stream {
-      width: 100% !important;
-      min-height: 240px;
-      background: #111;
-      border-radius: 12px;
-      overflow: hidden;
-      margin: 12px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #AAA;
-      font-size: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
 
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 35, 24, 0.92);
+      background: rgba(15, 35, 24, 0.94);
       backdrop-filter: blur(8px);
       z-index: 3000;
       display: flex;
@@ -206,7 +222,7 @@
 
     .toast-box {
       position: fixed;
-      top: 20px;
+      top: 18px;
       left: 16px;
       right: 16px;
       z-index: 4000;
@@ -227,23 +243,26 @@
       align-items: center;
       gap: 10px;
       pointer-events: auto;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }
 
     .filter-badge-btn {
       background: #FFFFFF;
       border: 1px solid #CCC;
       border-radius: 20px;
-      padding: 5px 12px;
+      padding: 6px 12px;
       font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
       color: #555;
+      white-space: nowrap;
     }
 
     .filter-badge-btn.active {
       background: var(--forest-dark);
       color: var(--gold-sand);
       border-color: var(--forest-dark);
+      font-weight: 700;
     }
   </style>
 </head>
@@ -255,9 +274,10 @@
   <!-- MODAL PIN GERBANG RAHASIA (DEFAULT PIN: 2026) -->
   <div class="modal-overlay" id="pinGateModal">
     <div class="modal-box">
-      <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" style="width:50px; height:50px; object-fit:contain; margin:0 auto 12px auto; display:block;">
-      <h3 style="font-size:20px; margin-bottom:4px;">Portal Panitia PPI Sivas</h3>
-      <p style="font-size:12px; color:#666; margin-bottom:18px;">Masukkan PIN Admin untuk mengakses verifikasi & scanner presensi (Default: 2026).</p>
+      <!-- LOGO TRANSPARAN TANPA FRAME PUTIH -->
+      <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" style="width:52px; height:52px; object-fit:contain; margin:0 auto 12px auto; display:block;">
+      <h3 style="font-size:20px; margin-bottom:4px; font-family:'Cormorant Garamond', serif; font-weight:700;">Portal Panitia PPI Sivas</h3>
+      <p style="font-size:12px; color:#666; margin-bottom:18px;">Masukkan PIN Admin untuk mengakses verifikasi pembayaran & scanner presensi (Default: 2026).</p>
       
       <form onsubmit="event.preventDefault(); verifyPin();">
         <input type="password" id="adminPinInput" placeholder="PIN" style="width:100%; padding:10px; border:1px solid #CCC; border-radius:8px; text-align:center; font-size:22px; letter-spacing:4px; margin-bottom:14px;" required>
@@ -287,157 +307,185 @@
       </div>
     </div>
 
-    <!-- BILAH PENGALIH SESI ABSENSI (BERANGKAT PAGI VS PULANG MALAM) -->
-    <div class="session-toggle-bar">
-      <div style="font-size:11px; font-weight:700; color:var(--forest-dark); text-transform:uppercase; display:flex; align-items:center; gap:6px;">
-        <i class="fa-solid fa-clock-rotate-left"></i> SESI ABSENSI:
-      </div>
-      <div style="display:flex; gap:6px;">
-        <button id="adminBtnSesiBerangkat" class="session-btn active" onclick="setAttendanceSession('BERANGKAT');">
-          <i class="fa-solid fa-bus"></i> 1. Berangkat (Pagi)
-        </button>
-        <button id="adminBtnSesiPulang" class="session-btn" onclick="setAttendanceSession('PULANG');">
-          <i class="fa-solid fa-moon"></i> 2. Pulang (Malam)
-        </button>
-      </div>
-    </div>
-
-    <!-- Metrik Counter Real-Time Berdasarkan Sesi Aktif -->
-    <div class="admin-stats">
-      <div class="stat-card">
-        <div>
-          <div class="stat-label">Total Terdaftar</div>
-          <div class="stat-val" id="metricTotal">0</div>
-        </div>
-        <i class="fa-solid fa-users" style="color:#0d6efd; font-size:22px;"></i>
-      </div>
-      <div class="stat-card">
-        <div>
-          <div class="stat-label">Terverifikasi Lunas</div>
-          <div class="stat-val" style="color:#0F5132;" id="metricLunas">0</div>
-        </div>
-        <i class="fa-solid fa-receipt" style="color:#0F5132; font-size:22px;"></i>
-      </div>
-      <div class="stat-card">
-        <div>
-          <div class="stat-label" id="lblMetricHadir">Hadir (Berangkat)</div>
-          <div class="stat-val" style="color:#198754;" id="metricHadir">0</div>
-        </div>
-        <i class="fa-solid fa-user-check" style="color:#198754; font-size:22px;"></i>
-      </div>
-      <div class="stat-card">
-        <div>
-          <div class="stat-label" id="lblMetricBelum">Belum Hadir (Berangkat)</div>
-          <div class="stat-val" style="color:#DC3545;" id="metricBelumHadir">0</div>
-        </div>
-        <i class="fa-solid fa-user-clock" style="color:#DC3545; font-size:22px;"></i>
-      </div>
-    </div>
-
-    <!-- Navigasi Tab Admin -->
-    <div class="admin-tabs">
-      <button class="tab-btn active" id="tabBtn1" onclick="switchTab('paneVerifikasi');">
-        <i class="fa-solid fa-list-check"></i> Verifikasi Pembayaran
+    <!-- 2 TOMBOL BESAR PEMISAH TOTAL: PRESENSI HARI-H VS KELOLA PEMBAYARAN -->
+    <div class="workflow-nav-bar">
+      <button class="workflow-tab-btn active" id="btnWorkTabScanner" onclick="switchWorkflowMode('MODE_SCANNER');">
+        <i class="fa-solid fa-camera"></i> 1. SCANNER & PRESENSI HARI-H
       </button>
-      <button class="tab-btn" id="tabBtn2" onclick="switchTab('paneScanner');">
-        <i class="fa-solid fa-qrcode"></i> Kamera Scanner Presensi
-      </button>
-      <button class="tab-btn" id="tabBtn3" onclick="switchTab('paneNotice');">
-        <i class="fa-solid fa-triangle-exclamation"></i> Belum Hadir (<span id="adminTabNoticeCount">0</span>)
+      <button class="workflow-tab-btn" id="btnWorkTabPayment" onclick="switchWorkflowMode('MODE_PAYMENT');">
+        <i class="fa-solid fa-receipt"></i> 2. KELOLA PEMBAYARAN & TIKET
       </button>
     </div>
 
-    <!-- TAB 1: VERIFIKASI PEMBAYARAN -->
-    <div id="paneVerifikasi" style="padding:16px; max-width:900px; margin:0 auto;">
-      <div style="display:flex; gap:8px; margin-bottom:12px;">
-        <input type="text" id="adminSearchInput" placeholder="Cari nama, ID, WA, wilayah..." style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; font-size:13px;" oninput="renderAdminList();">
-        <select id="adminStatusFilter" style="padding:9px; border:1px solid #CCC; border-radius:6px; font-size:13px;" onchange="renderAdminList();">
+    <!-- =================================================================== -->
+    <!-- MODE 1: SCANNER & PRESENSI HARI-H (KAMERA LANGSUNG DI PALING ATAS!) -->
+    <!-- =================================================================== -->
+    <div id="sectionModeScanner" style="padding:16px; max-width:900px; margin:0 auto;">
+      
+      <!-- PENGALIH SESI: BERANGKAT PAGI VS PULANG MALAM -->
+      <div class="session-toggle-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-size:12px; font-weight:700; color:var(--gold-sand); text-transform:uppercase;">
+            <i class="fa-solid fa-clock-rotate-left"></i> SESI AKTIF PRESENSI:
+          </div>
+          <span style="font-size:11px; background:rgba(212,163,115,0.2); padding:3px 8px; border-radius:10px; color:var(--gold-sand); font-weight:bold;" id="badgeSessionIndicator">
+            Sesi 1: Berangkat Pagi
+          </span>
+        </div>
+
+        <div class="session-btn-group">
+          <button id="btnSesiBerangkat" class="session-toggle-btn active" onclick="changeSession('BERANGKAT');">
+            <i class="fa-solid fa-bus"></i> 1. Berangkat (Pagi)
+          </button>
+          <button id="btnSesiPulang" class="session-toggle-btn" onclick="changeSession('PULANG');">
+            <i class="fa-solid fa-moon"></i> 2. Pulang (Malam)
+          </button>
+        </div>
+      </div>
+
+      <!-- METRIK KEHADIRAN SESI AKTIF (HITUNGAN OTOMATIS DARI 0 DI SESI PULANG) -->
+      <div class="scanner-metrics-grid">
+        <div class="metric-chip">
+          <div>
+            <div class="metric-chip-lbl" id="lblHadirSesi">Hadir di Bus (Pagi)</div>
+            <div class="metric-chip-val" style="color:#0F5132;" id="valMetricHadir">0</div>
+          </div>
+          <i class="fa-solid fa-user-check" style="color:#0F5132; font-size:24px;"></i>
+        </div>
+        <div class="metric-chip">
+          <div>
+            <div class="metric-chip-lbl" id="lblBelumSesi">Belum Masuk Bus (Pagi)</div>
+            <div class="metric-chip-val" style="color:#DC3545;" id="valMetricBelum">0</div>
+          </div>
+          <i class="fa-solid fa-user-clock" style="color:#DC3545; font-size:24px;"></i>
+        </div>
+      </div>
+
+      <!-- KOTAK KAMERA PEMINDAI BARCODE - LANGSUNG TERLIHAT DI DEPAN MATA -->
+      <div class="scanner-hero-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <h4 style="font-size:15px; color:var(--forest-dark); font-weight:700;">
+            <i class="fa-solid fa-camera"></i> Pemindai Barcode E-Ticket
+          </h4>
+          <span style="font-size:11px; color:#198754; font-weight:bold;" id="cameraStatusLabel">
+            <i class="fa-solid fa-circle-dot fa-beat-fade"></i> Kamera Belakang Aktif
+          </span>
+        </div>
+
+        <!-- STREAM KAMERA -->
+        <div id="qr-camera-stream">
+          <span>Menghubungkan ke kamera belakang...</span>
+        </div>
+
+        <!-- KONTROL KAMERA -->
+        <div style="display:flex; gap:8px; justify-content:center; margin-top:8px;">
+          <button onclick="switchCameraFacing();" style="background:#E2E8F0; color:#333; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:700; cursor:pointer;">
+            <i class="fa-solid fa-arrows-rotate"></i> Putar Kamera
+          </button>
+          <button id="btnToggleCamState" onclick="toggleCameraPower();" style="background:#F8D7DA; color:#842029; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:700; cursor:pointer;">
+            <i class="fa-solid fa-power-off"></i> Matikan Kamera
+          </button>
+        </div>
+
+        <!-- INPUT MANUAL ID REGISTRASI -->
+        <div style="margin-top:14px; text-align:left; border-top:1px dashed #DDD; padding-top:12px;">
+          <label style="font-size:11px; font-weight:700; color:#555; text-transform:uppercase;">Input Manual ID Registrasi (Jika Barcode HP Peserta Rusak):</label>
+          <div style="display:flex; gap:6px; margin-top:4px;">
+            <input type="text" id="manualScanInput" placeholder="CAMP-20261031-XXXX" style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
+            <button onclick="submitManualScan();" style="background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:6px; padding:8px 16px; font-size:12px; font-weight:bold; cursor:pointer;">
+              Check-In
+            </button>
+          </div>
+        </div>
+
+        <div id="scanResultFeedback" style="display:none; margin-top:12px; padding:12px; border-radius:8px; text-align:center;"></div>
+      </div>
+
+      <!-- DAFTAR PESERTA BELUM NAIK BUS (NOTICE LIST HARI-H) -->
+      <div style="margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:10px;">
+          <div>
+            <h4 style="font-size:16px; color:#DC3545; font-weight:700;" id="titleNoticeSection">
+              <i class="fa-solid fa-triangle-exclamation"></i> Daftar Peserta Belum Hadir
+            </h4>
+            <p style="font-size:12px; color:#666;" id="descNoticeSection">
+              Pantau siapa saja yang belum check-in bus dan hubungi langsung via WhatsApp.
+            </p>
+          </div>
+        </div>
+
+        <!-- FILTER KOTA / ASAL WILAYAH -->
+        <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:12px;">
+          <button class="filter-badge-btn active" onclick="setWilayahFilter('ALL', this);">Semua</button>
+          <button class="filter-badge-btn" onclick="setWilayahFilter('Sivas', this);">Sivas</button>
+          <button class="filter-badge-btn" onclick="setWilayahFilter('Yozgat', this);">Yozgat</button>
+          <button class="filter-badge-btn" onclick="setWilayahFilter('Tokat', this);">Tokat</button>
+          <button class="filter-badge-btn" onclick="setWilayahFilter('Malatya', this);">Malatya</button>
+          <button class="filter-badge-btn" onclick="setWilayahFilter('Elazığ', this);">Elazığ</button>
+        </div>
+
+        <div id="containerBelumHadirList"></div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- MODE 2: KELOLA PEMBAYARAN & TIKET (BERSIH DARI STATUS ABSENSI BUS)  -->
+    <!-- =================================================================== -->
+    <div id="sectionModePayment" style="padding:16px; max-width:900px; margin:0 auto; display:none;">
+      <div style="margin-bottom:14px;">
+        <h3 style="font-size:18px; color:var(--forest-dark); font-weight:700;">
+          <i class="fa-solid fa-wallet"></i> Verifikasi Pembayaran & Penerbitan E-Ticket
+        </h3>
+        <p style="font-size:12.5px; color:#666;">
+          Periksa konfirmasi transfer pendaftar, ubah status lunas, dan kirimkan file resmi PDF E-Ticket via WhatsApp.
+        </p>
+      </div>
+
+      <!-- METRIK STATUS KEUANGAN -->
+      <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; margin-bottom:14px;">
+        <div class="metric-chip">
+          <div>
+            <div class="metric-chip-lbl">Total Terdaftar</div>
+            <div class="metric-chip-val" id="metricTotalPeserta">0</div>
+          </div>
+          <i class="fa-solid fa-users" style="color:#0d6efd; font-size:22px;"></i>
+        </div>
+        <div class="metric-chip">
+          <div>
+            <div class="metric-chip-lbl">Terverifikasi Lunas</div>
+            <div class="metric-chip-val" style="color:#0F5132;" id="metricLunasPeserta">0</div>
+          </div>
+          <i class="fa-solid fa-receipt" style="color:#0F5132; font-size:22px;"></i>
+        </div>
+      </div>
+
+      <!-- PENCARIAN & FILTER -->
+      <div style="display:flex; gap:8px; margin-bottom:14px;">
+        <input type="text" id="inputSearchPayment" placeholder="Cari nama, ID, WA, wilayah..." style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; font-size:13px;" oninput="renderPaymentList();">
+        <select id="selectFilterPayment" style="padding:9px; border:1px solid #CCC; border-radius:6px; font-size:13px;" onchange="renderPaymentList();">
           <option value="ALL">Semua Status</option>
           <option value="PENDING">Menunggu Verifikasi</option>
           <option value="LUNAS">Terverifikasi Lunas</option>
         </select>
       </div>
 
-      <div id="adminCardListContainer"></div>
+      <div id="containerPaymentCardList"></div>
     </div>
 
-    <!-- TAB 2: KAMERA SCANNER PRESENSI HARI-H DENGAN SINKRONISASI TINGGI -->
-    <div id="paneScanner" style="padding:16px; max-width:900px; margin:0 auto; display:none;">
-      <div class="scanner-view-box">
-        <div style="display:inline-block; background:#E2E8F0; padding:4px 12px; border-radius:12px; font-size:11px; font-weight:700; color:#333; margin-bottom:6px;" id="badgeStandaloneScanSession">
-          <i class="fa-solid fa-bus"></i> MODE SCAN: SESI 1 (BERANGKAT PAGI)
-        </div>
-        <h4 style="font-size:16px; margin-bottom:4px; color:var(--bg-dark);">
-          <i class="fa-solid fa-camera"></i> Pemindai Barcode Presensi Hari-H
-        </h4>
-        <p style="font-size:12px; color:#666; margin-bottom:12px;">
-          Arahkan kamera smartphone ke QR Code pada E-Ticket fisik peserta saat masuk bus/lokasi.
-        </p>
-
-        <!-- KONTROL KAMERA -->
-        <div style="display:flex; gap:8px; justify-content:center; margin-bottom:10px;">
-          <button id="btnAdminStartCam" onclick="startCameraScanner();" style="background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; padding:7px 14px; font-size:12px; font-weight:700; cursor:pointer;">
-            <i class="fa-solid fa-video"></i> Mulai Kamera
-          </button>
-          <button id="btnAdminSwitchCam" onclick="switchCameraFacing();" style="background:#E2E8F0; color:#333; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:600; cursor:pointer;">
-            <i class="fa-solid fa-arrows-rotate"></i> Ganti Kamera
-          </button>
-          <button id="btnAdminStopCam" onclick="stopCameraScanner();" style="background:#F8D7DA; color:#842029; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:600; cursor:pointer; display:none;">
-            <i class="fa-solid fa-stop"></i> Matikan
-          </button>
-        </div>
-
-        <div id="qr-camera-stream">
-          <span>Kamera belum aktif. Tekan tombol "Mulai Kamera" di atas.</span>
-        </div>
-
-        <div style="margin-top:14px; text-align:left; border-top:1px dashed #DDD; padding-top:12px;">
-          <label style="font-size:11px; font-weight:700; color:#555; text-transform:uppercase;">Input Manual ID Registrasi:</label>
-          <div style="display:flex; gap:6px; margin-top:4px;">
-            <input type="text" id="manualScanInput" placeholder="CAMP-20261031-XXXX" style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
-            <button onclick="submitManualScan();" style="background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:6px; padding:8px 14px; font-size:12px; font-weight:bold; cursor:pointer;">Check-In</button>
-          </div>
-        </div>
-
-        <div id="scanResultFeedback" style="display:none; margin-top:14px; padding:12px; border-radius:8px;"></div>
-      </div>
-    </div>
-
-    <!-- TAB 3: NOTICE LIST PESERTA BELUM DATANG LENGKAP -->
-    <div id="paneNotice" style="padding:16px; max-width:900px; margin:0 auto; display:none;">
-      <div style="margin-bottom:12px;">
-        <h4 style="font-size:16px; color:#DC3545;" id="titleStandaloneNotice">
-          <i class="fa-solid fa-user-clock"></i> Daftar Peserta Belum Hadir (Sesi Berangkat)
-        </h4>
-        <p style="font-size:12px; color:#666;" id="descStandaloneNotice">
-          Pantau keberangkatan peserta dan kirim pesan pengingat langsung via WhatsApp.
-        </p>
-      </div>
-
-      <!-- FILTER KOTA / WILAYAH -->
-      <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:12px;">
-        <button class="filter-badge-btn active" onclick="setNoticeFilter('ALL', this);">Semua</button>
-        <button class="filter-badge-btn" onclick="setNoticeFilter('Sivas', this);">Sivas</button>
-        <button class="filter-badge-btn" onclick="setNoticeFilter('Yozgat', this);">Yozgat</button>
-        <button class="filter-badge-btn" onclick="setNoticeFilter('Tokat', this);">Tokat</button>
-        <button class="filter-badge-btn" onclick="setNoticeFilter('Malatya', this);">Malatya</button>
-        <button class="filter-badge-btn" onclick="setNoticeFilter('Elazığ', this);">Elazığ</button>
-      </div>
-
-      <div id="noticeListContainer"></div>
-    </div>
   </div>
 
   <div id="hiddenQrCanvas" style="display:none;"></div>
 
   <script>
-    // URL WEBHOOK APPS SCRIPT PERMANEN
+    // URL WEBHOOK APPS SCRIPT PERMANEN MILIK ANDA
     var APPS_SCRIPT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby2G41zIieHPVGg0OFnzZim4PcxevC9oNMiq75XPT1sbHRkPmJNnCqk6zMJBjTirkxL/exec';
 
     var html5Scanner = null;
-    var currentCameraFacing = 'environment';
-    var currentNoticeWilayahFilter = 'ALL';
-    var currentAttendanceSession = 'BERANGKAT';
+    var isCameraRunning = false;
+    var currentCameraFacing = 'environment'; // Otomatis kamera belakang
+    var currentWilayahFilter = 'ALL';
+    var currentSession = 'BERANGKAT'; // 'BERANGKAT' atau 'PULANG'
+    var currentWorkflowMode = 'MODE_SCANNER';
 
     function playBeepSound() {
       try {
@@ -455,6 +503,7 @@
       } catch(e){}
     }
 
+    // Inisialisasi Database Lokal
     var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || 'null');
     if (!participantsDb || participantsDb.length === 0) {
       participantsDb = [
@@ -514,7 +563,7 @@
 
     function saveData() {
       localStorage.setItem('CAMPNIC_2026_DATA', JSON.stringify(participantsDb));
-      updateMetrics();
+      updateAllCounters();
     }
 
     function showToast(msg, icon) {
@@ -531,51 +580,79 @@
       if (pin === '2026') {
         document.getElementById('pinGateModal').style.display = 'none';
         document.getElementById('adminMainContent').style.display = 'block';
-        updateMetrics();
-        renderAdminList();
-        showToast('Panel Panitia Terbuka', 'fa-solid fa-shield-halved');
+        updateAllCounters();
+        // Langsung nyalakan kamera belakang otomatis saat login berhasil
+        setTimeout(function() {
+          startAutoRearCamera();
+        }, 300);
+        showToast('Panel Panitia Terbuka - Kamera Siap', 'fa-solid fa-shield-halved');
       } else {
         showToast('PIN Admin Salah! (Default: 2026)', 'fa-solid fa-lock');
       }
     }
 
     function lockAdmin() {
+      stopCameraScanner();
       document.getElementById('pinGateModal').style.display = 'flex';
       document.getElementById('adminMainContent').style.display = 'none';
-      stopCameraScanner();
       document.getElementById('adminPinInput').value = '';
     }
 
-    function setAttendanceSession(sessionKey) {
-      currentAttendanceSession = sessionKey;
-      var btnBerangkat = document.getElementById('adminBtnSesiBerangkat');
-      var btnPulang = document.getElementById('adminBtnSesiPulang');
-      var badgeScan = document.getElementById('badgeStandaloneScanSession');
+    function switchWorkflowMode(mode) {
+      currentWorkflowMode = mode;
+      var secScanner = document.getElementById('sectionModeScanner');
+      var secPayment = document.getElementById('sectionModePayment');
+      var btnScan = document.getElementById('btnWorkTabScanner');
+      var btnPay = document.getElementById('btnWorkTabPayment');
+
+      if (mode === 'MODE_SCANNER') {
+        secScanner.style.display = 'block';
+        secPayment.style.display = 'none';
+        btnScan.classList.add('active');
+        btnPay.classList.remove('active');
+        renderBelumHadirList();
+        startAutoRearCamera();
+      } else {
+        secScanner.style.display = 'none';
+        secPayment.style.display = 'block';
+        btnPay.classList.add('active');
+        btnScan.classList.remove('active');
+        stopCameraScanner();
+        renderPaymentList();
+      }
+    }
+
+    // Pengalih Sesi Keberangkatan vs Kepulangan
+    function changeSession(sessionKey) {
+      currentSession = sessionKey;
+      var btnBerangkat = document.getElementById('btnSesiBerangkat');
+      var btnPulang = document.getElementById('btnSesiPulang');
+      var badge = document.getElementById('badgeSessionIndicator');
 
       if (sessionKey === 'BERANGKAT') {
         btnBerangkat.classList.add('active');
         btnPulang.classList.remove('active');
-        badgeScan.innerHTML = '<i class="fa-solid fa-bus"></i> MODE SCAN: SESI 1 (BERANGKAT PAGI)';
-        document.getElementById('lblMetricHadir').textContent = 'Hadir (Berangkat)';
-        document.getElementById('lblMetricBelum').textContent = 'Belum Hadir (Berangkat)';
-        document.getElementById('titleStandaloneNotice').innerHTML = '<i class="fa-solid fa-user-clock"></i> Peserta Belum Hadir (Sesi Berangkat)';
-        document.getElementById('descStandaloneNotice').textContent = 'Pantau keberangkatan peserta dan kirim pesan pengingat langsung via WhatsApp.';
+        badge.textContent = 'Sesi 1: Berangkat Pagi';
+        document.getElementById('lblHadirSesi').textContent = 'Hadir di Bus (Pagi)';
+        document.getElementById('lblBelumSesi').textContent = 'Belum Masuk Bus (Pagi)';
+        document.getElementById('titleNoticeSection').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Daftar Peserta Belum Hadir (Berangkat)';
+        document.getElementById('descNoticeSection').textContent = 'Pantau siapa saja yang belum check-in bus pagi menuju Hafik Gölü.';
       } else {
         btnPulang.classList.add('active');
         btnBerangkat.classList.remove('active');
-        badgeScan.innerHTML = '<i class="fa-solid fa-moon"></i> MODE SCAN: SESI 2 (PULANG MALAM)';
-        document.getElementById('lblMetricHadir').textContent = 'Hadir (Kepulangan)';
-        document.getElementById('lblMetricBelum').textContent = 'Belum Hadir (Kepulangan)';
-        document.getElementById('titleStandaloneNotice').innerHTML = '<i class="fa-solid fa-user-clock"></i> Peserta Belum Hadir (Sesi Pulang)';
-        document.getElementById('descStandaloneNotice').textContent = 'Pastikan seluruh peserta sudah kumpul di bus sebelum meninggalkan Hafik Gölü!';
+        badge.textContent = 'Sesi 2: Pulang Malam';
+        document.getElementById('lblHadirSesi').textContent = 'Hadir di Bus (Pulang)';
+        document.getElementById('lblBelumSesi').textContent = 'Belum Masuk Bus (Pulang)';
+        document.getElementById('titleNoticeSection').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Daftar Peserta Belum Hadir (Pulang)';
+        document.getElementById('descNoticeSection').textContent = 'Pastikan seluruh peserta sudah kumpul di bus sebelum meninggalkan danau Hafik!';
       }
 
-      updateMetrics();
-      renderNoticeList();
+      updateAllCounters();
+      renderBelumHadirList();
       showToast('Beralih ke ' + (sessionKey === 'BERANGKAT' ? 'Sesi 1: Keberangkatan' : 'Sesi 2: Kepulangan (Hitungan dimulai dari 0)'), 'fa-solid fa-clock-rotate-left');
     }
 
-    function updateMetrics() {
+    function updateAllCounters() {
       var total = participantsDb.length;
       var lunas = 0, hadir = 0, belum = 0;
 
@@ -583,7 +660,7 @@
         var p = participantsDb[i];
         if (p.statusBayar === 'Terverifikasi Lunas') lunas++;
 
-        var isHadirThisSession = (currentAttendanceSession === 'BERANGKAT') ? p.hadirBerangkat : p.hadirPulang;
+        var isHadirThisSession = (currentSession === 'BERANGKAT') ? p.hadirBerangkat : p.hadirPulang;
         if (isHadirThisSession) {
           hadir++;
         } else {
@@ -591,42 +668,263 @@
         }
       }
 
-      document.getElementById('metricTotal').textContent = total;
-      document.getElementById('metricLunas').textContent = lunas;
-      document.getElementById('metricHadir').textContent = hadir;
-      document.getElementById('metricBelumHadir').textContent = belum;
-      var noticeCount = document.getElementById('adminTabNoticeCount');
-      if (noticeCount) noticeCount.textContent = belum;
+      document.getElementById('valMetricHadir').textContent = hadir;
+      document.getElementById('valMetricBelum').textContent = belum;
+      document.getElementById('metricTotalPeserta').textContent = total;
+      document.getElementById('metricLunasPeserta').textContent = lunas;
     }
 
-    function switchTab(paneId) {
-      var tabs = ['paneVerifikasi', 'paneScanner', 'paneNotice'];
-      var btns = ['tabBtn1', 'tabBtn2', 'tabBtn3'];
+    function startAutoRearCamera() {
+      if (currentWorkflowMode !== 'MODE_SCANNER') return;
+      var feedback = document.getElementById('scanResultFeedback');
+      feedback.style.display = 'none';
 
-      tabs.forEach(function(t, idx) {
-        var el = document.getElementById(t);
-        var btn = document.getElementById(btns[idx]);
-        if (t === paneId) {
-          el.style.display = 'block';
-          btn.classList.add('active');
-        } else {
-          el.style.display = 'none';
-          btn.classList.remove('active');
+      if (!html5Scanner) {
+        html5Scanner = new Html5Qrcode('qr-camera-stream');
+      }
+
+      Html5Qrcode.getCameras().then(function(cameras) {
+        var selectedCamId = null;
+        if (cameras && cameras.length) {
+          // Cari kamera yang memiliki label back / rear / environment
+          for (var i = 0; i < cameras.length; i++) {
+            var lbl = (cameras[i].label || '').toLowerCase();
+            if (lbl.indexOf('back') !== -1 || lbl.indexOf('rear') !== -1 || lbl.indexOf('environment') !== -1) {
+              selectedCamId = cameras[i].id;
+              break;
+            }
+          }
+          // Jika label tidak terdeteksi, HP umumnya menaruh kamera belakang di urutan terakhir
+          if (!selectedCamId && cameras.length > 1) {
+            selectedCamId = cameras[cameras.length - 1].id;
+          } else if (!selectedCamId) {
+            selectedCamId = cameras[0].id;
+          }
         }
-      });
 
-      if (paneId === 'paneScanner') {
-        startCameraScanner();
+        var cameraConfig = selectedCamId ? { deviceId: { exact: selectedCamId } } : { facingMode: currentCameraFacing };
+        var scanConfig = {
+          fps: 15,
+          qrbox: function(viewfinderWidth, viewfinderHeight) {
+            var minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+            return { width: Math.floor(minEdge * 0.72), height: Math.floor(minEdge * 0.72) };
+          },
+          aspectRatio: 1.0
+        };
+
+        html5Scanner.start(
+          cameraConfig,
+          scanConfig,
+          onBarcodeDecoded,
+          function(err){}
+        ).then(function() {
+          isCameraRunning = true;
+          document.getElementById('cameraStatusLabel').innerHTML = '<i class="fa-solid fa-circle-dot fa-beat-fade"></i> Kamera Belakang Aktif';
+          document.getElementById('btnToggleCamState').innerHTML = '<i class="fa-solid fa-power-off"></i> Matikan Kamera';
+          document.getElementById('btnToggleCamState').style.background = '#F8D7DA';
+          document.getElementById('btnToggleCamState').style.color = '#842029';
+        }).catch(function(err) {
+          // Fallback sederhana jika exact device id ditolak browser
+          html5Scanner.start({ facingMode: "environment" }, scanConfig, onBarcodeDecoded, function(){})
+            .then(function() {
+              isCameraRunning = true;
+            })
+            .catch(function(e) {
+              document.getElementById('cameraStatusLabel').innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Kamera Mati';
+              document.getElementById('qr-camera-stream').innerHTML = '<span>Kamera tidak aktif. Tekan tombol "Mulai Kamera" di bawah.</span>';
+            });
+        });
+      }).catch(function() {
+        showToast('Izin kamera diperlukan untuk scan barcode!', 'fa-solid fa-triangle-exclamation');
+      });
+    }
+
+    function toggleCameraPower() {
+      if (isCameraRunning && html5Scanner) {
+        html5Scanner.stop().then(function() {
+          isCameraRunning = false;
+          document.getElementById('cameraStatusLabel').innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Kamera Nonaktif';
+          document.getElementById('btnToggleCamState').innerHTML = '<i class="fa-solid fa-video"></i> Nyalakan Kamera';
+          document.getElementById('btnToggleCamState').style.background = 'var(--forest-dark)';
+          document.getElementById('btnToggleCamState').style.color = 'var(--gold-sand)';
+          document.getElementById('qr-camera-stream').innerHTML = '<span>Kamera dimatikan. Tekan "Nyalakan Kamera" untuk mengaktifkan kembali.</span>';
+        }).catch(function(){});
       } else {
-        stopCameraScanner();
-        if (paneId === 'paneNotice') renderNoticeList();
+        startAutoRearCamera();
       }
     }
 
-    function renderAdminList() {
-      var query = (document.getElementById('adminSearchInput').value || '').toLowerCase().trim();
-      var filter = document.getElementById('adminStatusFilter').value;
-      var container = document.getElementById('adminCardListContainer');
+    function switchCameraFacing() {
+      currentCameraFacing = (currentCameraFacing === 'environment') ? 'user' : 'environment';
+      if (html5Scanner && isCameraRunning) {
+        html5Scanner.stop().then(function() {
+          startAutoRearCamera();
+        }).catch(function(){});
+      } else {
+        startAutoRearCamera();
+      }
+    }
+
+    function stopCameraScanner() {
+      if (html5Scanner && isCameraRunning) {
+        html5Scanner.stop().then(function() {
+          isCameraRunning = false;
+        }).catch(function(){});
+      }
+    }
+
+    function onBarcodeDecoded(decodedText) {
+      playBeepSound();
+      if (html5Scanner) html5Scanner.pause();
+
+      var match = decodedText.match(/CAMP-\d{8}-\d{4}/i);
+      var cleanId = match ? match[0].toUpperCase() : decodedText.trim().toUpperCase();
+
+      processCheckIn(cleanId);
+      setTimeout(function() {
+        if (html5Scanner && isCameraRunning) html5Scanner.resume();
+      }, 2400);
+    }
+
+    function submitManualScan() {
+      var input = document.getElementById('manualScanInput').value.trim();
+      if (!input) {
+        showToast('Masukkan ID Registrasi!', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+      processCheckIn(input);
+    }
+
+    function processCheckIn(idText) {
+      var match = idText.match(/CAMP-\d{8}-\d{4}/i);
+      var clean = match ? match[0].toUpperCase() : idText.toUpperCase().trim();
+
+      var feedback = document.getElementById('scanResultFeedback');
+      feedback.style.display = 'block';
+
+      var found = null;
+      for (var i = 0; i < participantsDb.length; i++) {
+        if (participantsDb[i].id.toUpperCase() === clean) {
+          found = participantsDb[i];
+          break;
+        }
+      }
+
+      if (!found) {
+        feedback.style.background = '#F8D7DA';
+        feedback.style.color = '#842029';
+        feedback.innerHTML = '<i class="fa-solid fa-xmark" style="font-size:22px;"></i>' +
+                             '<div style="font-weight:700;">ID TIDAK TERDAFTAR</div>' +
+                             '<div style="font-size:12px;">' + clean + ' tidak ada dalam database.</div>';
+        showToast('ID tidak valid!', 'fa-solid fa-xmark');
+        return;
+      }
+
+      if (found.statusBayar !== 'Terverifikasi Lunas') {
+        feedback.style.background = '#FFF3CD';
+        feedback.style.color = '#664D03';
+        feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="font-size:22px;"></i>' +
+                             '<div style="font-weight:700;">BELUM LUNAS</div>' +
+                             '<div style="font-size:12px;">' + found.nama + ' (' + found.statusBayar + ')</div>';
+        showToast('Peserta belum melunasi biaya!', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+
+      var sessionTitle = currentSession === 'BERANGKAT' ? 'Keberangkatan Pagi' : 'Kepulangan Malam';
+      var alreadyChecked = (currentSession === 'BERANGKAT') ? found.hadirBerangkat : found.hadirPulang;
+      var previousTime = (currentSession === 'BERANGKAT') ? found.timeBerangkat : found.timePulang;
+
+      if (alreadyChecked) {
+        feedback.style.background = '#CFF4FC';
+        feedback.style.color = '#055160';
+        feedback.innerHTML = '<i class="fa-solid fa-circle-info" style="font-size:22px;"></i>' +
+                             '<div style="font-weight:700;">SUDAH CHECK-IN (' + sessionTitle + ')</div>' +
+                             '<div style="font-size:12px;">Telah check-in pada pukul ' + previousTime + '</div>';
+        showToast('Peserta sudah check-in pada sesi ini!', 'fa-solid fa-circle-info');
+        return;
+      }
+
+      var now = new Date();
+      var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
+
+      if (currentSession === 'BERANGKAT') {
+        found.hadirBerangkat = true;
+        found.timeBerangkat = timeStr;
+      } else {
+        found.hadirPulang = true;
+        found.timePulang = timeStr;
+      }
+
+      saveData();
+      renderBelumHadirList();
+
+      feedback.style.background = '#D1E7DD';
+      feedback.style.color = '#0F5132';
+      feedback.innerHTML = '<i class="fa-solid fa-circle-check" style="font-size:24px;"></i>' +
+                           '<div style="font-weight:700; margin-top:4px;">CHECK-IN ' + sessionTitle.toUpperCase() + ' BERHASIL!</div>' +
+                           '<div style="font-size:14px; font-weight:700;">' + found.nama + ' (' + found.id + ')</div>' +
+                           '<div style="font-size:11.5px;">Pukul ' + timeStr + ' &bull; Wilayah: ' + (found.wilayah || 'Sivas') + '</div>';
+      showToast('Hadir: ' + found.nama + ' (' + sessionTitle + ')', 'fa-solid fa-check');
+    }
+
+    function setWilayahFilter(wilayah, btnEl) {
+      currentWilayahFilter = wilayah;
+      var btns = document.querySelectorAll('.filter-badge-btn');
+      btns.forEach(function(b){ b.classList.remove('active'); });
+      if (btnEl) btnEl.classList.add('active');
+      renderBelumHadirList();
+    }
+
+    function renderBelumHadirList() {
+      var container = document.getElementById('containerBelumHadirList');
+      var belumList = participantsDb.filter(function(it){
+        var isHadirThisSession = (currentSession === 'BERANGKAT') ? it.hadirBerangkat : it.hadirPulang;
+        var matchStatus = !isHadirThisSession;
+        var matchWilayah = (currentWilayahFilter === 'ALL' || (it.wilayah || 'Sivas') === currentWilayahFilter);
+        return matchStatus && matchWilayah;
+      });
+
+      var sessionTitle = currentSession === 'BERANGKAT' ? 'sesi keberangkatan' : 'sesi kepulangan';
+
+      if (belumList.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:24px; color:#0F5132; font-weight:700; background:#FFF; border-radius:12px; border:1px solid #DCE3DE;"><i class="fa-solid fa-circle-check"></i> Seluruh peserta telah hadir di ' + sessionTitle + (currentWilayahFilter === 'ALL' ? '!' : ' dari wilayah ' + currentWilayahFilter + '!') + '</div>';
+        return;
+      }
+
+      var html = '';
+      for (var i = 0; i < belumList.length; i++) {
+        var p = belumList[i];
+        var cleanPhone = p.wa.replace(/[^0-9]/g, '');
+
+        var waText = (currentSession === 'BERANGKAT')
+          ? ('Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas ingin menanyakan apakah Anda sudah dalam perjalanan menuju titik kumpul bus?')
+          : ('Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas sedang mendata kepulangan bus dari Hafik Golu menuju Sivas. Apakah Anda sudah berada di area kumpul bus?');
+
+        var waUrl = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(waText);
+
+        html += '<div class="participant-card">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+            '<strong style="font-size:14px;">' + p.nama + '</strong>' +
+            '<span style="color:#DC3545; background:#FFE5E7; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">Belum Absen ' + (currentSession === 'BERANGKAT' ? 'Berangkat' : 'Pulang') + '</span>' +
+          '</div>' +
+          '<div style="font-size:12px; color:#666;">ID: ' + p.id + ' &bull; <i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; ' + (p.statusPeserta || 'Pelajar') + '</div>' +
+          '<div style="display:flex; gap:8px; margin-top:6px;">' +
+            '<a href="' + waUrl + '" target="_blank" style="flex:1; background:#25D366; color:#FFF; padding:8px 12px; border-radius:20px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px; text-decoration:none;">' +
+              '<i class="fa-brands fa-whatsapp"></i> Hubungi WA' +
+            '</a>' +
+            '<button onclick="processCheckIn(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
+              '<i class="fa-solid fa-check"></i> Tandai Hadir' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      }
+      container.innerHTML = html;
+    }
+
+    function renderPaymentList() {
+      var query = (document.getElementById('inputSearchPayment').value || '').toLowerCase().trim();
+      var filter = document.getElementById('selectFilterPayment').value;
+      var container = document.getElementById('containerPaymentCardList');
 
       var filtered = participantsDb.filter(function(it) {
         var matchStatus = true;
@@ -642,7 +940,7 @@
       });
 
       if (filtered.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:24px; color:#888;">Tidak ada data peserta ditemukan.</div>';
+        container.innerHTML = '<div style="text-align:center; padding:24px; color:#888;">Tidak ada data pendaftar.</div>';
         return;
       }
 
@@ -653,10 +951,7 @@
         var badgeBg = isLunas ? '#D1E7DD' : '#FFF3CD';
         var badgeColor = isLunas ? '#0F5132' : '#664D03';
 
-        var checkStatusStr = '<span style="font-size:11px; color:#666;">Absen Berangkat: ' + (p.hadirBerangkat ? ('<b style="color:#0F5132;">Hadir (' + p.timeBerangkat + ')</b>') : 'Belum') +
-                             ' &bull; Absen Pulang: ' + (p.hadirPulang ? ('<b style="color:#0F5132;">Hadir (' + p.timePulang + ')</b>') : 'Belum') + '</span>';
-
-        html += '<div class="admin-card-item">' +
+        html += '<div class="participant-card">' +
           '<div style="display:flex; justify-content:space-between; align-items:center;">' +
             '<strong style="color:var(--forest-accent);">' + p.id + '</strong>' +
             '<span style="background:' + badgeBg + '; color:' + badgeColor + '; padding:3px 8px; border-radius:10px; font-size:11px; font-weight:700;">' + p.statusBayar + '</span>' +
@@ -664,18 +959,17 @@
           '<div style="font-weight:700; font-size:14px;">' + p.nama + '</div>' +
           '<div style="font-size:12px; color:#666;"><i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; <i class="fa-solid fa-user-tag"></i> ' + (p.statusPeserta || 'Pelajar') + '</div>' +
           '<div style="font-size:12px; color:#555;"><i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>' +
-          '<div style="margin-top:2px;">' + checkStatusStr + '</div>' +
           '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:8px; margin-top:4px;">';
 
         if (!isLunas) {
-          html += '<button onclick="verifyParticipant(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:11.5px; font-weight:700; padding:7px 10px; cursor:pointer;">' +
+          html += '<button onclick="verifyParticipant(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 10px; cursor:pointer;">' +
                     '<i class="fa-solid fa-check"></i> Verifikasi Lunas' +
                   '</button>';
         } else {
-          html += '<button onclick="downloadTicketPdf(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:11px; font-weight:700; padding:6px 10px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:4px;">' +
+          html += '<button onclick="downloadTicketPdf(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:11px; font-weight:700; padding:7px 10px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:4px;">' +
                     '<i class="fa-solid fa-file-pdf"></i> Unduh PDF Tiket' +
                   '</button>' +
-                  '<button onclick="sendTicketWhatsapp(\'' + p.id + '\');" style="flex:1; background:#25D366; color:#FFF; border:none; border-radius:20px; font-size:11px; font-weight:700; padding:6px 10px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:4px;">' +
+                  '<button onclick="sendTicketWhatsapp(\'' + p.id + '\');" style="flex:1; background:#25D366; color:#FFF; border:none; border-radius:20px; font-size:11px; font-weight:700; padding:7px 10px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:4px;">' +
                     '<i class="fa-brands fa-whatsapp"></i> Kirim WA' +
                   '</button>';
         }
@@ -693,10 +987,11 @@
         }
       }
       saveData();
-      renderAdminList();
+      renderPaymentList();
       showToast('Peserta ' + id + ' berhasil diverifikasi!', 'fa-solid fa-circle-check');
     }
 
+    // Generator File Asli PDF E-Ticket Beresolusi Tinggi
     function generateTicketPdfBlob(p) {
       return new Promise(function(resolve) {
         var qrDiv = document.getElementById('hiddenQrCanvas');
@@ -785,7 +1080,7 @@
           doc.line(135, 42, 135, 124);
           doc.setLineDash([]);
 
-          // KOTAK PUTIH DENGAN QUIET-ZONE PADDING (SINKRON DENGAN KAMERA SCANNER)
+          // KOTAK PUTIH QUIET-ZONE UNTUK SINKRONISASI TINGGI DENGAN SCANNER
           doc.setFillColor(255, 255, 255);
           doc.roundedRect(141, 43, 56, 56, 3, 3, 'F');
           doc.setDrawColor(212, 163, 115);
@@ -837,205 +1132,6 @@
 
       var url = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(msg);
       window.open(url, '_blank');
-    }
-
-    // KAMERA SCANNER DENGAN KONTROL & SINKRONISASI CEPAT
-    function startCameraScanner() {
-      var feedback = document.getElementById('scanResultFeedback');
-      feedback.style.display = 'none';
-
-      document.getElementById('btnAdminStartCam').style.display = 'none';
-      document.getElementById('btnAdminStopCam').style.display = 'inline-block';
-
-      if (!html5Scanner) {
-        html5Scanner = new Html5Qrcode('qr-camera-stream');
-      }
-
-      var config = {
-        fps: 15,
-        qrbox: function(viewfinderWidth, viewfinderHeight) {
-          var minEdge = Math.min(viewfinderWidth, viewfinderHeight);
-          return { width: Math.floor(minEdge * 0.72), height: Math.floor(minEdge * 0.72) };
-        },
-        aspectRatio: 1.0
-      };
-
-      html5Scanner.start(
-        { facingMode: currentCameraFacing },
-        config,
-        function(decodedText) {
-          playBeepSound();
-          if (html5Scanner) html5Scanner.pause();
-
-          var match = decodedText.match(/CAMP-\d{8}-\d{4}/i);
-          var cleanId = match ? match[0].toUpperCase() : decodedText.trim().toUpperCase();
-
-          processCheckIn(cleanId);
-          setTimeout(function() {
-            if (html5Scanner) html5Scanner.resume();
-          }, 2600);
-        },
-        function(err) {}
-      ).catch(function(err) {
-        showToast('Kamera tidak dapat diakses: ' + err.toString(), 'fa-solid fa-triangle-exclamation');
-        document.getElementById('btnAdminStartCam').style.display = 'inline-block';
-        document.getElementById('btnAdminStopCam').style.display = 'none';
-      });
-    }
-
-    function switchCameraFacing() {
-      currentCameraFacing = currentCameraFacing === 'environment' ? 'user' : 'environment';
-      if (html5Scanner && html5Scanner.isScanning) {
-        html5Scanner.stop().then(function() {
-          startCameraScanner();
-        }).catch(function(){});
-      } else {
-        startCameraScanner();
-      }
-    }
-
-    function stopCameraScanner() {
-      if (html5Scanner && html5Scanner.isScanning) {
-        html5Scanner.stop().then(function() {
-          document.getElementById('btnAdminStartCam').style.display = 'inline-block';
-          document.getElementById('btnAdminStopCam').style.display = 'none';
-          document.getElementById('qr-camera-stream').innerHTML = '<span>Kamera dimatikan. Tekan "Mulai Kamera" untuk mengaktifkan kembali.</span>';
-        }).catch(function(){});
-      }
-    }
-
-    function submitManualScan() {
-      var input = document.getElementById('manualScanInput').value.trim();
-      if (!input) {
-        showToast('Masukkan ID Registrasi!', 'fa-solid fa-triangle-exclamation');
-        return;
-      }
-      processCheckIn(input);
-    }
-
-    function processCheckIn(idText) {
-      var match = idText.match(/CAMP-\d{8}-\d{4}/i);
-      var clean = match ? match[0].toUpperCase() : idText.toUpperCase().trim();
-
-      var feedback = document.getElementById('scanResultFeedback');
-      feedback.style.display = 'block';
-
-      var found = null;
-      for (var i = 0; i < participantsDb.length; i++) {
-        if (participantsDb[i].id.toUpperCase() === clean) {
-          found = participantsDb[i];
-          break;
-        }
-      }
-
-      if (!found) {
-        feedback.style.background = '#F8D7DA';
-        feedback.style.color = '#842029';
-        feedback.innerHTML = '<i class="fa-solid fa-xmark" style="font-size:24px;"></i>' +
-                             '<div style="font-weight:700;">ID TIDAK TERDAFTAR</div>' +
-                             '<div style="font-size:12px;">' + clean + ' tidak ada dalam database.</div>';
-        showToast('ID tidak valid!', 'fa-solid fa-xmark');
-        return;
-      }
-
-      if (found.statusBayar !== 'Terverifikasi Lunas') {
-        feedback.style.background = '#FFF3CD';
-        feedback.style.color = '#664D03';
-        feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="font-size:24px;"></i>' +
-                             '<div style="font-weight:700;">BELUM LUNAS</div>' +
-                             '<div style="font-size:12px;">' + found.nama + ' (' + found.statusBayar + ')</div>';
-        showToast('Peserta belum melunasi biaya!', 'fa-solid fa-triangle-exclamation');
-        return;
-      }
-
-      var sessionTitle = currentAttendanceSession === 'BERANGKAT' ? 'Keberangkatan Pagi' : 'Kepulangan Malam';
-      var alreadyChecked = (currentAttendanceSession === 'BERANGKAT') ? found.hadirBerangkat : found.hadirPulang;
-      var previousTime = (currentAttendanceSession === 'BERANGKAT') ? found.timeBerangkat : found.timePulang;
-
-      if (alreadyChecked) {
-        feedback.style.background = '#CFF4FC';
-        feedback.style.color = '#055160';
-        feedback.innerHTML = '<i class="fa-solid fa-circle-info" style="font-size:24px;"></i>' +
-                             '<div style="font-weight:700;">SUDAH CHECK-IN (' + sessionTitle + ')</div>' +
-                             '<div style="font-size:12px;">Telah check-in pada pukul ' + previousTime + '</div>';
-        showToast('Peserta sudah check-in pada sesi ini!', 'fa-solid fa-circle-info');
-        return;
-      }
-
-      var now = new Date();
-      var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
-
-      if (currentAttendanceSession === 'BERANGKAT') {
-        found.hadirBerangkat = true;
-        found.timeBerangkat = timeStr;
-      } else {
-        found.hadirPulang = true;
-        found.timePulang = timeStr;
-      }
-
-      saveData();
-
-      feedback.style.background = '#D1E7DD';
-      feedback.style.color = '#0F5132';
-      feedback.innerHTML = '<i class="fa-solid fa-circle-check" style="font-size:24px;"></i>' +
-                           '<div style="font-weight:700; margin-top:4px;">CHECK-IN ' + sessionTitle.toUpperCase() + ' BERHASIL!</div>' +
-                           '<div style="font-size:14px; font-weight:600;">' + found.nama + ' (' + found.id + ')</div>' +
-                           '<div style="font-size:11px;">Pukul ' + timeStr + ' &bull; Wilayah: ' + (found.wilayah || 'Sivas') + '</div>';
-      showToast('Hadir: ' + found.nama + ' (' + sessionTitle + ')', 'fa-solid fa-check');
-    }
-
-    function setNoticeFilter(wilayah, btnEl) {
-      currentNoticeWilayahFilter = wilayah;
-      var btns = document.querySelectorAll('.filter-badge-btn');
-      btns.forEach(function(b){ b.classList.remove('active'); });
-      if (btnEl) btnEl.classList.add('active');
-      renderNoticeList();
-    }
-
-    function renderNoticeList() {
-      var container = document.getElementById('noticeListContainer');
-      var belumList = participantsDb.filter(function(it){
-        var isHadirThisSession = (currentAttendanceSession === 'BERANGKAT') ? it.hadirBerangkat : it.hadirPulang;
-        var matchStatus = !isHadirThisSession;
-        var matchWilayah = (currentNoticeWilayahFilter === 'ALL' || (it.wilayah || 'Sivas') === currentNoticeWilayahFilter);
-        return matchStatus && matchWilayah;
-      });
-
-      var sessionTitle = currentAttendanceSession === 'BERANGKAT' ? 'sesi keberangkatan' : 'sesi kepulangan';
-
-      if (belumList.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:24px; color:#0F5132; font-weight:700;"><i class="fa-solid fa-circle-check"></i> Seluruh peserta telah hadir di ' + sessionTitle + (currentNoticeWilayahFilter === 'ALL' ? '!' : ' dari wilayah ' + currentNoticeWilayahFilter + '!') + '</div>';
-        return;
-      }
-
-      var html = '';
-      for (var i = 0; i < belumList.length; i++) {
-        var p = belumList[i];
-        var cleanPhone = p.wa.replace(/[^0-9]/g, '');
-
-        var waText = (currentAttendanceSession === 'BERANGKAT')
-          ? ('Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas ingin menanyakan apakah Anda sudah dalam perjalanan menuju titik kumpul bus?')
-          : ('Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas sedang mendata kepulangan bus dari Hafik Golu menuju Sivas. Apakah Anda sudah berada di area kumpul bus?');
-
-        var waUrl = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(waText);
-
-        html += '<div class="admin-card-item">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-            '<strong style="font-size:14px;">' + p.nama + '</strong>' +
-            '<span style="color:#DC3545; background:#FFE5E7; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">Belum Absen ' + (currentAttendanceSession === 'BERANGKAT' ? 'Berangkat' : 'Pulang') + '</span>' +
-          '</div>' +
-          '<div style="font-size:12px; color:#666;">ID: ' + p.id + ' &bull; <i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; ' + (p.statusPeserta || 'Pelajar') + '</div>' +
-          '<div style="display:flex; gap:8px; margin-top:6px;">' +
-            '<a href="' + waUrl + '" target="_blank" style="flex:1; background:#25D366; color:#FFF; padding:8px 12px; border-radius:20px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px; text-decoration:none;">' +
-              '<i class="fa-brands fa-whatsapp"></i> Hubungi WA' +
-            '</a>' +
-            '<button onclick="processCheckIn(\'' + p.id + '\'); renderNoticeList();" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
-              '<i class="fa-solid fa-check"></i> Tandai Hadir' +
-            '</button>' +
-          '</div>' +
-        '</div>';
-      }
-      container.innerHTML = html;
     }
   </script>
 </body>
