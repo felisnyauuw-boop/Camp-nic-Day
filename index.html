@@ -28,9 +28,9 @@
       --earth-brown: #3C2A1E;
       --radius-sm: 8px;
       --radius-md: 14px;
-      --radius-lg: 22px;
-      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.18);
-      --shadow-gold: 0 6px 22px rgba(212, 163, 115, 0.32);
+      --radius-lg: 24px;
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.12);
+      --shadow-gold: 0 8px 24px rgba(212, 163, 115, 0.28);
     }
 
     * {
@@ -68,16 +68,16 @@
       top: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(15, 35, 24, 0.94);
+      background: rgba(15, 35, 24, 0.96);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(212, 163, 115, 0.25);
+      border-bottom: 1px solid rgba(212, 163, 115, 0.2);
     }
 
     .nav-container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 12px 20px;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -86,14 +86,14 @@
     .brand-logo-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       cursor: pointer;
       user-select: none;
     }
 
     .brand-logo-img {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       object-fit: contain;
       background: transparent !important;
       border: none !important;
@@ -105,29 +105,30 @@
 
     .brand-logo-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 700;
       color: #FFFFFF;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       line-height: 1.1;
     }
 
     .brand-logo-sub {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--gold-sand);
       letter-spacing: 0.5px;
+      display: block;
     }
 
     .nav-links-desktop {
       display: flex;
-      gap: 20px;
+      gap: 22px;
       list-style: none;
       align-items: center;
     }
 
     .nav-links-desktop a {
       color: var(--warm-beige);
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 600;
       transition: color 0.2s;
     }
@@ -136,14 +137,42 @@
       color: var(--gold-sand);
     }
 
+    .nav-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-nav-cta {
+      background: linear-gradient(135deg, var(--gold-sand), var(--gold-hover));
+      color: #0F2318;
+      font-weight: 800;
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      border: none;
+      box-shadow: var(--shadow-gold);
+      transition: all 0.2s;
+    }
+
+    .btn-nav-cta:hover {
+      transform: translateY(-1px);
+    }
+
     .hamburger-toggle {
       display: none;
       background: none;
       border: none;
       color: var(--gold-sand);
       font-size: 24px;
-      min-width: 44px;
-      min-height: 44px;
+      min-width: 42px;
+      min-height: 42px;
       cursor: pointer;
       align-items: center;
       justify-content: center;
@@ -213,13 +242,13 @@
 
     .hero-section {
       position: relative;
-      min-height: calc(100vh - 68px);
+      min-height: calc(100vh - 72px);
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 60px 20px;
-      background: linear-gradient(180deg, rgba(15, 35, 24, 0.82) 0%, rgba(15, 35, 24, 0.95) 100%),
+      padding: 60px 20px 80px 20px;
+      background: linear-gradient(180deg, rgba(15, 35, 24, 0.84) 0%, rgba(15, 35, 24, 0.96) 100%),
                   url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
       color: #FFFFFF;
     }
@@ -231,10 +260,10 @@
     }
 
     .hero-clean-logo {
-      width: 82px;
-      height: 82px;
+      width: 86px;
+      height: 86px;
       object-fit: contain;
-      margin: 0 auto 16px auto;
+      margin: 0 auto 18px auto;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
@@ -243,7 +272,7 @@
 
     .hero-org-badge {
       display: inline-block;
-      padding: 5px 16px;
+      padding: 6px 18px;
       background: rgba(212, 163, 115, 0.16);
       border: 1px solid var(--gold-sand);
       border-radius: 30px;
@@ -251,32 +280,23 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--gold-sand);
-      margin-bottom: 14px;
+      margin-bottom: 18px;
       font-weight: 700;
     }
 
     .hero-title {
-      font-size: clamp(34px, 8vw, 64px);
+      font-size: clamp(38px, 8.5vw, 68px);
       font-weight: 700;
-      line-height: 1.1;
+      line-height: 1.08;
       letter-spacing: 1.5px;
-      margin-bottom: 14px;
+      margin-bottom: 34px; /* Memberikan ruang napas elegan ke tombol di bawah */
       color: #FFFFFF;
-    }
-
-    .hero-tagline {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(18px, 4vw, 25px);
-      font-style: italic;
-      color: var(--gold-sand);
-      max-width: 600px;
-      margin: 0 auto 30px auto;
     }
 
     .hero-dual-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 16px;
       justify-content: center;
     }
 
@@ -284,14 +304,14 @@
       background: linear-gradient(135deg, var(--gold-sand), var(--gold-hover));
       color: #0F2318;
       font-weight: 800;
-      padding: 14px 28px;
+      padding: 14px 30px;
       border-radius: 35px;
-      min-height: 48px;
+      min-height: 50px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      font-size: 13px;
+      gap: 9px;
+      font-size: 13.5px;
       text-transform: uppercase;
       letter-spacing: 1px;
       box-shadow: var(--shadow-gold);
@@ -302,21 +322,21 @@
 
     .btn-hero-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(212, 163, 115, 0.45);
+      box-shadow: 0 10px 28px rgba(212, 163, 115, 0.45);
     }
 
     .btn-hero-secondary {
       background: transparent;
       color: #FFFFFF;
-      border: 1.5px solid rgba(255, 255, 255, 0.5);
-      padding: 14px 26px;
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      padding: 14px 28px;
       border-radius: 35px;
-      min-height: 48px;
+      min-height: 50px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      font-size: 13px;
+      gap: 9px;
+      font-size: 13.5px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
@@ -328,19 +348,19 @@
     }
 
     .section-wrap {
-      padding: 65px 20px;
+      padding: 70px 20px;
       max-width: 1040px;
       margin: 0 auto;
     }
 
     .section-header {
       text-align: center;
-      margin-bottom: 36px;
+      margin-bottom: 38px;
     }
 
     .section-kicker {
       font-size: 11px;
-      letter-spacing: 2px;
+      letter-spacing: 2.2px;
       text-transform: uppercase;
       color: var(--forest-accent);
       font-weight: 800;
@@ -349,44 +369,44 @@
     }
 
     .section-title {
-      font-size: clamp(26px, 5.5vw, 42px);
+      font-size: clamp(28px, 5.5vw, 42px);
       color: var(--bg-dark);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .section-subtitle {
       max-width: 580px;
       margin: 0 auto;
       color: #555;
-      font-size: 13.5px;
+      font-size: 14px;
     }
 
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 32px;
+      gap: 36px;
       align-items: center;
     }
 
     .about-quote {
       border-left: 3px solid var(--gold-sand);
-      padding-left: 16px;
+      padding-left: 18px;
       font-family: 'Cormorant Garamond', serif;
       font-size: 19px;
       font-style: italic;
       color: var(--forest-accent);
-      margin: 18px 0;
+      margin: 20px 0;
     }
 
     .about-gallery-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
     }
 
     .about-gallery-grid img {
       width: 100%;
-      height: 180px;
+      height: 185px;
       object-fit: cover;
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-soft);
@@ -399,31 +419,31 @@
     .info-cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 36px;
+      gap: 16px;
+      margin-top: 40px;
     }
 
     .info-card {
       background: #FFFFFF;
-      padding: 16px;
+      padding: 18px;
       border-radius: var(--radius-md);
       border: 1px solid rgba(212, 163, 115, 0.3);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.02);
     }
 
     .info-icon {
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       background: var(--warm-beige);
       color: var(--forest-accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 19px;
       flex-shrink: 0;
     }
 
@@ -436,7 +456,7 @@
     }
 
     .info-card p {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 700;
       color: var(--bg-dark);
     }
@@ -452,36 +472,36 @@
     }
 
     .loc-content {
-      padding: 34px 26px;
+      padding: 38px 30px;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
     .loc-content h3 {
-      font-size: 26px;
+      font-size: 28px;
       color: var(--gold-sand);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .loc-content p {
       color: var(--warm-beige);
-      font-size: 13.5px;
+      font-size: 14px;
       line-height: 1.6;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .loc-image-wrap img {
       width: 100%;
       height: 100%;
-      min-height: 240px;
+      min-height: 250px;
       object-fit: cover;
     }
 
     .btn-maps {
       background: var(--gold-sand);
       color: #0F2318;
-      padding: 11px 22px;
+      padding: 12px 24px;
       border-radius: 25px;
       font-weight: 800;
       font-size: 13px;
@@ -563,12 +583,12 @@
     .benefits-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+      gap: 16px;
     }
 
     .benefit-card {
       background: #FFFFFF;
-      padding: 20px 16px;
+      padding: 22px 18px;
       border-radius: var(--radius-md);
       border: 1px solid rgba(212, 163, 115, 0.22);
     }
@@ -576,11 +596,11 @@
     .benefit-icon {
       font-size: 24px;
       color: var(--gold-sand);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .benefit-card h4 {
-      font-size: 15px;
+      font-size: 15.5px;
       color: var(--bg-dark);
       margin-bottom: 6px;
     }
@@ -594,7 +614,7 @@
     .reg-wrapper {
       background: #FFFFFF;
       border-radius: var(--radius-lg);
-      padding: 24px 20px;
+      padding: 26px 22px;
       box-shadow: var(--shadow-soft);
       border: 1px solid rgba(212, 163, 115, 0.3);
       max-width: 680px;
@@ -604,9 +624,9 @@
     .bank-card {
       background: var(--bg-dark);
       color: #FFFFFF;
-      padding: 16px 18px;
+      padding: 18px 20px;
       border-radius: var(--radius-md);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       border: 1px solid var(--gold-sand);
     }
 
@@ -615,12 +635,12 @@
       letter-spacing: 1.5px;
       color: var(--gold-sand);
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       font-weight: 700;
     }
 
     .bank-acc {
-      font-size: 16px;
+      font-size: 16.5px;
       font-weight: 800;
       color: #FFFFFF;
       margin-bottom: 2px;
@@ -630,7 +650,7 @@
     .form-group-wrap {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 15px;
     }
 
     .form-item {
@@ -692,7 +712,7 @@
       border: 1px solid var(--gold-sand);
       cursor: pointer;
       width: 100%;
-      min-height: 48px;
+      min-height: 50px;
       margin-top: 12px;
       box-shadow: var(--shadow-gold);
     }
@@ -700,7 +720,7 @@
     footer {
       background: var(--bg-dark);
       color: #FFFFFF;
-      padding: 40px 20px 30px 20px;
+      padding: 42px 20px 32px 20px;
       border-top: 1px solid rgba(212, 163, 115, 0.2);
       text-align: center;
     }
@@ -717,7 +737,7 @@
 
     .footer-brand {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 700;
       color: var(--gold-sand);
     }
@@ -749,7 +769,7 @@
       border-radius: var(--radius-lg);
       max-width: 440px;
       width: 100%;
-      padding: 24px 18px;
+      padding: 26px 20px;
       position: relative;
       border: 1px solid var(--gold-sand);
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
@@ -779,10 +799,11 @@
       overflow-y: auto;
     }
 
+    /* TOP BAR ADMIN LEGA & TANPA TOMBOL SYNC YANG BERHIMPIT */
     .admin-top-bar {
       background: var(--bg-dark);
       color: #FFFFFF;
-      padding: 12px 16px;
+      padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -792,19 +813,33 @@
       z-index: 100;
     }
 
+    .admin-top-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .admin-top-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
     .inpage-workflow-bar {
       background: #FFFFFF;
       display: flex;
       border-bottom: 2px solid #DCE3DE;
       position: sticky;
-      top: 60px;
+      top: 68px;
       z-index: 95;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
     }
 
     .inpage-work-btn {
       flex: 1;
-      padding: 12px 8px;
+      padding: 13px 8px;
       font-size: 12.5px;
       font-weight: 700;
       color: #666;
@@ -830,17 +865,19 @@
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(212, 163, 115, 0.4);
       color: #FFF;
-      padding: 8px 12px;
+      padding: 9px 12px;
       border-radius: 20px;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
+      transition: all 0.2s;
     }
 
     .session-badge-pill.active {
       background: linear-gradient(135deg, var(--gold-sand), var(--gold-hover));
       color: #0F2318;
       border-color: var(--gold-sand);
+      box-shadow: 0 4px 12px rgba(212, 163, 115, 0.3);
     }
 
     /* Single-Slot Toast Floating Alert */
@@ -879,8 +916,8 @@
 
     .interactive-counter-card {
       background: #FFF;
-      padding: 14px;
-      border-radius: 12px;
+      padding: 16px;
+      border-radius: 14px;
       border: 1.5px solid #DCE3DE;
       display: flex;
       justify-content: space-between;
@@ -925,13 +962,14 @@
     .live-sync-indicator {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-size: 10.5px;
+      gap: 6px;
+      font-size: 11px;
       color: #25D366;
       background: rgba(37, 211, 102, 0.12);
       border: 1px solid rgba(37, 211, 102, 0.3);
-      padding: 3px 8px;
-      border-radius: 12px;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-weight: 700;
     }
 
     .live-dot {
@@ -952,11 +990,13 @@
     @media (max-width: 768px) {
       .nav-links-desktop { display: none; }
       .hamburger-toggle { display: inline-flex; }
+      .brand-logo-sub { display: none; } /* Mencegah berhimpit pada mobile */
       .about-grid, .location-banner { grid-template-columns: 1fr; }
       .info-cards-grid, .benefits-grid { grid-template-columns: 1fr; }
       .timeline::before { left: 16px; }
       .timeline-dot { left: 10px; }
       .timeline-item { padding-left: 36px; }
+      .hero-title { margin-bottom: 26px; }
     }
   </style>
 </head>
@@ -965,7 +1005,7 @@
   <!-- Single-Slot Toast Floating Alert -->
   <div class="toast-box" id="toastContainer"></div>
 
-  <!-- MODAL PIN GERBANG RAHASIA (MURNI RAHASIA PANITIA) -->
+  <!-- MODAL PIN GERBANG RAHASIA (MURNI RAHASIA PANITIA - TANPA TEKS DEFAULT) -->
   <div class="custom-modal" id="pinGateModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('pinGateModal');">&times;</button>
@@ -974,7 +1014,7 @@
       <p style="font-size:12px; color:#666; margin-bottom:16px;">Masukkan PIN Akses Panitia untuk membuka Scanner & Presensi Bus.</p>
       
       <form onsubmit="event.preventDefault(); verifyAdminPin();">
-        <input type="password" id="inputAdminPin" placeholder="••••" style="width:100%; padding:10px; border:1px solid #CCC; border-radius:8px; text-align:center; font-size:22px; letter-spacing:6px; margin-bottom:12px;" required>
+        <input type="password" id="inputAdminPin" placeholder="••••" style="width:100%; padding:10px; border:1px solid #CCC; border-radius:8px; text-align:center; font-size:22px; letter-spacing:6px; margin-bottom:14px;" required>
         <button type="submit" class="btn-hero-primary" style="width:100%; justify-content:center;">Buka Portal</button>
       </form>
     </div>
@@ -1030,14 +1070,14 @@
     </div>
   </div>
 
-  <!-- NAVIGATION BAR -->
+  <!-- NAVIGATION BAR (LEGA & TIDAK DEMPET PADA MOBILE) -->
   <nav class="navbar">
     <div class="nav-container">
       <div class="brand-logo-wrap" id="brandLogoTrigger" title="Ketuk 3x untuk Panel Panitia">
         <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="Logo PPI Sivas" class="brand-logo-img">
         <div>
           <div class="brand-logo-title" id="dynNavTitle">CAMP-NIC 2026</div>
-          <div class="brand-logo-sub" id="dynNavSub">PPI Sivas &bull; Aksara Senada</div>
+          <span class="brand-logo-sub" id="dynNavSub">PPI Sivas &bull; Aksara Senada</span>
         </div>
       </div>
 
@@ -1050,8 +1090,8 @@
         <li><a href="#contact">Kontak</a></li>
       </ul>
 
-      <div style="display:flex; align-items:center; gap:8px;">
-        <a href="#registration" class="btn-hero-primary" style="padding:9px 18px; font-size:12px; min-height:40px;">Daftar</a>
+      <div class="nav-right-actions">
+        <a href="#registration" class="btn-nav-cta">Daftar</a>
         <button class="hamburger-toggle" id="drawerOpenBtn" aria-label="Buka Menu"><i class="fa-solid fa-bars"></i></button>
       </div>
     </div>
@@ -1076,13 +1116,12 @@
     <a href="#registration" class="btn-hero-primary drawer-link" style="text-align:center; margin-top:16px;">Daftar Sekarang</a>
   </div>
 
-  <!-- HERO SECTION MINIMALIS (HANYA JUDUL & 2 TOMBOL UTAMA) -->
+  <!-- HERO SECTION BERSIH (KALIMAT TAGLINE DIHAPUS SESUAI PERMINTAAN) -->
   <section class="hero-section" id="hero">
     <div class="hero-container">
       <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" class="hero-clean-logo">
       <span class="hero-org-badge" id="dynHeroBadge">PPI SIVAS &bull; KABINET AKSARA SENADA</span>
       <h1 class="hero-title" id="dynHeroTitle">CAMP-NIC DAY 2026</h1>
-      <p class="hero-tagline" id="dynHeroTagline">"Persahabatan, kebersamaan, dan alam dalam Satu Hari"</p>
 
       <div class="hero-dual-actions">
         <a href="#registration" class="btn-hero-primary">
@@ -1337,24 +1376,20 @@
 
   <!-- IN-PAGE ADMIN PORTAL (MULTI-PANITIA REAL-TIME SYNC) -->
   <div class="admin-full-overlay" id="inPageAdminPortal">
+    <!-- TOP BAR ADMIN BERSIH: HANYA LOGO, JUDUL, LIVE SYNC, DAN KUNCI (TANPA TOMBOL SYNC YANG BERHIMPIT) -->
     <div class="admin-top-bar">
-      <div style="display:flex; align-items:center; gap:8px;">
-        <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI" style="width:32px; height:32px; object-fit:contain;">
-        <div>
-          <div style="font-size:13px; font-weight:700; display:flex; align-items:center; gap:6px;">
-            PANEL PANITIA PPI SIVAS
-            <span class="live-sync-indicator" title="Sinkronisasi otomatis dengan perangkat panitia lain">
-              <span class="live-dot"></span> Live Sync
-            </span>
-          </div>
-          <div style="font-size:10px; color:var(--gold-sand);">Camp-nic Day 2026 &bull; Hafik Gölü</div>
+      <div class="admin-top-left">
+        <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI" style="width:34px; height:34px; object-fit:contain; flex-shrink:0;">
+        <div style="min-width:0;">
+          <div style="font-size:13px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">PANEL PANITIA PPI SIVAS</div>
+          <div style="font-size:10.5px; color:var(--gold-sand);">Camp-nic Day 2026 &bull; Hafik Gölü</div>
         </div>
       </div>
-      <div style="display:flex; gap:6px;">
-        <button onclick="fetchSpreadsheetData(false);" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#FFF; padding:6px 12px; border-radius:20px; font-size:11px; cursor:pointer;" title="Sync Paksa dari Spreadsheet">
-          <i class="fa-solid fa-arrows-rotate"></i> Sync
-        </button>
-        <button onclick="closeAdminPortal();" style="background:none; border:1px solid var(--gold-sand); color:var(--gold-sand); padding:6px 12px; border-radius:20px; font-size:11px; font-weight:bold; cursor:pointer;">
+      <div class="admin-top-right">
+        <span class="live-sync-indicator" title="Sinkronisasi otomatis aktif">
+          <span class="live-dot"></span> Live Sync
+        </span>
+        <button onclick="closeAdminPortal();" style="background:none; border:1px solid var(--gold-sand); color:var(--gold-sand); padding:6px 14px; border-radius:20px; font-size:11.5px; font-weight:700; cursor:pointer;">
           <i class="fa-solid fa-lock"></i> Kunci
         </button>
       </div>
@@ -1374,12 +1409,12 @@
     <div id="inpageSecScanner" style="padding:16px; max-width:900px; margin:0 auto; width:100%;">
 
       <!-- PILIH SESI ABSENSI -->
-      <div style="background:var(--forest-dark); padding:14px; border-radius:12px; border:1px solid var(--gold-sand); margin-bottom:12px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <div style="background:var(--forest-dark); padding:14px; border-radius:14px; border:1px solid var(--gold-sand); margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <span style="font-size:11px; font-weight:700; color:var(--gold-sand); text-transform:uppercase;">
             <i class="fa-solid fa-clock-rotate-left"></i> SESI ABSENSI AKTIF:
           </span>
-          <span style="font-size:11px; color:#FFF; background:rgba(255,255,255,0.1); padding:2px 8px; border-radius:10px;" id="inpageSessionLabel">
+          <span style="font-size:11px; color:#FFF; background:rgba(255,255,255,0.12); padding:3px 10px; border-radius:12px;" id="inpageSessionLabel">
             Sesi 1: Berangkat Pagi
           </span>
         </div>
@@ -1394,29 +1429,29 @@
       </div>
 
       <!-- 2 KARTU COUNTER YANG BISA DITEKAN (INTERAKTIF) -->
-      <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; margin-bottom:14px;">
+      <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; margin-bottom:16px;">
         <div id="cardHadirToggle" class="interactive-counter-card" onclick="toggleScannerListView('HADIR');" title="Tekan untuk melihat daftar yang sudah hadir">
           <div>
             <div style="font-size:11px; font-weight:700; color:#666;" id="inpageLblHadir">Hadir (Berangkat)</div>
-            <div style="font-size:24px; font-weight:800; color:#0F5132;" id="inpageValHadir">0</div>
-            <div style="font-size:9.5px; color:#0F5132; font-weight:700; margin-top:2px;"><i class="fa-solid fa-list-check"></i> Tekan untuk list</div>
+            <div style="font-size:26px; font-weight:800; color:#0F5132;" id="inpageValHadir">0</div>
+            <div style="font-size:10px; color:#0F5132; font-weight:700; margin-top:2px;"><i class="fa-solid fa-list-check"></i> Tekan untuk list</div>
           </div>
-          <i class="fa-solid fa-user-check" style="color:#0F5132; font-size:22px;"></i>
+          <i class="fa-solid fa-user-check" style="color:#0F5132; font-size:24px;"></i>
         </div>
 
         <div id="cardBelumToggle" class="interactive-counter-card" onclick="toggleScannerListView('BELUM');" title="Tekan untuk melihat daftar yang belum hadir">
           <div>
             <div style="font-size:11px; font-weight:700; color:#666;" id="inpageLblBelum">Belum Hadir (Berangkat)</div>
-            <div style="font-size:24px; font-weight:800; color:#DC3545;" id="inpageValBelum">0</div>
-            <div style="font-size:9.5px; color:#DC3545; font-weight:700; margin-top:2px;"><i class="fa-solid fa-list-ul"></i> Tekan untuk list</div>
+            <div style="font-size:26px; font-weight:800; color:#DC3545;" id="inpageValBelum">0</div>
+            <div style="font-size:10px; color:#DC3545; font-weight:700; margin-top:2px;"><i class="fa-solid fa-list-ul"></i> Tekan untuk list</div>
           </div>
-          <i class="fa-solid fa-user-clock" style="color:#DC3545; font-size:22px;"></i>
+          <i class="fa-solid fa-user-clock" style="color:#DC3545; font-size:24px;"></i>
         </div>
       </div>
 
       <!-- VIEW A: KAMERA BERSIH TANPA DAFTAR DI BAWAHNYA -->
-      <div id="scannerCameraMainView" style="background:#FFF; padding:16px; border-radius:14px; border:1px solid #DCE3DE; text-align:center;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+      <div id="scannerCameraMainView" style="background:#FFF; padding:18px; border-radius:14px; border:1px solid #DCE3DE; text-align:center;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <h4 style="font-size:15px; color:var(--bg-dark); font-weight:700;"><i class="fa-solid fa-camera"></i> Pemindai Barcode E-Ticket</h4>
           <span style="font-size:11px; color:#198754; font-weight:bold;" id="inpageCamStatus">
             <i class="fa-solid fa-circle-dot fa-beat-fade"></i> Kamera Belakang Aktif
@@ -1428,32 +1463,32 @@
         </div>
 
         <div style="display:flex; gap:8px; justify-content:center; margin-top:8px;">
-          <button onclick="switchCameraFacing();" style="background:#E2E8F0; color:#333; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:700; cursor:pointer;">
+          <button onclick="switchCameraFacing();" style="background:#E2E8F0; color:#333; border:none; border-radius:20px; padding:8px 16px; font-size:12px; font-weight:700; cursor:pointer;">
             <i class="fa-solid fa-arrows-rotate"></i> Putar Kamera
           </button>
-          <button id="inpageBtnToggleCam" onclick="toggleInpageCamera();" style="background:#F8D7DA; color:#842029; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:700; cursor:pointer;">
+          <button id="inpageBtnToggleCam" onclick="toggleInpageCamera();" style="background:#F8D7DA; color:#842029; border:none; border-radius:20px; padding:8px 16px; font-size:12px; font-weight:700; cursor:pointer;">
             <i class="fa-solid fa-power-off"></i> Matikan Kamera
           </button>
         </div>
 
         <!-- INPUT MANUAL ID -->
-        <div style="text-align:left; margin-top:14px; border-top:1px dashed #DDD; padding-top:12px;">
+        <div style="text-align:left; margin-top:16px; border-top:1px dashed #DDD; padding-top:14px;">
           <label style="font-size:11px; font-weight:700; color:#555; text-transform:uppercase;">Input Manual ID Registrasi:</label>
-          <div style="display:flex; gap:6px; margin-top:4px;">
-            <input type="text" id="inPageManualId" placeholder="CAMP-20261031-XXXX" style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
-            <button onclick="submitManualCheckIn();" class="btn-hero-primary" style="padding:8px 16px; font-size:12px;">Check-In</button>
+          <div style="display:flex; gap:6px; margin-top:6px;">
+            <input type="text" id="inPageManualId" placeholder="CAMP-20261031-XXXX" style="flex:1; padding:10px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
+            <button onclick="submitManualCheckIn();" class="btn-hero-primary" style="padding:8px 18px; font-size:12px;">Check-In</button>
           </div>
         </div>
       </div>
 
       <!-- VIEW B: DAFTAR NAMA DETAIL (PENCARIAN CEPAT, FILTER STATUS, & REVERT) -->
       <div id="scannerListDetailView" style="display:none;">
-        <div style="background:#FFF; padding:12px 16px; border-radius:12px; border:1px solid #DCE3DE; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="background:#FFF; padding:14px 18px; border-radius:12px; border:1px solid #DCE3DE; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
           <div>
             <h4 style="font-size:15px; font-weight:800;" id="scannerListDetailTitle">Daftar Peserta</h4>
             <div style="font-size:11.5px; color:#666;" id="scannerListDetailSubtitle">Memuat data...</div>
           </div>
-          <button onclick="backToCameraView();" class="btn-hero-primary" style="padding:8px 14px; font-size:12px; min-height:36px;">
+          <button onclick="backToCameraView();" class="btn-hero-primary" style="padding:8px 16px; font-size:12px; min-height:36px;">
             <i class="fa-solid fa-camera"></i> Kembali ke Kamera
           </button>
         </div>
@@ -1461,8 +1496,8 @@
         <!-- KOLOM PENCARIAN INSTAN NAMA / ID -->
         <div style="margin-bottom:10px;">
           <div style="position:relative;">
-            <input type="text" id="inputSearchScannerList" placeholder="🔍 Cari nama, ID registrasi, nomor WA..." style="width:100%; padding:9px 12px 9px 34px; border:1px solid #CFD6D0; border-radius:8px; font-size:13px; background:#FFF;" oninput="renderScannerListDetail();">
-            <i class="fa-solid fa-magnifying-glass" style="position:absolute; left:12px; top:11px; color:#888; font-size:13px;"></i>
+            <input type="text" id="inputSearchScannerList" placeholder="🔍 Cari nama, ID registrasi, nomor WA..." style="width:100%; padding:10px 12px 10px 36px; border:1px solid #CFD6D0; border-radius:8px; font-size:13px; background:#FFF;" oninput="renderScannerListDetail();">
+            <i class="fa-solid fa-magnifying-glass" style="position:absolute; left:12px; top:12px; color:#888; font-size:13px;"></i>
           </div>
         </div>
 
@@ -1487,9 +1522,9 @@
         Upload tiket PDF ke Google Drive Anda, tempelkan linknya di Spreadsheet pada kolom <code>Link_PDF_Tiket_GDrive</code>, lalu kirimkan E-Ticket resmi via WhatsApp.
       </p>
 
-      <div style="display:flex; gap:8px; margin-bottom:12px;">
-        <input type="text" id="adminSearchInput" placeholder="Cari nama, ID, WA, wilayah..." style="flex:1; padding:9px 12px; border:1px solid #CCC; border-radius:6px; font-size:13px;" oninput="renderAdminList();">
-        <select id="adminStatusFilter" style="padding:9px; border:1px solid #CCC; border-radius:6px; font-size:13px;" onchange="renderAdminList();">
+      <div style="display:flex; gap:8px; margin-bottom:14px;">
+        <input type="text" id="adminSearchInput" placeholder="Cari nama, ID, WA, wilayah..." style="flex:1; padding:10px 12px; border:1px solid #CCC; border-radius:6px; font-size:13px;" oninput="renderAdminList();">
+        <select id="adminStatusFilter" style="padding:10px; border:1px solid #CCC; border-radius:6px; font-size:13px;" onchange="renderAdminList();">
           <option value="ALL">Semua Status</option>
           <option value="PENDING">Menunggu Verifikasi</option>
           <option value="LUNAS">Terverifikasi Lunas</option>
@@ -1501,7 +1536,7 @@
   </div>
 
   <script>
-    // URL WEBHOOK APPS SCRIPT PERMANEN MILIK ANDA
+    /* URL WEBHOOK APPS SCRIPT PERMANEN */
     var APPS_SCRIPT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby2G41zIieHPVGg0OFnzZim4PcxevC9oNMiq75XPT1sbHRkPmJNnCqk6zMJBjTirkxL/exec';
 
     var base64ReceiptPayload = { name: '', data: '' };
@@ -1516,58 +1551,10 @@
     var currentScannerViewMode = 'CAMERA';
     var autoSyncIntervalTimer = null;
 
-    var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || 'null');
-    if (!participantsDb || participantsDb.length === 0) {
-      participantsDb = [
-        {
-          id: 'CAMP-20261031-0001',
-          timestamp: '31/10/2026 08:15:00',
-          nama: 'Aufa Azkia',
-          email: 'aufa@example.com',
-          wa: '+90 507 638 23 58',
-          statusPeserta: 'Pelajar / Mahasiswa',
-          wilayah: 'Sivas',
-          statusBayar: 'Terverifikasi Lunas',
-          linkPdf: '-',
-          hadirBerangkat: true,
-          timeBerangkat: '08:45:10',
-          hadirPulang: false,
-          timePulang: '-'
-        },
-        {
-          id: 'CAMP-20261031-0002',
-          timestamp: '31/10/2026 08:30:00',
-          nama: 'Rara Ingrid',
-          email: 'rara@example.com',
-          wa: '+62 812 7262 9990',
-          statusPeserta: 'Pelajar / Mahasiswa',
-          wilayah: 'Yozgat',
-          statusBayar: 'Menunggu Verifikasi',
-          linkPdf: '-',
-          hadirBerangkat: false,
-          timeBerangkat: '-',
-          hadirPulang: false,
-          timePulang: '-'
-        },
-        {
-          id: 'CAMP-20261031-0003',
-          timestamp: '31/10/2026 08:45:00',
-          nama: 'Emirhan Yılmaz',
-          email: 'emirhan@example.com',
-          wa: '+90 555 987 65 43',
-          statusPeserta: 'Non-Pelajar / Umum',
-          wilayah: 'Malatya',
-          statusBayar: 'Terverifikasi Lunas',
-          linkPdf: '-',
-          hadirBerangkat: true,
-          timeBerangkat: '08:52:10',
-          hadirPulang: false,
-          timePulang: '-'
-        }
-      ];
-      saveDb();
-    }
+    /* Database Lokal Pendaftar */
+    var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || '[]');
 
+    /* Susunan Acara Default (Dihidrasi dari Spreadsheet jika tersedia) */
     var defaultRundownData = [
       { jam: '08.30 - 10.00', judul: 'Keberangkatan Menuju Lokasi Kegiatan', deskripsi: 'Kumpul rombongan di titik pusat Sivas, presensi bus pagi, dan perjalanan menuju Hafik Gölü.' },
       { jam: '10.00 - 10.30', judul: 'Pembukaan & Sambutan Singkat', deskripsi: 'Pembukaan acara oleh panitia pelaksana dan sambutan hangat Ketua PPI Sivas.' },
@@ -1583,6 +1570,7 @@
       { jam: '21.00 - Selesai', judul: 'Persiapan Kepulangan dan Perpulangan', deskripsi: 'Operasi semut kebersihan area danau, presensi bus kepulangan, dan kembali ke Sivas.' }
     ];
 
+    /* Fasilitas Default */
     var defaultBenefitsData = [
       { judul: 'Transportasi Bus PP', deskripsi: 'Akomodasi bus pariwisata nyaman pulang-pergi dari pusat kota Sivas ke Hafik Gölü.', icon: 'fa-solid fa-bus' },
       { judul: 'Sajian BBQ & Makan Siang', deskripsi: 'Hidangan makan siang lezat, sajian pesta BBQ hangat, aneka camilan, dan minuman teh segar.', icon: 'fa-solid fa-fire-burner' },
@@ -1608,7 +1596,6 @@
       } catch(e){}
     }
 
-    // SINGLE-SLOT TOAST NOTIFICATION (MENCEGAH PENUMPUKAN KE BAWAH)
     function showToast(msg, icon) {
       var c = document.getElementById('toastContainer');
       c.innerHTML = '';
@@ -1634,9 +1621,11 @@
       setupSecretTrigger();
       renderRundownUI(defaultRundownData);
       renderBenefitsUI(defaultBenefitsData);
+
+      /* Ambil data Spreadsheet secara langsung */
       fetchSpreadsheetData(false);
 
-      // Jalankan Background Auto-Polling (Interval 5 detik) untuk sinkronisasi multi-panitia
+      /* Jalankan Background Auto-Polling (Interval 5 detik) untuk multi-panitia */
       startMultiDeviceAutoSync();
 
       if (window.location.search.indexOf('admin=true') !== -1) {
@@ -1644,10 +1633,10 @@
       }
     });
 
-    // PENGAMBILAN DATA DENGAN TEKNIK CACHE-BUSTING UNTUK MENJAMIN LINK GDRIVE LANGSUNG MUNCUL
     function fetchSpreadsheetData(silent) {
       if (!APPS_SCRIPT_WEBHOOK_URL) return;
 
+      /* Cache-Buster Timestamp untuk memaksa data Google Drive terbaru muncul */
       var cacheBusterUrl = APPS_SCRIPT_WEBHOOK_URL + (APPS_SCRIPT_WEBHOOK_URL.indexOf('?') === -1 ? '?' : '&') + '_t=' + new Date().getTime();
 
       fetch(cacheBusterUrl)
@@ -1659,6 +1648,7 @@
             if (data.benefits && data.benefits.length) renderBenefitsUI(data.benefits);
 
             if (data.participants && data.participants.length) {
+              /* Timpa data lokal dengan data asli dari Spreadsheet */
               participantsDb = data.participants;
               saveDb();
               if (currentScannerViewMode !== 'CAMERA') {
@@ -1672,7 +1662,7 @@
           }
         })
         .catch(function(err) {
-          if (!silent) console.log('Mode offline / fallback lokal aktif:', err);
+          if (!silent) console.log('Mode lokal aktif / offline:', err);
         });
     }
 
@@ -1681,7 +1671,6 @@
       autoSyncIntervalTimer = setInterval(function() {
         var portal = document.getElementById('inPageAdminPortal');
         if (portal && portal.style.display !== 'none') {
-          // Lakukan sinkronisasi senyap jika panel admin sedang dibuka
           fetchSpreadsheetData(true);
         }
       }, 5000);
@@ -1697,7 +1686,6 @@
         document.getElementById('dynNavSub').textContent = cfg.Kabinet_Name;
         document.getElementById('dynHeroBadge').textContent = cfg.Kabinet_Name;
       }
-      if (cfg.Tagline) document.getElementById('dynHeroTagline').textContent = '"' + cfg.Tagline + '"';
       if (cfg.Tanggal_Acara) document.getElementById('dynCardTanggal').textContent = cfg.Tanggal_Acara;
       if (cfg.Waktu_Acara) document.getElementById('dynCardWaktu').textContent = cfg.Waktu_Acara;
       if (cfg.Lokasi_Nama) {
@@ -1708,7 +1696,7 @@
       if (cfg.Link_Google_Maps) document.getElementById('dynLocMapsBtn').href = cfg.Link_Google_Maps;
       if (cfg.Target_Peserta) document.getElementById('dynCardTarget').textContent = cfg.Target_Peserta;
 
-      // Bank Info
+      /* Bank Info */
       if (cfg.Bank_TR_Nama) document.getElementById('dynBankTRNama').textContent = cfg.Bank_TR_Nama + ':';
       if (cfg.Bank_TR_IBAN) document.getElementById('dynBankTRIban').textContent = cfg.Bank_TR_IBAN;
       if (cfg.Bank_TR_AtasNama) document.getElementById('dynBankTRHolder').textContent = 'a.n. ' + cfg.Bank_TR_AtasNama;
@@ -1717,7 +1705,7 @@
       if (cfg.Bank_ID_NoRek) document.getElementById('dynBankIDNoRek').textContent = cfg.Bank_ID_NoRek;
       if (cfg.Bank_ID_AtasNama) document.getElementById('dynBankIDHolder').textContent = 'a.n. ' + cfg.Bank_ID_AtasNama;
 
-      // Kontak Info
+      /* Kontak */
       if (cfg.Kontak_WA) {
         var cleanWA = cfg.Kontak_WA.replace(/[^0-9]/g, '');
         document.getElementById('dynBtnContactWA').href = 'https://wa.me/' + cleanWA + '?text=Halo%20Panitia%20Camp-nic%20Day%202026%20PPI%20Sivas';
@@ -1983,15 +1971,14 @@
           '<div style="font-size:12px; color:#666;">ID: ' + p.id + ' &bull; <i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; <span style="font-weight:700; color:var(--forest-dark);">' + (p.statusPeserta || 'Pelajar') + '</span></div>' +
           '<div style="font-size:12px; color:#555;"><i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>';
 
-        // JIKA DI TAMPILAN HADIR: TAMPILKAN TOMBOL REVERT / BATALKAN HADIR (SALAH SCAN)
+        /* Tombol Batalkan Hadir (Jika Salah Scan) */
         if (isHadirView) {
           html += '<div style="margin-top:6px; border-top:1px dashed #E0E5E1; padding-top:6px;">' +
-            '<button onclick="revertParticipantPresence(\'' + p.id + '\');" style="background:#FFF0F1; color:#DC3545; border:1px solid #F5C2C7; border-radius:20px; font-size:11.5px; font-weight:700; padding:6px 12px; cursor:pointer; display:inline-flex; align-items:center; gap:5px;" title="Klik jika salah scan">' +
+            '<button onclick="revertParticipantPresence(\'' + p.id + '\');" style="background:#FFF0F1; color:#DC3545; border:1px solid #F5C2C7; border-radius:20px; font-size:11.5px; font-weight:700; padding:6px 14px; cursor:pointer; display:inline-flex; align-items:center; gap:5px;" title="Klik jika salah scan">' +
               '<i class="fa-solid fa-rotate-left"></i> Batalkan Hadir (Salah Scan)' +
             '</button>' +
           '</div>';
         } else {
-          // JIKA DI TAMPILAN BELUM HADIR: TOMBOL WA & TANDAI HADIR MANUAL
           var cleanPhone = p.wa.replace(/[^0-9]/g, '');
           var waText = (inpageSession === 'BERANGKAT')
             ? ('Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas ingin mengonfirmasi apakah Anda sudah berada di titik kumpul bus pagi?')
@@ -2013,10 +2000,7 @@
       container.innerHTML = html;
     }
 
-    // PEMBATALAN STATUS KEHADIRAN / SALAH SCAN
     function revertParticipantPresence(id) {
-      if (!confirm('Kembalikan status peserta ' + id + ' menjadi Belum Hadir?')) return;
-
       var found = null;
       for (var i = 0; i < participantsDb.length; i++) {
         if (participantsDb[i].id === id) {
@@ -2038,7 +2022,7 @@
       saveDb();
       renderScannerListDetail();
 
-      // Sinkronkan ke Google Spreadsheet via Webhook
+      /* Sinkronkan ke Google Spreadsheet via Webhook */
       if (APPS_SCRIPT_WEBHOOK_URL) {
         fetch(APPS_SCRIPT_WEBHOOK_URL, {
           method: 'POST',
@@ -2208,7 +2192,7 @@
         renderScannerListDetail();
       }
 
-      // Sync ke Google Sheets via Webhook
+      /* Sync ke Google Sheets via Webhook */
       if (APPS_SCRIPT_WEBHOOK_URL) {
         fetch(APPS_SCRIPT_WEBHOOK_URL, {
           method: 'POST',
@@ -2276,34 +2260,37 @@
         var isLunas = p.statusBayar === 'Terverifikasi Lunas';
         var badgeBg = isLunas ? '#D1E7DD' : '#FFF3CD';
         var badgeColor = isLunas ? '#0F5132' : '#664D03';
-        var hasDriveLink = (p.linkPdf && p.linkPdf !== '-' && p.linkPdf.indexOf('http') === 0);
 
-        html += '<div style="background:#FFF; border-radius:12px; border:1px solid #DCE3DE; padding:14px; margin-bottom:12px; font-size:13px; display:flex; flex-direction:column; gap:6px;">' +
+        /* Evaluasi Keberadaan Link Google Drive dari Spreadsheet */
+        var rawLink = (p.linkPdf || '').trim();
+        var hasDriveLink = (rawLink !== '' && rawLink !== '-' && (rawLink.indexOf('http') === 0 || rawLink.indexOf('drive.google.com') !== -1));
+
+        html += '<div style="background:#FFF; border-radius:14px; border:1px solid #DCE3DE; padding:16px; margin-bottom:12px; font-size:13px; display:flex; flex-direction:column; gap:6px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">' +
           '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-            '<strong style="color:var(--forest-accent);">' + p.id + '</strong>' +
-            '<span style="background:' + badgeBg + '; color:' + badgeColor + '; padding:3px 8px; border-radius:10px; font-size:11px; font-weight:700;">' + p.statusBayar + '</span>' +
+            '<strong style="color:var(--forest-accent); font-size:13.5px;">' + p.id + '</strong>' +
+            '<span style="background:' + badgeBg + '; color:' + badgeColor + '; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;">' + p.statusBayar + '</span>' +
           '</div>' +
-          '<div style="font-weight:700; font-size:14px;">' + p.nama + '</div>' +
+          '<div style="font-weight:800; font-size:15px; color:#142E20;">' + p.nama + '</div>' +
           '<div style="font-size:12px; color:#666;"><i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; <i class="fa-solid fa-user-tag"></i> ' + (p.statusPeserta || 'Pelajar') + '</div>' +
           '<div style="font-size:12px; color:#555;"><i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>' +
 
-          // Indikator Link Google Drive (Diambil langsung dari Spreadsheet via Cache-Buster)
-          '<div style="background:#F8FAF8; border:1px dashed #D4A373; border-radius:8px; padding:6px 10px; margin-top:2px;">' +
-            '<div style="font-size:10.5px; font-weight:700; color:#555;"><i class="fa-brands fa-google-drive" style="color:#0F9D58;"></i> LINK TIKET GDRIVE (DARI SPREADSHEET):</div>' +
+          /* Indikator Link Google Drive (Diambil langsung dari Spreadsheet via Cache-Buster) */
+          '<div style="background:#F8FAF8; border:1px dashed #D4A373; border-radius:8px; padding:8px 12px; margin-top:4px;">' +
+            '<div style="font-size:10.5px; font-weight:800; color:#444; margin-bottom:2px;"><i class="fa-brands fa-google-drive" style="color:#0F9D58;"></i> LINK TIKET GDRIVE (DARI SPREADSHEET):</div>' +
             (hasDriveLink
-              ? '<a href="' + p.linkPdf + '" target="_blank" style="font-size:11px; color:#0B5ED7; text-decoration:underline; word-break:break-all;">' + p.linkPdf + '</a>'
-              : '<div style="font-size:11px; color:#DC3545;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Isi di kolom Link_PDF_Tiket_GDrive pada spreadsheet)</div>') +
+              ? '<a href="' + rawLink + '" target="_blank" style="font-size:11.5px; color:#0B5ED7; text-decoration:underline; word-break:break-all; font-weight:600;">' + rawLink + '</a>'
+              : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Isi di kolom Link_PDF_Tiket_GDrive pada spreadsheet)</div>') +
           '</div>' +
 
-          '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:8px; margin-top:4px;">';
+          '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:10px; margin-top:6px;">';
 
         if (!isLunas) {
-          html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 10px; cursor:pointer;">' +
+          html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:12px; font-weight:700; padding:9px 12px; cursor:pointer;">' +
                     '<i class="fa-solid fa-check"></i> Verifikasi Lunas' +
                   '</button>';
         }
 
-        html += '<button onclick="sendWhatsappTicketWithDriveLink(\'' + p.id + '\');" style="flex:1; background:#25D366; color:#FFF; border:none; border-radius:20px; font-size:11px; font-weight:700; padding:7px 10px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:5px;">' +
+        html += '<button onclick="sendWhatsappTicketWithDriveLink(\'' + p.id + '\');" style="flex:1; background:#25D366; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
                   '<i class="fa-brands fa-whatsapp"></i> Kirim Tiket via WA' +
                 '</button>';
 
@@ -2339,14 +2326,15 @@
       if (!p) return;
 
       var cleanPhone = p.wa.replace(/[^0-9]/g, '');
-      var hasLink = (p.linkPdf && p.linkPdf !== '-' && p.linkPdf.indexOf('http') === 0);
+      var rawLink = (p.linkPdf || '').trim();
+      var hasLink = (rawLink !== '' && rawLink !== '-' && (rawLink.indexOf('http') === 0 || rawLink.indexOf('drive.google.com') !== -1));
 
       var msg = 'Halo ' + p.nama + ',\n\n' +
         'Pembayaran registrasi *Camp-nic Day 2026 (Hafik Gölü, Sivas)* Anda dengan ID: *' + p.id + '* telah diverifikasi LUNAS oleh panitia PPI Sivas.\n\n';
 
       if (hasLink) {
         msg += 'Silakan unduh berkas resmi PDF E-Ticket ber-QR Code Anda melalui tautan Google Drive resmi berikut:\n' +
-               p.linkPdf + '\n\n' +
+               rawLink + '\n\n' +
                'Harap simpan file tiket ini di ponsel Anda dan tunjukkan barcode-nya kepada panitia saat naik bus di titik kumpul.\n\n';
       } else {
         msg += 'Panitia sedang menyiapkan berkas PDF E-Ticket resmi ber-QR Code Anda dan akan segera mengunggahnya ke database. Tunjukkan ID registrasi ini saat berkumpul.\n\n';
