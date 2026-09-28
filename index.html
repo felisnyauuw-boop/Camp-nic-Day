@@ -651,7 +651,7 @@
       letter-spacing: 1.5px;
       color: var(--gold-sand);
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-weight: 700;
     }
 
@@ -1020,7 +1020,6 @@
   <!-- Single-Slot Toast Floating Alert -->
   <div class="toast-box" id="toastContainer"></div>
 
-  <!-- MODAL PIN GERBANG RAHASIA (MURNI RAHASIA PANITIA) -->
   <div class="custom-modal" id="pinGateModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('pinGateModal');">&times;</button>
@@ -1035,7 +1034,6 @@
     </div>
   </div>
 
-  <!-- MODAL POPUP BIODATA LENGKAP SAAT DISCAN (HIJAU: BARU HADIR | KUNING: SCAN ULANG) -->
   <div class="custom-modal" id="scanBioModal">
     <div class="modal-card" style="text-align:left; max-width:420px;">
       <div style="text-align:center; margin-bottom:12px;">
@@ -1085,7 +1083,6 @@
     </div>
   </div>
 
-  <!-- NAVIGATION BAR (LEGA & TIDAK DEMPET PADA MOBILE) -->
   <nav class="navbar">
     <div class="nav-container">
       <div class="brand-logo-wrap" id="brandLogoTrigger" title="Ketuk 3x untuk Panel Panitia">
@@ -1113,7 +1110,6 @@
     </div>
   </nav>
 
-  <!-- MOBILE DRAWER DENGAN MENU RAMPING SESUAI INSTRUKSI -->
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <div class="mobile-drawer" id="mobileDrawer">
     <button class="drawer-close" id="drawerCloseBtn" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
@@ -1133,7 +1129,6 @@
     <a href="#registration" class="btn-hero-primary drawer-link" style="text-align:center; margin-top:16px;">Daftar Sekarang</a>
   </div>
 
-  <!-- HERO SECTION BERSIH (KALIMAT TAGLINE DIHAPUS TOTAL) -->
   <section class="hero-section" id="hero">
     <div class="hero-container">
       <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" class="hero-clean-logo">
@@ -1151,7 +1146,6 @@
     </div>
   </section>
 
-  <!-- ABOUT SECTION -->
   <section class="section-wrap" id="about">
     <div class="section-header">
       <span class="section-kicker">Konsep Kegiatan</span>
@@ -1210,7 +1204,6 @@
     </div>
   </section>
 
-  <!-- LOCATION SECTION -->
   <section class="section-wrap" id="location" style="padding-top:0;">
     <div class="location-banner">
       <div class="loc-content">
@@ -1230,7 +1223,6 @@
     </div>
   </section>
 
-  <!-- RUNDOWN SECTION -->
   <section class="section-wrap" id="rundown">
     <div class="section-header">
       <span class="section-kicker">Susunan Acara Resmi</span>
@@ -1243,7 +1235,6 @@
     </div>
   </section>
 
-  <!-- PROPOSAL SECTION -->
   <section class="section-wrap" id="proposal" style="padding-top:0;">
     <div class="proposal-banner-box">
       <i class="fa-solid fa-file-pdf" style="font-size:38px; color:var(--gold-sand);"></i>
@@ -1259,7 +1250,6 @@
     </div>
   </section>
 
-  <!-- BENEFITS SECTION -->
   <section class="section-wrap" id="benefits" style="background:var(--warm-beige); border-radius:var(--radius-lg);">
     <div class="section-header">
       <span class="section-kicker">Fasilitas Peserta</span>
@@ -1270,9 +1260,18 @@
     <div class="benefits-grid" id="benefitsGridContainer">
       <!-- Diisi otomatis dari Spreadsheet via Webhook / Fallback Default -->
     </div>
+
+    <!-- HIGHLIGHT VALUE BANNER DI BAWAH FASILITAS EKSKLUSIF -->
+    <div style="margin-top:28px; background:var(--forest-dark); border:1.5px solid var(--gold-sand); border-radius:var(--radius-md); padding:20px 22px; text-align:center; box-shadow:var(--shadow-soft);">
+      <div style="font-size:11.5px; color:var(--gold-sand); font-weight:800; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:5px;">
+        <i class="fa-solid fa-gem"></i> NILAI INVESTASI KEGIATAN
+      </div>
+      <div style="font-size:clamp(16px, 4.2vw, 22px); font-weight:800; color:#FFFFFF; line-height:1.4;" id="dynHighlightValueText">
+        Dapatkan Fasilitas Senilai &gt;250 TL Hanya dengan Bayar 150 TL
+      </div>
+    </div>
   </section>
 
-  <!-- REGISTRATION SECTION (HANYA BANK ZIRAAT TURKI) -->
   <section class="section-wrap" id="registration">
     <div class="section-header">
       <span class="section-kicker">Gabung Bersama Kami</span>
@@ -1281,8 +1280,18 @@
     </div>
 
     <div class="reg-wrapper">
-      <!-- KARTU PEMBAYARAN MURNI ZIRAAT BANKASI (TÜRKIYE) -->
+      <!-- KARTU PEMBAYARAN MURNI ZIRAAT BANKASI BESERTA BIAYA PENDAFTARAN 150 TL -->
       <div class="bank-card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:12px; border-bottom:1px dashed rgba(212, 163, 115, 0.4); padding-bottom:12px;">
+          <div>
+            <div class="bank-title" style="margin-bottom:2px;">Biaya Pendaftaran / Partisipasi:</div>
+            <div style="font-size:26px; font-weight:800; color:var(--gold-sand);" id="dynBiayaPendaftaran">150 TL</div>
+          </div>
+          <div style="background:rgba(212, 163, 115, 0.15); border:1px solid var(--gold-sand); padding:5px 12px; border-radius:14px; font-size:11px; color:var(--gold-sand); font-weight:800;">
+            <i class="fa-solid fa-circle-check"></i> ALL-IN FASILITAS
+          </div>
+        </div>
+
         <div class="bank-title">Tujuan Rekening Resmi PPI Sivas:</div>
         <div>
           <div style="font-size:12.5px; color:var(--gold-sand); font-weight:700;" id="dynBankTRNama">Ziraat Bankası (Türkiye):</div>
@@ -1342,13 +1351,12 @@
         </div>
 
         <button type="submit" class="btn-submit-form" id="btnSubmitForm">
-          <i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran
+          <i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran (150 TL)
         </button>
       </form>
     </div>
   </section>
 
-  <!-- CONTACT SECTION -->
   <section class="section-wrap" id="contact" style="text-align:center; padding-top:20px;">
     <h2 class="serif-heading" style="font-size:32px; color:var(--bg-dark); margin-bottom:8px;">Hubungi Panitia PPI Sivas</h2>
     <p style="font-size:13.5px; color:#666; max-width:500px; margin:0 auto 20px auto;">
@@ -1364,7 +1372,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" class="footer-logo">
     <div class="footer-brand" id="dynFooterBrand">CAMP-NIC DAY 2026</div>
@@ -1376,7 +1383,6 @@
     </div>
   </footer>
 
-  <!-- MODAL PENDAFTARAN SUKSES DENGAN TEKS RINGKAS RESMI -->
   <div class="custom-modal" id="successModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('successModal');">&times;</button>
@@ -1404,9 +1410,7 @@
     </div>
   </div>
 
-  <!-- IN-PAGE ADMIN PORTAL (MULTI-PANITIA REAL-TIME SYNC & 3 SESI ABSENSI) -->
   <div class="admin-full-overlay" id="inPageAdminPortal">
-    <!-- TOP BAR ADMIN LEGA & BERSIH TANPA TEKS BERDESAKAN -->
     <div class="admin-top-bar">
       <div class="admin-top-left">
         <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI" style="width:34px; height:34px; object-fit:contain; flex-shrink:0;">
@@ -1425,7 +1429,6 @@
       </div>
     </div>
 
-    <!-- 2 WORKFLOW UTAMA -->
     <div class="inpage-workflow-bar">
       <button class="inpage-work-btn active" id="inpageBtnModeScan" onclick="switchInpageWorkflow('SCANNER');">
         <i class="fa-solid fa-camera"></i> 1. SCANNER & PRESENSI HARI-H
@@ -1437,7 +1440,6 @@
 
     <!-- MODE 1: SCANNER & PRESENSI HARI-H -->
     <div id="inpageSecScanner" style="padding:16px; max-width:900px; margin:0 auto; width:100%;">
-
       <!-- PILIH 3 SESI ABSENSI FLEKSIBEL (1, 2, 3) -->
       <div style="background:var(--forest-dark); padding:14px; border-radius:14px; border:1px solid var(--gold-sand); margin-bottom:14px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -1514,7 +1516,7 @@
         </div>
       </div>
 
-      <!-- VIEW B: DAFTAR NAMA DETAIL DENGAN PENCARIAN CEPAT & FILTER STATUS -->
+      <!-- VIEW B: DAFTAR NAMA DETAIL DENGAN PANCARIAN CEPAT & FILTER STATUS -->
       <div id="scannerListDetailView" style="display:none;">
         <div style="background:#FFF; padding:14px 18px; border-radius:12px; border:1px solid #DCE3DE; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
           <div>
@@ -1543,7 +1545,6 @@
 
         <div id="scannerListItemsContainer"></div>
       </div>
-
     </div>
 
     <!-- MODE 2: KELOLA PEMBAYARAN & LINK GOOGLE DRIVE -->
@@ -1592,7 +1593,7 @@
     /* Database Lokal Pendaftar */
     var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || '[]');
 
-    /* Susunan Acara Default (Dihidrasi dari Spreadsheet jika tersedia) */
+    /* Susunan Acara Default */
     var defaultRundownData = [
       { jam: '08.30 - 10.00', judul: 'Keberangkatan Menuju Lokasi Kegiatan', deskripsi: 'Kumpul rombongan di titik pusat Sivas, presensi bus pagi, dan perjalanan menuju Hafik Gölü.' },
       { jam: '10.00 - 10.30', judul: 'Pembukaan & Sambutan Singkat', deskripsi: 'Pembukaan acara oleh panitia pelaksana dan sambutan hangat Ketua PPI Sivas.' },
@@ -1660,10 +1661,7 @@
       renderRundownUI(defaultRundownData);
       renderBenefitsUI(defaultBenefitsData);
 
-      /* Ambil data Spreadsheet secara langsung dengan Cache-Busting */
       fetchSpreadsheetData(false);
-
-      /* Background Auto-Polling (Interval 5 detik) untuk multi-panitia */
       startMultiDeviceAutoSync();
 
       if (window.location.search.indexOf('admin=true') !== -1) {
@@ -1731,6 +1729,18 @@
       if (cfg.Lokasi_Deskripsi) document.getElementById('dynLocDesc').textContent = cfg.Lokasi_Deskripsi;
       if (cfg.Link_Google_Maps) document.getElementById('dynLocMapsBtn').href = cfg.Link_Google_Maps;
       if (cfg.Target_Peserta) document.getElementById('dynCardTarget').textContent = cfg.Target_Peserta;
+
+      /* Nominal Biaya Pendaftaran & Penegasan Nilai Fasilitas */
+      if (cfg.Biaya_Pendaftaran) {
+        var feeEl = document.getElementById('dynBiayaPendaftaran');
+        if (feeEl) feeEl.textContent = cfg.Biaya_Pendaftaran;
+        var btnSub = document.getElementById('btnSubmitForm');
+        if (btnSub) btnSub.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran (' + cfg.Biaya_Pendaftaran + ')';
+      }
+      if (cfg.Highlight_Value_Text) {
+        var hlEl = document.getElementById('dynHighlightValueText');
+        if (hlEl) hlEl.innerHTML = cfg.Highlight_Value_Text;
+      }
 
       /* Foto & Proposal Headless CMS */
       if (cfg.Link_Proposal_PDF) {
@@ -2039,7 +2049,6 @@
           '<div style="font-size:12px; color:#666;">ID: ' + p.id + ' &bull; <i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; <span style="font-weight:700; color:var(--forest-dark);">' + (p.statusPeserta || 'Pelajar') + '</span></div>' +
           '<div style="font-size:12px; color:#555;"><i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>';
 
-        /* Tombol Batalkan Hadir (Jika Salah Scan) */
         if (isHadirView) {
           html += '<div style="margin-top:6px; border-top:1px dashed #E0E5E1; padding-top:6px;">' +
             '<button onclick="revertParticipantPresence(\'' + p.id + '\');" style="background:#FFF0F1; color:#DC3545; border:1px solid #F5C2C7; border-radius:20px; font-size:11.5px; font-weight:700; padding:6px 14px; cursor:pointer; display:inline-flex; align-items:center; gap:5px;" title="Klik jika salah scan">' +
@@ -2236,14 +2245,12 @@
 
       var statObj = getParticipantPresenceThisSession(found);
 
-      // JIKA SUDAH CHECK IN SEBELUMNYA -> POPUP TAMPIL WARNA KUNING AMBER
       if (statObj.isHadir) {
         showToast('Peserta SUDAH check-in pada pukul ' + statObj.time, 'fa-solid fa-triangle-exclamation');
         displayParticipantBioModal(found, statObj.time, 'SUDAH CHECK-IN SEBELUMNYA', true);
         return;
       }
 
-      // CHECK IN BARU SUKSES -> POPUP TAMPIL WARNA HIJAU
       var now = new Date();
       var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
 
@@ -2297,7 +2304,6 @@
       document.getElementById('bioJam').textContent = jam || '-';
 
       if (isDuplicateScan) {
-        // TEMA KUNING / AMBER UNTUK SCAN ULANG
         iconWrap.style.background = '#FFF3CD';
         iconWrap.style.color = '#856404';
         iconSign.className = 'fa-solid fa-triangle-exclamation';
@@ -2305,7 +2311,6 @@
         cardBox.style.background = '#FFFBEA';
         cardBox.style.borderColor = '#FFEBAA';
       } else {
-        // TEMA HIJAU UNTUK SCAN PERTAMA BERHASIL
         iconWrap.style.background = '#D1E7DD';
         iconWrap.style.color = '#0F5132';
         iconSign.className = 'fa-solid fa-check';
@@ -2366,7 +2371,6 @@
           '<div style="font-size:12px; color:#666;"><i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; <i class="fa-solid fa-user-tag"></i> ' + (p.statusPeserta || 'Pelajar') + '</div>' +
           '<div style="font-size:12px; color:#555;"><i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>' +
 
-          /* Indikator Link Google Drive (Diambil langsung dari Spreadsheet) */
           '<div style="background:#F8FAF8; border:1px dashed #D4A373; border-radius:8px; padding:8px 12px; margin-top:4px;">' +
             '<div style="font-size:10.5px; font-weight:800; color:#444; margin-bottom:2px;"><i class="fa-brands fa-google-drive" style="color:#0F9D58;"></i> LINK TIKET GDRIVE (DARI SPREADSHEET):</div>' +
             (hasDriveLink
@@ -2395,7 +2399,6 @@
       container.innerHTML = html;
     }
 
-    /* VERIFIKASI LUNAS: GENERATE PDF DRIVE & TULIS LINK KE SPREADSHEET */
     function verifyParticipantInPage(id) {
       showToast('Membuat PDF E-Ticket resmi di Google Drive...', 'fa-solid fa-spinner fa-spin');
 
@@ -2498,13 +2501,11 @@
       var statusPeserta = (statusInput.value || '').trim();
       var wilayah = (wilayahInput.value || '').trim();
 
-      // 1. Validasi Ketat: Semua Kolom Wajib Diisi
       if (!nama || !email || !wa || !statusPeserta || !wilayah) {
         showToast('Harap lengkapi semua kolom pendaftaran yang wajib diisi!', 'fa-solid fa-triangle-exclamation');
         return;
       }
 
-      // 2. Validasi Format Email
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         showToast('Format email tidak valid (Contoh: aufa@example.com)!', 'fa-solid fa-triangle-exclamation');
@@ -2512,7 +2513,6 @@
         return;
       }
 
-      // 3. Validasi Ketat Nomor WhatsApp (Wajib Diawali Kode Negara dengan Tanda +)
       var cleanWaDigits = wa.replace(/[\s-]/g, '');
       var waRegex = /^\+[1-9]\d{8,14}$/;
       if (!wa.startsWith('+') || !waRegex.test(cleanWaDigits)) {
@@ -2521,7 +2521,6 @@
         return;
       }
 
-      // 4. Validasi Struk Pembayaran Wajib Diunggah
       if (!base64ReceiptPayload || !base64ReceiptPayload.data) {
         showToast('Wajib mengunggah foto struk bukti pembayaran transfer!', 'fa-solid fa-triangle-exclamation');
         return;
@@ -2534,7 +2533,6 @@
       var newSeq = ('000' + (participantsDb.length + 1)).slice(-4);
       var newId = 'CAMP-20261031-' + newSeq;
 
-      // Format nama file bukti transfer: MURNI NAMA PENDAFTAR SAJA
       var ext = 'jpg';
       if (base64ReceiptPayload.name && base64ReceiptPayload.name.lastIndexOf('.') !== -1) {
         ext = base64ReceiptPayload.name.substring(base64ReceiptPayload.name.lastIndexOf('.') + 1);
@@ -2578,7 +2576,8 @@
 
       setTimeout(function() {
         btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran';
+        var feeVal = document.getElementById('dynBiayaPendaftaran') ? document.getElementById('dynBiayaPendaftaran').textContent : '150 TL';
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran (' + feeVal + ')';
 
         document.getElementById('modalRegId').textContent = newId;
         openModal('successModal');
