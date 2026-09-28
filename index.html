@@ -289,7 +289,7 @@
       font-weight: 700;
       line-height: 1.08;
       letter-spacing: 1.5px;
-      margin-bottom: 34px; /* Memberikan ruang napas elegan ke tombol di bawah */
+      margin-bottom: 34px;
       color: #FFFFFF;
     }
 
@@ -624,10 +624,10 @@
     .bank-card {
       background: var(--bg-dark);
       color: #FFFFFF;
-      padding: 18px 20px;
+      padding: 20px;
       border-radius: var(--radius-md);
       margin-bottom: 22px;
-      border: 1px solid var(--gold-sand);
+      border: 1.5px solid var(--gold-sand);
     }
 
     .bank-title {
@@ -635,32 +635,32 @@
       letter-spacing: 1.5px;
       color: var(--gold-sand);
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       font-weight: 700;
     }
 
     .bank-acc {
-      font-size: 16.5px;
+      font-size: 18px;
       font-weight: 800;
       color: #FFFFFF;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
       word-break: break-all;
     }
 
     .form-group-wrap {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 16px;
     }
 
     .form-item {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
 
     .form-item label {
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--bg-dark);
     }
@@ -799,7 +799,6 @@
       overflow-y: auto;
     }
 
-    /* TOP BAR ADMIN LEGA & TANPA TOMBOL SYNC YANG BERHIMPIT */
     .admin-top-bar {
       background: var(--bg-dark);
       color: #FFFFFF;
@@ -958,7 +957,6 @@
       font-weight: 700;
     }
 
-    /* Live Sync Indicator Pill */
     .live-sync-indicator {
       display: inline-flex;
       align-items: center;
@@ -990,7 +988,7 @@
     @media (max-width: 768px) {
       .nav-links-desktop { display: none; }
       .hamburger-toggle { display: inline-flex; }
-      .brand-logo-sub { display: none; } /* Mencegah berhimpit pada mobile */
+      .brand-logo-sub { display: none; }
       .about-grid, .location-banner { grid-template-columns: 1fr; }
       .info-cards-grid, .benefits-grid { grid-template-columns: 1fr; }
       .timeline::before { left: 16px; }
@@ -1116,7 +1114,7 @@
     <a href="#registration" class="btn-hero-primary drawer-link" style="text-align:center; margin-top:16px;">Daftar Sekarang</a>
   </div>
 
-  <!-- HERO SECTION BERSIH (KALIMAT TAGLINE DIHAPUS SESUAI PERMINTAAN) -->
+  <!-- HERO SECTION BERSIH (KALIMAT TAGLINE DIHAPUS TOTAL) -->
   <section class="hero-section" id="hero">
     <div class="hero-container">
       <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" class="hero-clean-logo">
@@ -1199,7 +1197,7 @@
       <div class="loc-content">
         <span class="hero-org-badge" style="width:fit-content; margin-bottom:10px;">Destinasi Pilihan</span>
         <h3 id="dynLocHeading">Danau Alami Hafik Gölü</h3>
-        <p id="dynLocDesc">Danau asri di distrik Hafik yang berjarak sekitar 35 km dari pusat kota Sivas. Menghadirkan udara sejuk, panorama air tenang, dan suasana teduh yang sempurna untuk rehat dari hiruk pikuk kota.</p>
+        <p id="dynLocDesc">Danau asri di distrik Hafik yang berjarak sekitar 35 km dari pusat kota Sivas. Menghadirkan udara sejuk, panorama air tenang, dan suasana teduh yang sempurna untuk rehat dari hiruk pikuk perkuliahan.</p>
         <p style="font-size:12px; color:var(--sage); margin-bottom:18px;">
           <i class="fa-solid fa-bus"></i> Disediakan fasilitas bus rombongan pulang-pergi dari Pusat Kota Sivas.
         </p>
@@ -1213,7 +1211,7 @@
     </div>
   </section>
 
-  <!-- RUNDOWN SECTION (Dihidrasi dari Spreadsheet) -->
+  <!-- RUNDOWN SECTION -->
   <section class="section-wrap" id="rundown">
     <div class="section-header">
       <span class="section-kicker">Susunan Acara Resmi</span>
@@ -1226,7 +1224,7 @@
     </div>
   </section>
 
-  <!-- BENEFITS SECTION (Dihidrasi dari Spreadsheet) -->
+  <!-- BENEFITS SECTION -->
   <section class="section-wrap" id="benefits" style="background:var(--warm-beige); border-radius:var(--radius-lg);">
     <div class="section-header">
       <span class="section-kicker">Fasilitas Peserta</span>
@@ -1239,26 +1237,22 @@
     </div>
   </section>
 
-  <!-- REGISTRATION SECTION -->
+  <!-- REGISTRATION SECTION (HANYA BANK ZIRAAT TURKI - BANK BCA TELAH DIHAPUS) -->
   <section class="section-wrap" id="registration">
     <div class="section-header">
       <span class="section-kicker">Gabung Bersama Kami</span>
       <h2 class="section-title">Formulir Pendaftaran</h2>
-      <p class="section-subtitle">Isi data diri Anda di bawah ini. E-Ticket resmi ber-QR Code akan dikirimkan panitia ke WhatsApp Anda setelah verifikasi pembayaran.</p>
+      <p class="section-subtitle">Isi data diri Anda di bawah ini secara lengkap. E-Ticket resmi ber-QR Code akan dikirimkan panitia ke WhatsApp Anda setelah verifikasi pembayaran.</p>
     </div>
 
     <div class="reg-wrapper">
+      <!-- KARTU PEMBAYARAN MURNI ZIRAAT BANKASI (TÜRKIYE) -->
       <div class="bank-card">
         <div class="bank-title">Tujuan Rekening Resmi PPI Sivas:</div>
-        <div style="margin-bottom:10px;">
-          <div style="font-size:12px; color:var(--gold-sand); font-weight:700;" id="dynBankTRNama">Ziraat Bankası (Türkiye):</div>
+        <div>
+          <div style="font-size:12.5px; color:var(--gold-sand); font-weight:700;" id="dynBankTRNama">Ziraat Bankası (Türkiye):</div>
           <div class="bank-acc" id="dynBankTRIban">TR53 0001 0090 1062 7977 9050 02</div>
-          <div style="font-size:12px; color:#CCC;" id="dynBankTRHolder">a.n. RARA INGRID ADMADJA</div>
-        </div>
-        <div style="border-top:1px dashed rgba(212,163,115,0.4); padding-top:8px;">
-          <div style="font-size:12px; color:var(--gold-sand); font-weight:700;" id="dynBankIDNama">BCA (Bank Central Asia - Indonesia):</div>
-          <div class="bank-acc" id="dynBankIDNoRek">4972107097</div>
-          <div style="font-size:12px; color:#CCC;" id="dynBankIDHolder">a.n. AUFA AZKIA EL FIRDAUSI</div>
+          <div style="font-size:12.5px; color:#E0E5E1; font-weight:600;" id="dynBankTRHolder">a.n. RARA INGRID ADMADJA</div>
         </div>
       </div>
 
@@ -1275,8 +1269,9 @@
           </div>
 
           <div class="form-item">
-            <label for="formWa">Nomor WhatsApp Aktif (Gunakan Kode Negara di Depan) *</label>
+            <label for="formWa">Nomor WhatsApp Aktif (Wajib Gunakan Tanda + dan Kode Negara) *</label>
             <input type="tel" id="formWa" required placeholder="Contoh: +90 507 638 23 58 atau +62 812 7262 9990">
+            <span style="font-size:11px; color:#666;">* Pastikan diawali kode negara dengan tanda + (Contoh: <strong>+90</strong> untuk Turki atau <strong>+62</strong> untuk Indonesia)</span>
           </div>
 
           <div class="form-item">
@@ -1304,7 +1299,7 @@
             <div class="file-drop-box" onclick="document.getElementById('inputReceiptFile').click();">
               <i class="fa-solid fa-cloud-arrow-up" style="font-size:26px; color:var(--gold-sand); margin-bottom:6px;"></i>
               <div style="font-weight:700; font-size:13px;" id="fileLabelText">Pilih Foto Struk Pembayaran (JPG/PNG)</div>
-              <div style="font-size:11px; color:#888;">Maksimal 5MB</div>
+              <div style="font-size:11px; color:#888;">Maksimal 5MB (Format nama file otomatis disesuaikan nama Anda)</div>
               <input type="file" id="inputReceiptFile" accept="image/*" style="display:none;" onchange="handleFileReceipt(event)">
               <img id="receiptPreview" class="file-preview-img" alt="Preview Struk">
             </div>
@@ -1322,7 +1317,7 @@
   <section class="section-wrap" id="contact" style="text-align:center; padding-top:20px;">
     <h2 class="serif-heading" style="font-size:32px; color:var(--bg-dark); margin-bottom:8px;">Hubungi Panitia PPI Sivas</h2>
     <p style="font-size:13.5px; color:#666; max-width:500px; margin:0 auto 20px auto;">
-      Memiliki pertanyaan mengenai kegiatan, rute keberangkatan, atau pendaftaran rombongan?
+      Memiliki pertanyaan mengenai kegiatan, rute keberangkatan bus, atau kebutuhan lainnya?
     </p>
     <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
       <a href="https://wa.me/905076382358?text=Halo%20Panitia%20Camp-nic%20Day%202026%20PPI%20Sivas" target="_blank" rel="noopener" class="btn-hero-primary" id="dynBtnContactWA">
@@ -1354,7 +1349,7 @@
         <i class="fa-solid fa-check"></i>
       </div>
       <h3 style="font-size:22px; color:var(--bg-dark); margin-bottom:4px;">Pendaftaran Diterima!</h3>
-      <p style="font-size:13px; color:#555; margin-bottom:12px;">Data dan bukti transfer Anda berhasil dikirim ke panitia PPI Sivas.</p>
+      <p style="font-size:13px; color:#555; margin-bottom:12px;">Data dan bukti transfer Anda berhasil dikirim ke sistem panitia PPI Sivas.</p>
 
       <div style="background:var(--warm-beige); padding:12px; border-radius:8px; border:1px dashed var(--gold-sand); margin-bottom:14px;">
         <div style="font-size:11px; color:var(--forest-accent); font-weight:700;">ID REGISTRASI ANDA:</div>
@@ -1365,7 +1360,7 @@
       </div>
 
       <p style="font-size:12px; color:#666; margin-bottom:16px;">
-        Panitia akan memeriksa pembayaran Anda. Setelah diverifikasi Lunas, berkas PDF E-Ticket resmi ber-QR Code akan dikirimkan langsung oleh panitia ke WhatsApp Anda.
+        Panitia akan memeriksa pembayaran Anda di Ziraat Bankası. Setelah diverifikasi Lunas, berkas PDF E-Ticket resmi ber-QR Code akan dibuat otomatis di Google Drive dan dikirimkan oleh panitia langsung ke WhatsApp Anda.
       </p>
 
       <button onclick="closeModal('successModal');" class="btn-hero-primary" style="width:100%; justify-content:center;">
@@ -1376,7 +1371,7 @@
 
   <!-- IN-PAGE ADMIN PORTAL (MULTI-PANITIA REAL-TIME SYNC) -->
   <div class="admin-full-overlay" id="inPageAdminPortal">
-    <!-- TOP BAR ADMIN BERSIH: HANYA LOGO, JUDUL, LIVE SYNC, DAN KUNCI (TANPA TOMBOL SYNC YANG BERHIMPIT) -->
+    <!-- TOP BAR ADMIN BERSIH: HANYA LOGO, JUDUL, LIVE SYNC, DAN KUNCI -->
     <div class="admin-top-bar">
       <div class="admin-top-left">
         <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI" style="width:34px; height:34px; object-fit:contain; flex-shrink:0;">
@@ -1428,7 +1423,7 @@
         </div>
       </div>
 
-      <!-- 2 KARTU COUNTER YANG BISA DITEKAN (INTERAKTIF) -->
+      <!-- 2 KARTU COUNTER INTERAKTIF -->
       <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; margin-bottom:16px;">
         <div id="cardHadirToggle" class="interactive-counter-card" onclick="toggleScannerListView('HADIR');" title="Tekan untuk melihat daftar yang sudah hadir">
           <div>
@@ -1519,7 +1514,7 @@
         <i class="fa-solid fa-wallet"></i> Verifikasi Pembayaran & Link Tiket Google Drive
       </h3>
       <p style="font-size:12.5px; color:#666; margin-bottom:14px;">
-        Upload tiket PDF ke Google Drive Anda, tempelkan linknya di Spreadsheet pada kolom <code>Link_PDF_Tiket_GDrive</code>, lalu kirimkan E-Ticket resmi via WhatsApp.
+        Saat Anda klik <strong>Verifikasi Lunas</strong>, sistem langsung membuat PDF E-Ticket resmi di folder Drive Anda, menyimpan link-nya ke Spreadsheet, dan menyiapkan tombol kirim WhatsApp.
       </p>
 
       <div style="display:flex; gap:8px; margin-bottom:14px;">
@@ -1622,7 +1617,7 @@
       renderRundownUI(defaultRundownData);
       renderBenefitsUI(defaultBenefitsData);
 
-      /* Ambil data Spreadsheet secara langsung */
+      /* Ambil data Spreadsheet secara langsung dengan Cache-Busting */
       fetchSpreadsheetData(false);
 
       /* Jalankan Background Auto-Polling (Interval 5 detik) untuk multi-panitia */
@@ -1636,7 +1631,6 @@
     function fetchSpreadsheetData(silent) {
       if (!APPS_SCRIPT_WEBHOOK_URL) return;
 
-      /* Cache-Buster Timestamp untuk memaksa data Google Drive terbaru muncul */
       var cacheBusterUrl = APPS_SCRIPT_WEBHOOK_URL + (APPS_SCRIPT_WEBHOOK_URL.indexOf('?') === -1 ? '?' : '&') + '_t=' + new Date().getTime();
 
       fetch(cacheBusterUrl)
@@ -1648,7 +1642,6 @@
             if (data.benefits && data.benefits.length) renderBenefitsUI(data.benefits);
 
             if (data.participants && data.participants.length) {
-              /* Timpa data lokal dengan data asli dari Spreadsheet */
               participantsDb = data.participants;
               saveDb();
               if (currentScannerViewMode !== 'CAMERA') {
@@ -1656,7 +1649,7 @@
               }
               renderAdminList();
               if (!silent) {
-                showToast('Data Spreadsheet berhasil disinkronkan!', 'fa-solid fa-cloud-arrow-down');
+                showToast('Data Spreadsheet tersinkronisasi!', 'fa-solid fa-cloud-arrow-down');
               }
             }
           }
@@ -1696,14 +1689,10 @@
       if (cfg.Link_Google_Maps) document.getElementById('dynLocMapsBtn').href = cfg.Link_Google_Maps;
       if (cfg.Target_Peserta) document.getElementById('dynCardTarget').textContent = cfg.Target_Peserta;
 
-      /* Bank Info */
+      /* Informasi Rekening Bank Tunggal: Ziraat Bankası */
       if (cfg.Bank_TR_Nama) document.getElementById('dynBankTRNama').textContent = cfg.Bank_TR_Nama + ':';
       if (cfg.Bank_TR_IBAN) document.getElementById('dynBankTRIban').textContent = cfg.Bank_TR_IBAN;
       if (cfg.Bank_TR_AtasNama) document.getElementById('dynBankTRHolder').textContent = 'a.n. ' + cfg.Bank_TR_AtasNama;
-
-      if (cfg.Bank_ID_Nama) document.getElementById('dynBankIDNama').textContent = cfg.Bank_ID_Nama + ':';
-      if (cfg.Bank_ID_NoRek) document.getElementById('dynBankIDNoRek').textContent = cfg.Bank_ID_NoRek;
-      if (cfg.Bank_ID_AtasNama) document.getElementById('dynBankIDHolder').textContent = 'a.n. ' + cfg.Bank_ID_AtasNama;
 
       /* Kontak */
       if (cfg.Kontak_WA) {
@@ -1806,7 +1795,7 @@
         document.getElementById('inPageAdminPortal').style.display = 'flex';
         updateInpageCounters();
         switchInpageWorkflow('SCANNER');
-        showToast('Portal Panitia Terbuka - Kamera Siap', 'fa-solid fa-shield-halved');
+        showToast('Portal Panitia Terbuka', 'fa-solid fa-shield-halved');
         fetchSpreadsheetData(true);
       } else {
         showToast('PIN Akses Salah!', 'fa-solid fa-lock');
@@ -2022,7 +2011,6 @@
       saveDb();
       renderScannerListDetail();
 
-      /* Sinkronkan ke Google Spreadsheet via Webhook */
       if (APPS_SCRIPT_WEBHOOK_URL) {
         fetch(APPS_SCRIPT_WEBHOOK_URL, {
           method: 'POST',
@@ -2192,7 +2180,6 @@
         renderScannerListDetail();
       }
 
-      /* Sync ke Google Sheets via Webhook */
       if (APPS_SCRIPT_WEBHOOK_URL) {
         fetch(APPS_SCRIPT_WEBHOOK_URL, {
           method: 'POST',
@@ -2261,7 +2248,6 @@
         var badgeBg = isLunas ? '#D1E7DD' : '#FFF3CD';
         var badgeColor = isLunas ? '#0F5132' : '#664D03';
 
-        /* Evaluasi Keberadaan Link Google Drive dari Spreadsheet */
         var rawLink = (p.linkPdf || '').trim();
         var hasDriveLink = (rawLink !== '' && rawLink !== '-' && (rawLink.indexOf('http') === 0 || rawLink.indexOf('drive.google.com') !== -1));
 
@@ -2274,19 +2260,19 @@
           '<div style="font-size:12px; color:#666;"><i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; <i class="fa-solid fa-user-tag"></i> ' + (p.statusPeserta || 'Pelajar') + '</div>' +
           '<div style="font-size:12px; color:#555;"><i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>' +
 
-          /* Indikator Link Google Drive (Diambil langsung dari Spreadsheet via Cache-Buster) */
+          /* Indikator Link Google Drive (Diambil langsung dari Spreadsheet) */
           '<div style="background:#F8FAF8; border:1px dashed #D4A373; border-radius:8px; padding:8px 12px; margin-top:4px;">' +
             '<div style="font-size:10.5px; font-weight:800; color:#444; margin-bottom:2px;"><i class="fa-brands fa-google-drive" style="color:#0F9D58;"></i> LINK TIKET GDRIVE (DARI SPREADSHEET):</div>' +
             (hasDriveLink
               ? '<a href="' + rawLink + '" target="_blank" style="font-size:11.5px; color:#0B5ED7; text-decoration:underline; word-break:break-all; font-weight:600;">' + rawLink + '</a>'
-              : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Isi di kolom Link_PDF_Tiket_GDrive pada spreadsheet)</div>') +
+              : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Klik "Verifikasi Lunas" untuk generate otomatis ke Drive)</div>') +
           '</div>' +
 
           '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:10px; margin-top:6px;">';
 
         if (!isLunas) {
           html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:12px; font-weight:700; padding:9px 12px; cursor:pointer;">' +
-                    '<i class="fa-solid fa-check"></i> Verifikasi Lunas' +
+                    '<i class="fa-solid fa-check"></i> Verifikasi Lunas & Buat PDF Drive' +
                   '</button>';
         }
 
@@ -2299,10 +2285,15 @@
       container.innerHTML = html;
     }
 
+    /* VERIFIKASI LUNAS: LANGSUNG GENERATE PDF DI SERVER DRIVE & UPDATE SPREADSHEET */
     function verifyParticipantInPage(id) {
+      showToast('Membuat PDF E-Ticket resmi di Google Drive...', 'fa-solid fa-spinner fa-spin');
+
+      var found = null;
       for (var i = 0; i < participantsDb.length; i++) {
         if (participantsDb[i].id === id) {
-          participantsDb[i].statusBayar = 'Terverifikasi Lunas';
+          found = participantsDb[i];
+          found.statusBayar = 'Terverifikasi Lunas';
           break;
         }
       }
@@ -2312,13 +2303,24 @@
       if (APPS_SCRIPT_WEBHOOK_URL) {
         fetch(APPS_SCRIPT_WEBHOOK_URL, {
           method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'UPDATE_PDF_LINK', id: id })
-        }).catch(function(){});
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'VERIFY_PAYMENT', id: id })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(resData) {
+          if (resData && resData.success && resData.pdfUrl) {
+            if (found) found.linkPdf = resData.pdfUrl;
+            saveDb();
+            renderAdminList();
+            showToast('Lunas! PDF berhasil dibuat & link Drive tersimpan.', 'fa-solid fa-circle-check');
+          } else {
+            showToast('Verifikasi dicatat! Link PDF sedang diproses Google Drive.', 'fa-solid fa-circle-info');
+          }
+        })
+        .catch(function() {
+          showToast('Peserta ' + id + ' diverifikasi Lunas!', 'fa-solid fa-circle-check');
+        });
       }
-
-      showToast('Peserta ' + id + ' diverifikasi Lunas!', 'fa-solid fa-circle-check');
     }
 
     function sendWhatsappTicketWithDriveLink(id) {
@@ -2337,7 +2339,7 @@
                rawLink + '\n\n' +
                'Harap simpan file tiket ini di ponsel Anda dan tunjukkan barcode-nya kepada panitia saat naik bus di titik kumpul.\n\n';
       } else {
-        msg += 'Panitia sedang menyiapkan berkas PDF E-Ticket resmi ber-QR Code Anda dan akan segera mengunggahnya ke database. Tunjukkan ID registrasi ini saat berkumpul.\n\n';
+        msg += 'Panitia sedang menyiapkan berkas PDF E-Ticket resmi ber-QR Code Anda di Google Drive. Tunjukkan ID registrasi ini saat berkumpul.\n\n';
         showToast('Catatan: Link Google Drive belum diisi di spreadsheet!', 'fa-solid fa-triangle-exclamation');
       }
 
@@ -2362,17 +2364,52 @@
         var prev = document.getElementById('receiptPreview');
         prev.src = evt.target.result;
         prev.style.display = 'inline-block';
-        document.getElementById('fileLabelText').textContent = 'File: ' + file.name;
+        document.getElementById('fileLabelText').textContent = 'File terpilih: ' + file.name;
       };
       r.readAsDataURL(file);
     }
 
     function submitRegistration() {
-      var nama = document.getElementById('formNama').value.trim();
-      var email = document.getElementById('formEmail').value.trim();
-      var wa = document.getElementById('formWa').value.trim();
-      var statusPeserta = document.getElementById('formStatus').value;
-      var wilayah = document.getElementById('formWilayah').value;
+      var namaInput = document.getElementById('formNama');
+      var emailInput = document.getElementById('formEmail');
+      var waInput = document.getElementById('formWa');
+      var statusInput = document.getElementById('formStatus');
+      var wilayahInput = document.getElementById('formWilayah');
+
+      var nama = (namaInput.value || '').trim();
+      var email = (emailInput.value || '').trim();
+      var wa = (waInput.value || '').trim();
+      var statusPeserta = (statusInput.value || '').trim();
+      var wilayah = (wilayahInput.value || '').trim();
+
+      // 1. Validasi Ketat: Semua Kolom Wajib Diisi
+      if (!nama || !email || !wa || !statusPeserta || !wilayah) {
+        showToast('Harap lengkapi semua kolom pendaftaran yang wajib diisi!', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+
+      // 2. Validasi Format Email
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showToast('Format email tidak valid (Contoh: aufa@example.com)!', 'fa-solid fa-triangle-exclamation');
+        emailInput.focus();
+        return;
+      }
+
+      // 3. Validasi Ketat Nomor WhatsApp (Wajib Diawali Kode Negara dengan Tanda +)
+      var cleanWaDigits = wa.replace(/[\s-]/g, '');
+      var waRegex = /^\+[1-9]\d{8,14}$/;
+      if (!wa.startsWith('+') || !waRegex.test(cleanWaDigits)) {
+        showToast('Nomor WA wajib diawali kode negara dengan tanda + (Contoh: +90 507 638 23 58 atau +62 812 7262 9990)!', 'fa-solid fa-triangle-exclamation');
+        waInput.focus();
+        return;
+      }
+
+      // 4. Validasi Struk Pembayaran Wajib Diunggah
+      if (!base64ReceiptPayload || !base64ReceiptPayload.data) {
+        showToast('Wajib mengunggah foto struk bukti pembayaran transfer!', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
 
       var btn = document.getElementById('btnSubmitForm');
       btn.disabled = true;
@@ -2381,10 +2418,17 @@
       var newSeq = ('000' + (participantsDb.length + 1)).slice(-4);
       var newId = 'CAMP-20261031-' + newSeq;
 
+      // Format nama file bukti transfer: MURNI NAMA PENDAFTAR SAJA
+      var ext = 'jpg';
+      if (base64ReceiptPayload.name && base64ReceiptPayload.name.lastIndexOf('.') !== -1) {
+        ext = base64ReceiptPayload.name.substring(base64ReceiptPayload.name.lastIndexOf('.') + 1);
+      }
+      var cleanFileName = nama.replace(/[/\\?%*:|"<>]/g, '').trim() + '.' + ext;
+
       var newRecord = {
         action: 'SUBMIT_REGISTRATION',
         id: newId,
-        timestamp: '31/10/2026 09:00:00',
+        timestamp: UtilitiesFormatDateNow_(),
         nama: nama,
         email: email,
         wa: wa,
@@ -2396,7 +2440,7 @@
         timeBerangkat: '-',
         hadirPulang: false,
         timePulang: '-',
-        fileName: base64ReceiptPayload.name,
+        fileName: cleanFileName,
         fileBase64: base64ReceiptPayload.data
       };
 
@@ -2424,9 +2468,17 @@
         document.getElementById('participantForm').reset();
         document.getElementById('receiptPreview').style.display = 'none';
         document.getElementById('fileLabelText').textContent = 'Pilih Foto Struk Pembayaran (JPG/PNG)';
+        base64ReceiptPayload = { name: '', data: '' };
 
-        showToast('Pendaftaran Anda berhasil dicatat!', 'fa-solid fa-circle-check');
+        showToast('Pendaftaran Anda berhasil dikirim ke panitia!', 'fa-solid fa-circle-check');
       }, 500);
+    }
+
+    function UtilitiesFormatDateNow_() {
+      var d = new Date();
+      var pad = function(n) { return (n < 10 ? '0' : '') + n; };
+      return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() + ' ' +
+             pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
     }
   </script>
 </body>
