@@ -29,6 +29,7 @@
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 24px;
+      --radius-pill: 40px;
       --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.12);
       --shadow-gold: 0 8px 24px rgba(212, 163, 115, 0.28);
     }
@@ -63,21 +64,35 @@
       color: inherit;
     }
 
+    /* NAVBAR MELAYANG DENGAN LEKUKAN & TRANSPARANSI DINAMIS */
     .navbar {
-      position: sticky;
-      top: 0;
-      width: 100%;
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 1040px;
       z-index: 1000;
-      background: rgba(15, 35, 24, 0.96);
+      background: rgba(15, 35, 24, 0.65);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(212, 163, 115, 0.2);
+      border: 1px solid rgba(212, 163, 115, 0.28);
+      border-radius: var(--radius-pill);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar.scrolled {
+      top: 10px;
+      background: rgba(15, 35, 24, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-color: rgba(212, 163, 115, 0.45);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
     }
 
     .nav-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 14px 20px;
+      padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -92,8 +107,8 @@
     }
 
     .brand-logo-img {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       object-fit: contain;
       background: transparent !important;
       border: none !important;
@@ -105,7 +120,7 @@
 
     .brand-logo-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 21px;
+      font-size: 20px;
       font-weight: 700;
       color: #FFFFFF;
       letter-spacing: 1.2px;
@@ -113,7 +128,7 @@
     }
 
     .brand-logo-sub {
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--gold-sand);
       letter-spacing: 0.5px;
       display: block;
@@ -147,7 +162,7 @@
       background: linear-gradient(135deg, var(--gold-sand), var(--gold-hover));
       color: #0F2318;
       font-weight: 800;
-      padding: 8px 18px;
+      padding: 7px 18px;
       border-radius: 25px;
       font-size: 12px;
       text-transform: uppercase;
@@ -155,7 +170,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 38px;
+      min-height: 36px;
       border: none;
       box-shadow: var(--shadow-gold);
       transition: all 0.2s;
@@ -171,8 +186,8 @@
       border: none;
       color: var(--gold-sand);
       font-size: 24px;
-      min-width: 42px;
-      min-height: 42px;
+      min-width: 40px;
+      min-height: 40px;
       cursor: pointer;
       align-items: center;
       justify-content: center;
@@ -242,12 +257,12 @@
 
     .hero-section {
       position: relative;
-      min-height: calc(100vh - 72px);
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 60px 20px 80px 20px;
+      padding: 120px 20px 80px 20px;
       background: linear-gradient(180deg, rgba(15, 35, 24, 0.84) 0%, rgba(15, 35, 24, 0.96) 100%),
                   url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
       color: #FFFFFF;
@@ -612,19 +627,98 @@
       line-height: 1.5;
     }
 
-    .proposal-banner-box {
-      background: #FFFFFF;
-      border-radius: var(--radius-lg);
-      padding: 26px 22px;
+    /* REDESAIN BANNER VALUE ALA IKLAN MODERN (DIRECT & EYE-CATCHING) */
+    .ad-deal-banner {
+      margin-top: 28px;
+      background: linear-gradient(135deg, rgba(20, 46, 32, 0.98), rgba(15, 35, 24, 0.98));
       border: 1.5px solid var(--gold-sand);
-      box-shadow: var(--shadow-soft);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 18px rgba(212, 163, 115, 0.22);
       text-align: center;
-      gap: 12px;
-      max-width: 680px;
-      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ad-deal-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(212, 163, 115, 0.14) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .ad-deal-text {
+      font-size: clamp(16px, 4.2vw, 22px);
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.45;
+      z-index: 1;
+    }
+
+    .ad-old-val {
+      text-decoration: line-through;
+      color: #A6BBAA;
+      font-weight: 700;
+      margin: 0 4px;
+    }
+
+    .ad-new-val {
+      color: var(--gold-sand);
+      font-weight: 800;
+      font-size: 1.16em;
+      text-shadow: 0 0 12px rgba(212, 163, 115, 0.45);
+      margin-left: 4px;
+    }
+
+    /* TOMBOL BULAT MELAYANG UNDUH PROPOSAL (FAB) */
+    .fab-proposal-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      z-index: 1200;
+      background: linear-gradient(135deg, var(--gold-sand), var(--gold-hover));
+      color: #0F2318;
+      padding: 12px 20px;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35), 0 0 15px rgba(212,163,115,0.4);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .fab-proposal-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45), 0 0 22px rgba(212,163,115,0.6);
+    }
+
+    @media (max-width: 600px) {
+      .fab-proposal-btn {
+        width: 52px;
+        height: 52px;
+        padding: 0;
+        border-radius: 50%;
+        bottom: 20px;
+        right: 18px;
+        font-size: 20px;
+      }
+      .fab-proposal-btn span {
+        display: none;
+      }
     }
 
     .reg-wrapper {
@@ -742,6 +836,7 @@
       border: 1px solid var(--sage);
     }
 
+    /* TOMBOL KIRIM FORMULIR BERSIH (TANPA EMBEL-EMBEL 150 TL) */
     .btn-submit-form {
       background: linear-gradient(135deg, var(--forest-accent), var(--bg-dark));
       color: var(--gold-sand);
@@ -757,6 +852,12 @@
       min-height: 50px;
       margin-top: 12px;
       box-shadow: var(--shadow-gold);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-submit-form:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212, 163, 115, 0.4);
     }
 
     footer {
@@ -1046,6 +1147,13 @@
   <!-- Single-Slot Toast Floating Alert -->
   <div class="toast-box" id="toastContainer"></div>
 
+  <!-- TOMBOL BULAT MELAYANG (FAB) UNDUH PROPOSAL RESMI -->
+  <a href="https://drive.google.com" target="_blank" rel="noopener" id="dynFloatingProposalBtn" class="fab-proposal-btn" title="Unduh Proposal Resmi (PDF)">
+    <i class="fa-solid fa-file-pdf"></i>
+    <span>Proposal (PDF)</span>
+  </a>
+
+  <!-- MODAL GERBANG PIN KEAMANAN PANITIA -->
   <div class="custom-modal" id="pinGateModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('pinGateModal');">&times;</button>
@@ -1060,6 +1168,7 @@
     </div>
   </div>
 
+  <!-- MODAL HASIL SCAN (HIJAU: BARU, KUNING: SUDAH PERNAH SCAN) -->
   <div class="custom-modal" id="scanBioModal">
     <div class="modal-card" style="text-align:left; max-width:420px;">
       <div style="text-align:center; margin-bottom:12px;">
@@ -1109,7 +1218,8 @@
     </div>
   </div>
 
-  <nav class="navbar">
+  <!-- NAVBAR MELAYANG DENGAN LEKUKAN ELEGAN -->
+  <nav class="navbar" id="floatingNavbar">
     <div class="nav-container">
       <div class="brand-logo-wrap" id="brandLogoTrigger" title="Ketuk 3x untuk Panel Panitia">
         <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="Logo PPI Sivas" class="brand-logo-img">
@@ -1124,7 +1234,6 @@
         <li><a href="#location">Destinasi</a></li>
         <li><a href="#rundown">Rundown</a></li>
         <li><a href="#benefits">Fasilitas</a></li>
-        <li><a href="#proposal">Proposal</a></li>
         <li><a href="#registration">Pendaftaran</a></li>
         <li><a href="#contact">Kontak</a></li>
       </ul>
@@ -1148,9 +1257,9 @@
       <li><a href="#location" class="drawer-link">Destinasi</a></li>
       <li><a href="#rundown" class="drawer-link">Rundown</a></li>
       <li><a href="#benefits" class="drawer-link">Fasilitas</a></li>
-      <li><a href="#proposal" class="drawer-link">Proposal</a></li>
       <li><a href="#registration" class="drawer-link">Pendaftaran</a></li>
       <li><a href="#contact" class="drawer-link">Kontak</a></li>
+      <li><a href="https://drive.google.com" target="_blank" rel="noopener" id="dynDrawerProposalLink" class="drawer-link" style="color:var(--gold-sand);"><i class="fa-solid fa-file-pdf"></i> Unduh Proposal</a></li>
     </ul>
     <a href="#registration" class="btn-hero-primary drawer-link" style="text-align:center; margin-top:16px;">Daftar Sekarang</a>
   </div>
@@ -1261,21 +1370,6 @@
     </div>
   </section>
 
-  <section class="section-wrap" id="proposal" style="padding-top:0;">
-    <div class="proposal-banner-box">
-      <i class="fa-solid fa-file-pdf" style="font-size:38px; color:var(--gold-sand);"></i>
-      <div>
-        <h3 style="font-size:22px; color:var(--bg-dark); font-weight:700;">Proposal Resmi Kegiatan</h3>
-        <p style="font-size:13px; color:#555; max-width:480px; margin:4px auto 0 auto;">
-          Unduh dokumen proposal resmi Camp-nic Day 2026 untuk informasi teknis, latar belakang, dan transparansi kegiatan PPI Sivas.
-        </p>
-      </div>
-      <a href="https://drive.google.com" target="_blank" rel="noopener" class="btn-hero-primary" id="dynLinkProposal" style="margin-top:6px;">
-        <i class="fa-solid fa-download"></i> Unduh Proposal Resmi (PDF)
-      </a>
-    </div>
-  </section>
-
   <section class="section-wrap" id="benefits" style="background:var(--warm-beige); border-radius:var(--radius-lg);">
     <div class="section-header">
       <span class="section-kicker">Fasilitas Peserta</span>
@@ -1287,13 +1381,10 @@
       <!-- Diisi otomatis dari Spreadsheet via Webhook / Fallback Default -->
     </div>
 
-    <!-- HIGHLIGHT VALUE BANNER DI BAWAH FASILITAS EKSKLUSIF -->
-    <div style="margin-top:28px; background:var(--forest-dark); border:1.5px solid var(--gold-sand); border-radius:var(--radius-md); padding:20px 22px; text-align:center; box-shadow:var(--shadow-soft);">
-      <div style="font-size:11.5px; color:var(--gold-sand); font-weight:800; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:5px;">
-        <i class="fa-solid fa-gem"></i> NILAI INVESTASI KEGIATAN
-      </div>
-      <div style="font-size:clamp(16px, 4.2vw, 22px); font-weight:800; color:#FFFFFF; line-height:1.4;" id="dynHighlightValueText">
-        Dapatkan Fasilitas Senilai &gt;250 TL Hanya dengan Bayar 150 TL
+    <!-- REDESAIN BANNER VALUE FASILITAS (LANGSUNG FOKUS ALA IKLAN MODERN) -->
+    <div class="ad-deal-banner" id="dynHighlightBannerWrap">
+      <div class="ad-deal-text" id="dynHighlightValueText">
+        Dapatkan Fasilitas Senilai <span class="ad-old-val">&gt;250 TL</span> Hanya dengan <span class="ad-new-val">150 TL</span>
       </div>
     </div>
   </section>
@@ -1396,8 +1487,9 @@
           </div>
         </div>
 
+        <!-- TOMBOL KIRIM BERSIH TANPA NOMINAL (150 TL) -->
         <button type="submit" class="btn-submit-form" id="btnSubmitForm">
-          <i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran (150 TL)
+          <i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran
         </button>
       </form>
     </div>
@@ -1429,6 +1521,7 @@
     </div>
   </footer>
 
+  <!-- MODAL SUKSES PENDAFTARAN (TEKS RINGKAS & JELAS) -->
   <div class="custom-modal" id="successModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('successModal');">&times;</button>
@@ -1456,6 +1549,7 @@
     </div>
   </div>
 
+  <!-- PANEL PANITIA PPI SIVAS (IN-PAGE FULL OVERLAY) -->
   <div class="admin-full-overlay" id="inPageAdminPortal">
     <div class="admin-top-bar">
       <div class="admin-top-left">
@@ -1747,6 +1841,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       setupDrawer();
       setupSecretTrigger();
+      setupNavbarScroll();
       renderRundownUI(defaultRundownData);
       renderBenefitsUI(defaultBenefitsData);
 
@@ -1757,6 +1852,20 @@
         openPinModal();
       }
     });
+
+    /* EFEK TRANSPARANSI DINAMIS HEADER MELAYANG SAAT DISCROLL */
+    function setupNavbarScroll() {
+      var nav = document.getElementById('floatingNavbar');
+      if (!nav) return;
+
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 40) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+    }
 
     function fetchSpreadsheetData(silent) {
       if (!APPS_SCRIPT_WEBHOOK_URL) return;
@@ -1819,23 +1928,34 @@
       if (cfg.Link_Google_Maps) document.getElementById('dynLocMapsBtn').href = cfg.Link_Google_Maps;
       if (cfg.Target_Peserta) document.getElementById('dynCardTarget').textContent = cfg.Target_Peserta;
 
-      /* Nominal Biaya Pendaftaran & Penegasan Nilai Fasilitas */
+      /* Nominal Biaya Pendaftaran */
       if (cfg.Biaya_Pendaftaran) {
         var feeEl = document.getElementById('dynBiayaPendaftaran');
         if (feeEl) feeEl.textContent = cfg.Biaya_Pendaftaran;
-        var btnSub = document.getElementById('btnSubmitForm');
-        if (btnSub) btnSub.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran (' + cfg.Biaya_Pendaftaran + ')';
-      }
-      if (cfg.Highlight_Value_Text) {
-        var hlEl = document.getElementById('dynHighlightValueText');
-        if (hlEl) hlEl.innerHTML = cfg.Highlight_Value_Text;
       }
 
-      /* Foto & Proposal Headless CMS */
-      if (cfg.Link_Proposal_PDF) {
-        var propBtn = document.getElementById('dynLinkProposal');
-        if (propBtn) propBtn.href = cfg.Link_Proposal_PDF;
+      /* Teks Penegasan Nilai Fasilitas (Langsung Fokus Tanpa Judul Kaku) */
+      if (cfg.Highlight_Value_Text) {
+        var hlEl = document.getElementById('dynHighlightValueText');
+        if (hlEl) {
+          // Menyesuaikan format tampilan iklan modern jika memuat pola >250 TL dan 150 TL
+          var rawTxt = cfg.Highlight_Value_Text;
+          if (rawTxt.indexOf('>250 TL') !== -1 && rawTxt.indexOf('150 TL') !== -1) {
+            hlEl.innerHTML = 'Dapatkan Fasilitas Senilai <span class="ad-old-val">&gt;250 TL</span> Hanya dengan <span class="ad-new-val">150 TL</span>';
+          } else {
+            hlEl.innerHTML = rawTxt;
+          }
+        }
       }
+
+      /* Tombol Melayang Proposal Resmi (FAB) & Link Mobile Drawer */
+      if (cfg.Link_Proposal_PDF) {
+        var propFab = document.getElementById('dynFloatingProposalBtn');
+        if (propFab) propFab.href = cfg.Link_Proposal_PDF;
+        var drawerProp = document.getElementById('dynDrawerProposalLink');
+        if (drawerProp) drawerProp.href = cfg.Link_Proposal_PDF;
+      }
+
       if (cfg.Foto_Hero_URL) {
         var heroEl = document.getElementById('hero');
         if (heroEl) {
@@ -2334,12 +2454,14 @@
 
       var statObj = getParticipantPresenceThisSession(found);
 
+      // KUNING AMBER: JIKA PESERTA SUDAH PERNAH CHECK-IN SEBELUMNYA
       if (statObj.isHadir) {
         showToast('Peserta SUDAH check-in pada pukul ' + statObj.time, 'fa-solid fa-triangle-exclamation');
         displayParticipantBioModal(found, statObj.time, 'SUDAH CHECK-IN SEBELUMNYA', true);
         return;
       }
 
+      // HIJAU: CHECK-IN BARU BERHASIL
       var now = new Date();
       var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
 
@@ -2665,8 +2787,8 @@
 
       setTimeout(function() {
         btn.disabled = false;
-        var feeVal = document.getElementById('dynBiayaPendaftaran') ? document.getElementById('dynBiayaPendaftaran').textContent : '150 TL';
-        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran (' + feeVal + ')';
+        // Tombol dikembalikan bersih tanpa embel-embel nominal (150 TL)
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran';
 
         document.getElementById('modalRegId').textContent = newId;
         openModal('successModal');
