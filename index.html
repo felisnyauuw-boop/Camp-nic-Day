@@ -121,7 +121,7 @@
 
     .nav-links-desktop {
       display: flex;
-      gap: 22px;
+      gap: 20px;
       list-style: none;
       align-items: center;
     }
@@ -228,7 +228,7 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .drawer-menu-list a {
@@ -251,6 +251,7 @@
       background: linear-gradient(180deg, rgba(15, 35, 24, 0.84) 0%, rgba(15, 35, 24, 0.96) 100%),
                   url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
       color: #FFFFFF;
+      transition: background-image 0.5s ease;
     }
 
     .hero-container {
@@ -611,6 +612,21 @@
       line-height: 1.5;
     }
 
+    .proposal-banner-box {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 26px 22px;
+      border: 1.5px solid var(--gold-sand);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
     .reg-wrapper {
       background: #FFFFFF;
       border-radius: var(--radius-lg);
@@ -789,6 +805,39 @@
       cursor: pointer;
     }
 
+    .toast-box {
+      position: fixed;
+      top: 18px;
+      left: 16px;
+      right: 16px;
+      z-index: 4000;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .toast-alert {
+      background: var(--bg-dark);
+      color: var(--warm-cream);
+      border-left: 4px solid var(--gold-sand);
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      max-width: 480px;
+      width: 100%;
+      animation: fadeInToast 0.25s ease-out;
+    }
+
+    @keyframes fadeInToast {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .admin-full-overlay {
       position: fixed;
       inset: 0;
@@ -831,7 +880,7 @@
       display: flex;
       border-bottom: 2px solid #DCE3DE;
       position: sticky;
-      top: 68px;
+      top: 64px;
       z-index: 95;
       box-shadow: 0 3px 10px rgba(0,0,0,0.04);
     }
@@ -864,12 +913,14 @@
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(212, 163, 115, 0.4);
       color: #FFF;
-      padding: 9px 12px;
+      padding: 9px 8px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
+      flex: 1;
+      text-align: center;
     }
 
     .session-badge-pill.active {
@@ -877,40 +928,6 @@
       color: #0F2318;
       border-color: var(--gold-sand);
       box-shadow: 0 4px 12px rgba(212, 163, 115, 0.3);
-    }
-
-    /* Single-Slot Toast Floating Alert */
-    .toast-box {
-      position: fixed;
-      top: 18px;
-      left: 16px;
-      right: 16px;
-      z-index: 4000;
-      display: flex;
-      justify-content: center;
-      pointer-events: none;
-    }
-
-    .toast-alert {
-      background: var(--bg-dark);
-      color: var(--warm-cream);
-      border-left: 4px solid var(--gold-sand);
-      padding: 12px 18px;
-      border-radius: 8px;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      pointer-events: auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      max-width: 480px;
-      width: 100%;
-      animation: fadeInToast 0.25s ease-out;
-    }
-
-    @keyframes fadeInToast {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .interactive-counter-card {
@@ -1003,13 +1020,13 @@
   <!-- Single-Slot Toast Floating Alert -->
   <div class="toast-box" id="toastContainer"></div>
 
-  <!-- MODAL PIN GERBANG RAHASIA (MURNI RAHASIA PANITIA - TANPA TEKS DEFAULT) -->
+  <!-- MODAL PIN GERBANG RAHASIA (MURNI RAHASIA PANITIA) -->
   <div class="custom-modal" id="pinGateModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('pinGateModal');">&times;</button>
       <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" style="width:52px; height:52px; object-fit:contain; margin:0 auto 8px auto; display:block;">
       <h3 style="font-size:20px; font-weight:700; margin-bottom:4px;">Akses Panel Panitia</h3>
-      <p style="font-size:12px; color:#666; margin-bottom:16px;">Masukkan PIN Akses Panitia untuk membuka Scanner & Presensi Bus.</p>
+      <p style="font-size:12px; color:#666; margin-bottom:16px;">Masukkan PIN Akses Panitia untuk membuka Scanner Presensi.</p>
       
       <form onsubmit="event.preventDefault(); verifyAdminPin();">
         <input type="password" id="inputAdminPin" placeholder="••••" style="width:100%; padding:10px; border:1px solid #CCC; border-radius:8px; text-align:center; font-size:22px; letter-spacing:6px; margin-bottom:14px;" required>
@@ -1018,20 +1035,20 @@
     </div>
   </div>
 
-  <!-- MODAL POPUP BIODATA LENGKAP SAAT DISCAN -->
+  <!-- MODAL POPUP BIODATA LENGKAP SAAT DISCAN (HIJAU: BARU HADIR | KUNING: SCAN ULANG) -->
   <div class="custom-modal" id="scanBioModal">
     <div class="modal-card" style="text-align:left; max-width:420px;">
       <div style="text-align:center; margin-bottom:12px;">
-        <div style="width:52px; height:52px; background:#D1E7DD; color:#0F5132; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:24px;">
-          <i class="fa-solid fa-check"></i>
+        <div id="bioIconWrap" style="width:52px; height:52px; background:#D1E7DD; color:#0F5132; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:24px;">
+          <i id="bioIconSign" class="fa-solid fa-check"></i>
         </div>
-        <h3 style="font-size:20px; font-weight:800; color:var(--forest-dark); margin-top:6px;" id="bioModalTitle">CHECK-IN BERHASIL!</h3>
+        <h3 style="font-size:19px; font-weight:800; color:var(--forest-dark); margin-top:6px;" id="bioModalTitle">CHECK-IN BERHASIL!</h3>
         <span style="background:var(--forest-dark); color:var(--gold-sand); font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px;" id="bioBadgeSesi">
-          Sesi 1: Berangkat Pagi
+          Absensi Pertama
         </span>
       </div>
 
-      <div style="background:var(--warm-beige); border:1px solid var(--gold-sand); border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px; font-size:13px;">
+      <div id="bioDetailCardBox" style="background:var(--warm-beige); border:1px solid var(--gold-sand); border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px; font-size:13px;">
         <div>
           <div style="font-size:10.5px; color:#777; font-weight:700; text-transform:uppercase;">ID REGISTRASI</div>
           <div style="font-weight:800; font-size:15px; color:var(--forest-accent);" id="bioId">-</div>
@@ -1081,9 +1098,10 @@
 
       <ul class="nav-links-desktop">
         <li><a href="#about">Tentang</a></li>
-        <li><a href="#location">Lokasi</a></li>
+        <li><a href="#location">Destinasi</a></li>
         <li><a href="#rundown">Rundown</a></li>
         <li><a href="#benefits">Fasilitas</a></li>
+        <li><a href="#proposal">Proposal</a></li>
         <li><a href="#registration">Pendaftaran</a></li>
         <li><a href="#contact">Kontak</a></li>
       </ul>
@@ -1095,7 +1113,7 @@
     </div>
   </nav>
 
-  <!-- MOBILE DRAWER -->
+  <!-- MOBILE DRAWER DENGAN MENU RAMPING SESUAI INSTRUKSI -->
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <div class="mobile-drawer" id="mobileDrawer">
     <button class="drawer-close" id="drawerCloseBtn" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
@@ -1104,12 +1122,13 @@
       <div style="font-family:'Cormorant Garamond'; font-size:20px; color:var(--gold-sand); font-weight:700;">CAMP-NIC 2026</div>
     </div>
     <ul class="drawer-menu-list">
-      <li><a href="#about" class="drawer-link">Tentang Kegiatan</a></li>
-      <li><a href="#location" class="drawer-link">Destinasi Hafik Gölü</a></li>
-      <li><a href="#rundown" class="drawer-link">Rundown 12 Sesi</a></li>
-      <li><a href="#benefits" class="drawer-link">Fasilitas & Keunggulan</a></li>
-      <li><a href="#registration" class="drawer-link">Formulir Pendaftaran</a></li>
-      <li><a href="#contact" class="drawer-link">Kontak Panitia</a></li>
+      <li><a href="#about" class="drawer-link">Tentang</a></li>
+      <li><a href="#location" class="drawer-link">Destinasi</a></li>
+      <li><a href="#rundown" class="drawer-link">Rundown</a></li>
+      <li><a href="#benefits" class="drawer-link">Fasilitas</a></li>
+      <li><a href="#proposal" class="drawer-link">Proposal</a></li>
+      <li><a href="#registration" class="drawer-link">Pendaftaran</a></li>
+      <li><a href="#contact" class="drawer-link">Kontak</a></li>
     </ul>
     <a href="#registration" class="btn-hero-primary drawer-link" style="text-align:center; margin-top:16px;">Daftar Sekarang</a>
   </div>
@@ -1154,8 +1173,8 @@
       </div>
 
       <div class="about-gallery-grid">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80" alt="Kemah Alam">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=600&q=80" class="img-offset" alt="Danau Hafik Sivas">
+        <img id="dynImgAbout1" loading="lazy" src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80" alt="Kemah Alam">
+        <img id="dynImgAbout2" loading="lazy" src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=600&q=80" class="img-offset" alt="Danau Hafik Sivas">
       </div>
     </div>
 
@@ -1206,7 +1225,7 @@
         </a>
       </div>
       <div class="loc-image-wrap">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Hafik Gölü">
+        <img id="dynImgDestinasi" loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Hafik Gölü">
       </div>
     </div>
   </section>
@@ -1224,6 +1243,22 @@
     </div>
   </section>
 
+  <!-- PROPOSAL SECTION -->
+  <section class="section-wrap" id="proposal" style="padding-top:0;">
+    <div class="proposal-banner-box">
+      <i class="fa-solid fa-file-pdf" style="font-size:38px; color:var(--gold-sand);"></i>
+      <div>
+        <h3 style="font-size:22px; color:var(--bg-dark); font-weight:700;">Proposal Resmi Kegiatan</h3>
+        <p style="font-size:13px; color:#555; max-width:480px; margin:4px auto 0 auto;">
+          Unduh dokumen proposal resmi Camp-nic Day 2026 untuk informasi teknis, latar belakang, dan transparansi kegiatan PPI Sivas.
+        </p>
+      </div>
+      <a href="https://drive.google.com" target="_blank" rel="noopener" class="btn-hero-primary" id="dynLinkProposal" style="margin-top:6px;">
+        <i class="fa-solid fa-download"></i> Unduh Proposal Resmi (PDF)
+      </a>
+    </div>
+  </section>
+
   <!-- BENEFITS SECTION -->
   <section class="section-wrap" id="benefits" style="background:var(--warm-beige); border-radius:var(--radius-lg);">
     <div class="section-header">
@@ -1237,7 +1272,7 @@
     </div>
   </section>
 
-  <!-- REGISTRATION SECTION (HANYA BANK ZIRAAT TURKI - BANK BCA TELAH DIHAPUS) -->
+  <!-- REGISTRATION SECTION (HANYA BANK ZIRAAT TURKI) -->
   <section class="section-wrap" id="registration">
     <div class="section-header">
       <span class="section-kicker">Gabung Bersama Kami</span>
@@ -1341,7 +1376,7 @@
     </div>
   </footer>
 
-  <!-- MODAL PENDAFTARAN SUKSES -->
+  <!-- MODAL PENDAFTARAN SUKSES DENGAN TEKS RINGKAS RESMI -->
   <div class="custom-modal" id="successModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('successModal');">&times;</button>
@@ -1359,8 +1394,8 @@
         </div>
       </div>
 
-      <p style="font-size:12px; color:#666; margin-bottom:16px;">
-        Panitia akan memeriksa pembayaran Anda di Ziraat Bankası. Setelah diverifikasi Lunas, berkas PDF E-Ticket resmi ber-QR Code akan dibuat otomatis di Google Drive dan dikirimkan oleh panitia langsung ke WhatsApp Anda.
+      <p style="font-size:12.5px; color:#555; line-height:1.5; margin-bottom:16px;">
+        Panitia akan memeriksa pembayaran Anda di Ziraat Bankası. Setelah pembayaran terverifikasi, file PDF E-Ticket resmi akan dikirimkan langsung melalui WhatsApp Anda.
       </p>
 
       <button onclick="closeModal('successModal');" class="btn-hero-primary" style="width:100%; justify-content:center;">
@@ -1369,15 +1404,15 @@
     </div>
   </div>
 
-  <!-- IN-PAGE ADMIN PORTAL (MULTI-PANITIA REAL-TIME SYNC) -->
+  <!-- IN-PAGE ADMIN PORTAL (MULTI-PANITIA REAL-TIME SYNC & 3 SESI ABSENSI) -->
   <div class="admin-full-overlay" id="inPageAdminPortal">
-    <!-- TOP BAR ADMIN BERSIH: HANYA LOGO, JUDUL, LIVE SYNC, DAN KUNCI (TANPA TOMBOL SYNC YANG BERHIMPIT) -->
+    <!-- TOP BAR ADMIN LEGA & BERSIH TANPA TEKS BERDESAKAN -->
     <div class="admin-top-bar">
       <div class="admin-top-left">
         <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI" style="width:34px; height:34px; object-fit:contain; flex-shrink:0;">
         <div style="min-width:0;">
-          <div style="font-size:13px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">PANEL PANITIA PPI SIVAS</div>
-          <div style="font-size:10.5px; color:var(--gold-sand);">Camp-nic Day 2026 &bull; Hafik Gölü</div>
+          <div style="font-size:13.5px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">PANEL PANITIA PPI SIVAS</div>
+          <div style="font-size:10.5px; color:var(--gold-sand);">Camp-nic Day 2026</div>
         </div>
       </div>
       <div class="admin-top-right">
@@ -1403,22 +1438,25 @@
     <!-- MODE 1: SCANNER & PRESENSI HARI-H -->
     <div id="inpageSecScanner" style="padding:16px; max-width:900px; margin:0 auto; width:100%;">
 
-      <!-- PILIH SESI ABSENSI -->
+      <!-- PILIH 3 SESI ABSENSI FLEKSIBEL (1, 2, 3) -->
       <div style="background:var(--forest-dark); padding:14px; border-radius:14px; border:1px solid var(--gold-sand); margin-bottom:14px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <span style="font-size:11px; font-weight:700; color:var(--gold-sand); text-transform:uppercase;">
             <i class="fa-solid fa-clock-rotate-left"></i> SESI ABSENSI AKTIF:
           </span>
           <span style="font-size:11px; color:#FFF; background:rgba(255,255,255,0.12); padding:3px 10px; border-radius:12px;" id="inpageSessionLabel">
-            Sesi 1: Berangkat Pagi
+            Sesi 1: Absensi Pertama
           </span>
         </div>
-        <div style="display:flex; gap:8px;">
-          <button id="inpageSesiBerangkat" class="session-badge-pill active" style="flex:1;" onclick="setInpageSession('BERANGKAT');">
-            <i class="fa-solid fa-bus"></i> 1. Berangkat (Pagi)
+        <div style="display:flex; gap:6px;">
+          <button id="inpageSesi1" class="session-badge-pill active" onclick="setInpageSession('1');">
+            1. Absensi Pertama
           </button>
-          <button id="inpageSesiPulang" class="session-badge-pill" style="flex:1;" onclick="setInpageSession('PULANG');">
-            <i class="fa-solid fa-moon"></i> 2. Pulang (Malam)
+          <button id="inpageSesi2" class="session-badge-pill" onclick="setInpageSession('2');">
+            2. Absensi Kedua
+          </button>
+          <button id="inpageSesi3" class="session-badge-pill" onclick="setInpageSession('3');">
+            3. Absensi Ketiga
           </button>
         </div>
       </div>
@@ -1427,7 +1465,7 @@
       <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; margin-bottom:16px;">
         <div id="cardHadirToggle" class="interactive-counter-card" onclick="toggleScannerListView('HADIR');" title="Tekan untuk melihat daftar yang sudah hadir">
           <div>
-            <div style="font-size:11px; font-weight:700; color:#666;" id="inpageLblHadir">Hadir (Berangkat)</div>
+            <div style="font-size:11px; font-weight:700; color:#666;" id="inpageLblHadir">Hadir (Sesi 1)</div>
             <div style="font-size:26px; font-weight:800; color:#0F5132;" id="inpageValHadir">0</div>
             <div style="font-size:10px; color:#0F5132; font-weight:700; margin-top:2px;"><i class="fa-solid fa-list-check"></i> Tekan untuk list</div>
           </div>
@@ -1436,7 +1474,7 @@
 
         <div id="cardBelumToggle" class="interactive-counter-card" onclick="toggleScannerListView('BELUM');" title="Tekan untuk melihat daftar yang belum hadir">
           <div>
-            <div style="font-size:11px; font-weight:700; color:#666;" id="inpageLblBelum">Belum Hadir (Berangkat)</div>
+            <div style="font-size:11px; font-weight:700; color:#666;" id="inpageLblBelum">Belum Hadir (Sesi 1)</div>
             <div style="font-size:26px; font-weight:800; color:#DC3545;" id="inpageValBelum">0</div>
             <div style="font-size:10px; color:#DC3545; font-weight:700; margin-top:2px;"><i class="fa-solid fa-list-ul"></i> Tekan untuk list</div>
           </div>
@@ -1476,7 +1514,7 @@
         </div>
       </div>
 
-      <!-- VIEW B: DAFTAR NAMA DETAIL (PANCARIAN CEPAT, FILTER STATUS, & REVERT) -->
+      <!-- VIEW B: DAFTAR NAMA DETAIL DENGAN PENCARIAN CEPAT & FILTER STATUS -->
       <div id="scannerListDetailView" style="display:none;">
         <div style="background:#FFF; padding:14px 18px; border-radius:12px; border:1px solid #DCE3DE; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
           <div>
@@ -1543,7 +1581,7 @@
     var inPageScannerInstance = null;
     var isInpageCamRunning = false;
     var currentCameraFacing = 'environment';
-    var inpageSession = 'BERANGKAT';
+    var inpageSession = '1'; // '1', '2', atau '3'
     var inpageStatusFilter = 'ALL';
     var brandTapCounter = 0;
     var brandTapTimer = null;
@@ -1625,7 +1663,7 @@
       /* Ambil data Spreadsheet secara langsung dengan Cache-Busting */
       fetchSpreadsheetData(false);
 
-      /* Jalankan Background Auto-Polling (Interval 5 detik) untuk multi-panitia */
+      /* Background Auto-Polling (Interval 5 detik) untuk multi-panitia */
       startMultiDeviceAutoSync();
 
       if (window.location.search.indexOf('admin=true') !== -1) {
@@ -1693,6 +1731,30 @@
       if (cfg.Lokasi_Deskripsi) document.getElementById('dynLocDesc').textContent = cfg.Lokasi_Deskripsi;
       if (cfg.Link_Google_Maps) document.getElementById('dynLocMapsBtn').href = cfg.Link_Google_Maps;
       if (cfg.Target_Peserta) document.getElementById('dynCardTarget').textContent = cfg.Target_Peserta;
+
+      /* Foto & Proposal Headless CMS */
+      if (cfg.Link_Proposal_PDF) {
+        var propBtn = document.getElementById('dynLinkProposal');
+        if (propBtn) propBtn.href = cfg.Link_Proposal_PDF;
+      }
+      if (cfg.Foto_Hero_URL) {
+        var heroEl = document.getElementById('hero');
+        if (heroEl) {
+          heroEl.style.backgroundImage = 'linear-gradient(180deg, rgba(15, 35, 24, 0.84) 0%, rgba(15, 35, 24, 0.96) 100%), url("' + cfg.Foto_Hero_URL + '")';
+        }
+      }
+      if (cfg.Foto_About_1) {
+        var imgAb1 = document.getElementById('dynImgAbout1');
+        if (imgAb1) imgAb1.src = cfg.Foto_About_1;
+      }
+      if (cfg.Foto_About_2) {
+        var imgAb2 = document.getElementById('dynImgAbout2');
+        if (imgAb2) imgAb2.src = cfg.Foto_About_2;
+      }
+      if (cfg.Foto_Destinasi) {
+        var imgDest = document.getElementById('dynImgDestinasi');
+        if (imgDest) imgDest.src = cfg.Foto_Destinasi;
+      }
 
       /* Informasi Rekening Bank Tunggal: Ziraat Bankası */
       if (cfg.Bank_TR_Nama) document.getElementById('dynBankTRNama').textContent = cfg.Bank_TR_Nama + ':';
@@ -1836,38 +1898,50 @@
     }
 
     function setInpageSession(sessionKey) {
-      inpageSession = sessionKey;
-      var btnBerangkat = document.getElementById('inpageSesiBerangkat');
-      var btnPulang = document.getElementById('inpageSesiPulang');
+      inpageSession = String(sessionKey);
+      var btn1 = document.getElementById('inpageSesi1');
+      var btn2 = document.getElementById('inpageSesi2');
+      var btn3 = document.getElementById('inpageSesi3');
       var lblBadge = document.getElementById('inpageSessionLabel');
 
-      if (sessionKey === 'BERANGKAT') {
-        btnBerangkat.classList.add('active');
-        btnPulang.classList.remove('active');
-        lblBadge.textContent = 'Sesi 1: Berangkat Pagi';
-        document.getElementById('inpageLblHadir').textContent = 'Hadir (Berangkat)';
-        document.getElementById('inpageLblBelum').textContent = 'Belum Hadir (Berangkat)';
-      } else {
-        btnPulang.classList.add('active');
-        btnBerangkat.classList.remove('active');
-        lblBadge.textContent = 'Sesi 2: Pulang Malam';
-        document.getElementById('inpageLblHadir').textContent = 'Hadir (Kepulangan)';
-        document.getElementById('inpageLblBelum').textContent = 'Belum Hadir (Kepulangan)';
+      btn1.classList.remove('active');
+      btn2.classList.remove('active');
+      btn3.classList.remove('active');
+
+      var labelText = 'Sesi ' + inpageSession + ': Absensi Ke-' + inpageSession;
+      if (inpageSession === '1') {
+        btn1.classList.add('active');
+        labelText = 'Sesi 1: Absensi Pertama';
+      } else if (inpageSession === '2') {
+        btn2.classList.add('active');
+        labelText = 'Sesi 2: Absensi Kedua';
+      } else if (inpageSession === '3') {
+        btn3.classList.add('active');
+        labelText = 'Sesi 3: Absensi Ketiga';
       }
+
+      lblBadge.textContent = labelText;
+      document.getElementById('inpageLblHadir').textContent = 'Hadir (Sesi ' + inpageSession + ')';
+      document.getElementById('inpageLblBelum').textContent = 'Belum Hadir (Sesi ' + inpageSession + ')';
 
       updateInpageCounters();
       if (currentScannerViewMode !== 'CAMERA') {
         renderScannerListDetail();
       }
-      showToast('Beralih ke ' + (sessionKey === 'BERANGKAT' ? 'Sesi 1: Keberangkatan' : 'Sesi 2: Kepulangan (Hitungan mulai dari 0)'), 'fa-solid fa-clock-rotate-left');
+      showToast('Beralih ke ' + labelText, 'fa-solid fa-clock-rotate-left');
+    }
+
+    function getParticipantPresenceThisSession(p) {
+      if (inpageSession === '2') return { isHadir: p.hadir2 || false, time: p.time2 || '-' };
+      if (inpageSession === '3') return { isHadir: p.hadir3 || false, time: p.time3 || '-' };
+      return { isHadir: p.hadir1 || false, time: p.time1 || '-' };
     }
 
     function updateInpageCounters() {
       var hadir = 0, belum = 0;
       for (var i = 0; i < participantsDb.length; i++) {
-        var p = participantsDb[i];
-        var isHadirThisSession = (inpageSession === 'BERANGKAT') ? p.hadirBerangkat : p.hadirPulang;
-        if (isHadirThisSession) hadir++;
+        var statusObj = getParticipantPresenceThisSession(participantsDb[i]);
+        if (statusObj.isHadir) hadir++;
         else belum++;
       }
       document.getElementById('inpageValHadir').textContent = hadir;
@@ -1923,15 +1997,15 @@
       var searchQuery = (searchInput ? searchInput.value : '').toLowerCase().trim();
 
       var isHadirView = (currentScannerViewMode === 'LIST_HADIR');
-      var sessionTitle = (inpageSession === 'BERANGKAT') ? 'Keberangkatan Pagi' : 'Kepulangan Malam';
+      var sessionTitle = 'Absensi Ke-' + inpageSession;
 
       titleEl.innerHTML = isHadirView
         ? '<i class="fa-solid fa-user-check" style="color:#0F5132;"></i> Peserta Sudah Hadir (' + sessionTitle + ')'
         : '<i class="fa-solid fa-user-clock" style="color:#DC3545;"></i> Peserta Belum Hadir (' + sessionTitle + ')';
 
       var list = participantsDb.filter(function(it) {
-        var isHadirThisSession = (inpageSession === 'BERANGKAT') ? it.hadirBerangkat : it.hadirPulang;
-        var matchPresence = isHadirView ? isHadirThisSession : !isHadirThisSession;
+        var stat = getParticipantPresenceThisSession(it);
+        var matchPresence = isHadirView ? stat.isHadir : !stat.isHadir;
         var matchStatusFilter = (inpageStatusFilter === 'ALL' || (it.statusPeserta || 'Pelajar / Mahasiswa') === inpageStatusFilter);
 
         var matchSearch = true;
@@ -1953,14 +2027,14 @@
       var html = '';
       for (var i = 0; i < list.length; i++) {
         var p = list[i];
-        var checkinTime = (inpageSession === 'BERANGKAT') ? p.timeBerangkat : p.timePulang;
+        var checkinTime = getParticipantPresenceThisSession(p).time;
 
         html += '<div style="background:#FFF; border-radius:12px; border:1px solid #DCE3DE; padding:14px; margin-bottom:10px; font-size:13px; display:flex; flex-direction:column; gap:5px;">' +
           '<div style="display:flex; justify-content:space-between; align-items:center;">' +
             '<strong style="font-size:14px;">' + p.nama + '</strong>' +
             (isHadirView
               ? '<span style="color:#0F5132; background:#D1E7DD; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;"><i class="fa-solid fa-clock"></i> Pukul ' + checkinTime + '</span>'
-              : '<span style="color:#DC3545; background:#FFE5E7; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">Belum Masuk Bus</span>') +
+              : '<span style="color:#DC3545; background:#FFE5E7; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">Belum Hadir</span>') +
           '</div>' +
           '<div style="font-size:12px; color:#666;">ID: ' + p.id + ' &bull; <i class="fa-solid fa-location-dot"></i> ' + (p.wilayah || 'Sivas') + ' &bull; <span style="font-weight:700; color:var(--forest-dark);">' + (p.statusPeserta || 'Pelajar') + '</span></div>' +
           '<div style="font-size:12px; color:#555;"><i class="fa-brands fa-whatsapp"></i> ' + p.wa + '</div>';
@@ -1974,9 +2048,7 @@
           '</div>';
         } else {
           var cleanPhone = p.wa.replace(/[^0-9]/g, '');
-          var waText = (inpageSession === 'BERANGKAT')
-            ? ('Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas ingin mengonfirmasi apakah Anda sudah berada di titik kumpul bus pagi?')
-            : ('Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas mendata kepulangan bus dari Hafik Gölü. Apakah Anda sudah berada di area kumpul bus?');
+          var waText = 'Halo ' + p.nama + ', kami dari panitia Camp-nic Day 2026 PPI Sivas ingin mengonfirmasi presensi kehadiran Anda pada Sesi ' + inpageSession + '. Apakah Anda sudah berada di lokasi?';
           var waUrl = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(waText);
 
           html += '<div style="display:flex; gap:8px; margin-top:6px;">' +
@@ -2005,12 +2077,15 @@
 
       if (!found) return;
 
-      if (inpageSession === 'BERANGKAT') {
-        found.hadirBerangkat = false;
-        found.timeBerangkat = '-';
+      if (inpageSession === '2') {
+        found.hadir2 = false;
+        found.time2 = '-';
+      } else if (inpageSession === '3') {
+        found.hadir3 = false;
+        found.time3 = '-';
       } else {
-        found.hadirPulang = false;
-        found.timePulang = '-';
+        found.hadir1 = false;
+        found.time1 = '-';
       }
 
       saveDb();
@@ -2029,7 +2104,7 @@
         }).catch(function(){});
       }
 
-      showToast('Kehadiran ' + found.nama + ' dibatalkan (Belum Hadir)', 'fa-solid fa-rotate-left');
+      showToast('Kehadiran ' + found.nama + ' dibatalkan di Spreadsheet', 'fa-solid fa-rotate-left');
     }
 
     function startInPageRearScanner() {
@@ -2159,25 +2234,28 @@
         return;
       }
 
-      var sessionTitle = inpageSession === 'BERANGKAT' ? 'Keberangkatan Pagi' : 'Kepulangan Malam';
-      var alreadyChecked = (inpageSession === 'BERANGKAT') ? found.hadirBerangkat : found.hadirPulang;
-      var previousTime = (inpageSession === 'BERANGKAT') ? found.timeBerangkat : found.timePulang;
+      var statObj = getParticipantPresenceThisSession(found);
 
-      if (alreadyChecked) {
-        showToast('Peserta SUDAH check-in pada pukul ' + previousTime, 'fa-solid fa-circle-info');
-        displayParticipantBioModal(found, previousTime, 'SUDAH CHECK-IN');
+      // JIKA SUDAH CHECK IN SEBELUMNYA -> POPUP TAMPIL WARNA KUNING AMBER
+      if (statObj.isHadir) {
+        showToast('Peserta SUDAH check-in pada pukul ' + statObj.time, 'fa-solid fa-triangle-exclamation');
+        displayParticipantBioModal(found, statObj.time, 'SUDAH CHECK-IN SEBELUMNYA', true);
         return;
       }
 
+      // CHECK IN BARU SUKSES -> POPUP TAMPIL WARNA HIJAU
       var now = new Date();
       var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
 
-      if (inpageSession === 'BERANGKAT') {
-        found.hadirBerangkat = true;
-        found.timeBerangkat = timeStr;
+      if (inpageSession === '2') {
+        found.hadir2 = true;
+        found.time2 = timeStr;
+      } else if (inpageSession === '3') {
+        found.hadir3 = true;
+        found.time3 = timeStr;
       } else {
-        found.hadirPulang = true;
-        found.timePulang = timeStr;
+        found.hadir1 = true;
+        found.time1 = timeStr;
       }
 
       saveDb();
@@ -2199,19 +2277,42 @@
         }).catch(function(){});
       }
 
-      showToast('Hadir: ' + found.nama + ' (' + sessionTitle + ')', 'fa-solid fa-check');
-      displayParticipantBioModal(found, timeStr, 'CHECK-IN BERHASIL!');
+      showToast('Hadir: ' + found.nama + ' (Sesi ' + inpageSession + ')', 'fa-solid fa-check');
+      displayParticipantBioModal(found, timeStr, 'CHECK-IN BERHASIL!', false);
     }
 
-    function displayParticipantBioModal(p, jam, statusText) {
-      document.getElementById('bioModalTitle').textContent = statusText;
-      document.getElementById('bioBadgeSesi').textContent = (inpageSession === 'BERANGKAT') ? 'Sesi 1: Keberangkatan Pagi' : 'Sesi 2: Kepulangan Malam';
+    function displayParticipantBioModal(p, jam, statusText, isDuplicateScan) {
+      var iconWrap = document.getElementById('bioIconWrap');
+      var iconSign = document.getElementById('bioIconSign');
+      var titleEl = document.getElementById('bioModalTitle');
+      var cardBox = document.getElementById('bioDetailCardBox');
+
+      titleEl.textContent = statusText;
+      document.getElementById('bioBadgeSesi').textContent = 'Absensi Ke-' + inpageSession;
       document.getElementById('bioId').textContent = p.id;
       document.getElementById('bioNama').textContent = p.nama;
       document.getElementById('bioStatus').textContent = p.statusPeserta || 'Pelajar';
       document.getElementById('bioWilayah').textContent = (p.wilayah || 'Sivas') + ' (Turki)';
       document.getElementById('bioWa').textContent = p.wa;
       document.getElementById('bioJam').textContent = jam || '-';
+
+      if (isDuplicateScan) {
+        // TEMA KUNING / AMBER UNTUK SCAN ULANG
+        iconWrap.style.background = '#FFF3CD';
+        iconWrap.style.color = '#856404';
+        iconSign.className = 'fa-solid fa-triangle-exclamation';
+        titleEl.style.color = '#856404';
+        cardBox.style.background = '#FFFBEA';
+        cardBox.style.borderColor = '#FFEBAA';
+      } else {
+        // TEMA HIJAU UNTUK SCAN PERTAMA BERHASIL
+        iconWrap.style.background = '#D1E7DD';
+        iconWrap.style.color = '#0F5132';
+        iconSign.className = 'fa-solid fa-check';
+        titleEl.style.color = 'var(--forest-dark)';
+        cardBox.style.background = 'var(--warm-beige)';
+        cardBox.style.borderColor = 'var(--gold-sand)';
+      }
 
       openModal('scanBioModal');
     }
@@ -2270,7 +2371,7 @@
             '<div style="font-size:10.5px; font-weight:800; color:#444; margin-bottom:2px;"><i class="fa-brands fa-google-drive" style="color:#0F9D58;"></i> LINK TIKET GDRIVE (DARI SPREADSHEET):</div>' +
             (hasDriveLink
               ? '<a href="' + rawLink + '" target="_blank" style="font-size:11.5px; color:#0B5ED7; text-decoration:underline; word-break:break-all; font-weight:600;">' + rawLink + '</a>'
-              : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Klik tombol generate untuk isi otomatis ke Drive)</div>') +
+              : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Klik "Verifikasi Lunas" untuk buat otomatis ke Drive)</div>') +
           '</div>' +
 
           '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:10px; margin-top:6px;">';
@@ -2280,7 +2381,6 @@
                     '<i class="fa-solid fa-check"></i> Verifikasi Lunas & Buat PDF Drive' +
                   '</button>';
         } else if (!hasDriveLink) {
-          /* Jika sudah lunas namun link belum terisi, sediakan tombol buat/tarik link */
           html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; background:#0B5ED7; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer;">' +
                     '<i class="fa-brands fa-google-drive"></i> Buat / Tarik Link Drive' +
                   '</button>';
@@ -2295,7 +2395,7 @@
       container.innerHTML = html;
     }
 
-    /* VERIFIKASI LUNAS: GENERATE PDF DI SERVER DRIVE, TULIS KE SHEET, DAN TARIK KEMBALI LINK SECARA CORS-SAFE */
+    /* VERIFIKASI LUNAS: GENERATE PDF DRIVE & TULIS LINK KE SPREADSHEET */
     function verifyParticipantInPage(id) {
       showToast('Membuat PDF E-Ticket resmi di Google Drive...', 'fa-solid fa-spinner fa-spin');
 
@@ -2329,7 +2429,6 @@
           console.log('Menunggu sinkronisasi Spreadsheet GET:', err);
         })
         .finally(function() {
-          /* Dual-Stage Auto-Fetch GET (CORS-Safe) untuk menarik link terbaru yang baru saja disimpan di Spreadsheet */
           setTimeout(function() {
             fetchSpreadsheetData(true);
             setTimeout(function() {
@@ -2354,7 +2453,7 @@
       if (hasLink) {
         msg += 'Silakan unduh berkas resmi PDF E-Ticket ber-QR Code Anda melalui tautan Google Drive resmi berikut:\n' +
                rawLink + '\n\n' +
-               'Harap simpan file tiket ini di ponsel Anda dan tunjukkan barcode-nya kepada panitia saat naik bus di titik kumpul.\n\n';
+               'Harap simpan file tiket ini di ponsel Anda dan tunjukkan barcode-nya kepada panitia saat presensi absensi kegiatan.\n\n';
       } else {
         msg += 'Panitia sedang menyiapkan berkas PDF E-Ticket resmi ber-QR Code Anda di Google Drive. Tunjukkan ID registrasi ini saat berkumpul.\n\n';
         showToast('Catatan: Link Google Drive belum diisi di spreadsheet!', 'fa-solid fa-triangle-exclamation');
@@ -2453,10 +2552,12 @@
         wilayah: wilayah,
         statusBayar: 'Menunggu Verifikasi',
         linkPdf: '-',
-        hadirBerangkat: false,
-        timeBerangkat: '-',
-        hadirPulang: false,
-        timePulang: '-',
+        hadir1: false,
+        time1: '-',
+        hadir2: false,
+        time2: '-',
+        hadir3: false,
+        time3: '-',
         fileName: cleanFileName,
         fileBase64: base64ReceiptPayload.data
       };
