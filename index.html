@@ -1371,7 +1371,7 @@
 
   <!-- IN-PAGE ADMIN PORTAL (MULTI-PANITIA REAL-TIME SYNC) -->
   <div class="admin-full-overlay" id="inPageAdminPortal">
-    <!-- TOP BAR ADMIN BERSIH: HANYA LOGO, JUDUL, LIVE SYNC, DAN KUNCI -->
+    <!-- TOP BAR ADMIN BERSIH: HANYA LOGO, JUDUL, LIVE SYNC, DAN KUNCI (TANPA TOMBOL SYNC YANG BERHIMPIT) -->
     <div class="admin-top-bar">
       <div class="admin-top-left">
         <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI" style="width:34px; height:34px; object-fit:contain; flex-shrink:0;">
@@ -1476,7 +1476,7 @@
         </div>
       </div>
 
-      <!-- VIEW B: DAFTAR NAMA DETAIL (PENCARIAN CEPAT, FILTER STATUS, & REVERT) -->
+      <!-- VIEW B: DAFTAR NAMA DETAIL (PANCARIAN CEPAT, FILTER STATUS, & REVERT) -->
       <div id="scannerListDetailView" style="display:none;">
         <div style="background:#FFF; padding:14px 18px; border-radius:12px; border:1px solid #DCE3DE; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
           <div>
@@ -1510,11 +1510,16 @@
 
     <!-- MODE 2: KELOLA PEMBAYARAN & LINK GOOGLE DRIVE -->
     <div id="inpageSecPayment" style="padding:16px; max-width:900px; margin:0 auto; width:100%; display:none;">
-      <h3 style="font-size:18px; color:var(--forest-dark); font-weight:700; margin-bottom:4px;">
-        <i class="fa-solid fa-wallet"></i> Verifikasi Pembayaran & Link Tiket Google Drive
-      </h3>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <h3 style="font-size:18px; color:var(--forest-dark); font-weight:700;">
+          <i class="fa-solid fa-wallet"></i> Verifikasi Pembayaran & Link Tiket Google Drive
+        </h3>
+        <button onclick="fetchSpreadsheetData(false);" style="background:#E2E8F0; color:#333; border:none; padding:6px 12px; border-radius:16px; font-size:11px; font-weight:700; cursor:pointer;" title="Perbarui dari Spreadsheet">
+          <i class="fa-solid fa-rotate"></i> Muat Ulang
+        </button>
+      </div>
       <p style="font-size:12.5px; color:#666; margin-bottom:14px;">
-        Saat Anda klik <strong>Verifikasi Lunas</strong>, sistem langsung membuat PDF E-Ticket resmi di folder Drive Anda, menyimpan link-nya ke Spreadsheet, dan menyiapkan tombol kirim WhatsApp.
+        Klik <strong>Verifikasi Lunas</strong> untuk otomatis mencetak PDF ke Google Drive dan mengisi link di Spreadsheet, atau klik <strong>Kirim Tiket via WA</strong> setelah link terisi.
       </p>
 
       <div style="display:flex; gap:8px; margin-bottom:14px;">
@@ -2265,7 +2270,7 @@
             '<div style="font-size:10.5px; font-weight:800; color:#444; margin-bottom:2px;"><i class="fa-brands fa-google-drive" style="color:#0F9D58;"></i> LINK TIKET GDRIVE (DARI SPREADSHEET):</div>' +
             (hasDriveLink
               ? '<a href="' + rawLink + '" target="_blank" style="font-size:11.5px; color:#0B5ED7; text-decoration:underline; word-break:break-all; font-weight:600;">' + rawLink + '</a>'
-              : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Klik "Verifikasi Lunas" untuk generate otomatis ke Drive)</div>') +
+              : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Klik tombol generate untuk isi otomatis ke Drive)</div>') +
           '</div>' +
 
           '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:10px; margin-top:6px;">';
@@ -2273,6 +2278,11 @@
         if (!isLunas) {
           html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:12px; font-weight:700; padding:9px 12px; cursor:pointer;">' +
                     '<i class="fa-solid fa-check"></i> Verifikasi Lunas & Buat PDF Drive' +
+                  '</button>';
+        } else if (!hasDriveLink) {
+          /* Jika sudah lunas namun link belum terisi, sediakan tombol buat/tarik link */
+          html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; background:#0B5ED7; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer;">' +
+                    '<i class="fa-brands fa-google-drive"></i> Buat / Tarik Link Drive' +
                   '</button>';
         }
 
@@ -2285,7 +2295,7 @@
       container.innerHTML = html;
     }
 
-    /* VERIFIKASI LUNAS: LANGSUNG GENERATE PDF DI SERVER DRIVE & UPDATE SPREADSHEET */
+    /* VERIFIKASI LUNAS: GENERATE PDF DI SERVER DRIVE, TULIS KE SHEET, DAN TARIK KEMBALI LINK SECARA CORS-SAFE */
     function verifyParticipantInPage(id) {
       showToast('Membuat PDF E-Ticket resmi di Google Drive...', 'fa-solid fa-spinner fa-spin');
 
@@ -2313,12 +2323,19 @@
             saveDb();
             renderAdminList();
             showToast('Lunas! PDF berhasil dibuat & link Drive tersimpan.', 'fa-solid fa-circle-check');
-          } else {
-            showToast('Verifikasi dicatat! Link PDF sedang diproses Google Drive.', 'fa-solid fa-circle-info');
           }
         })
-        .catch(function() {
-          showToast('Peserta ' + id + ' diverifikasi Lunas!', 'fa-solid fa-circle-check');
+        .catch(function(err) {
+          console.log('Menunggu sinkronisasi Spreadsheet GET:', err);
+        })
+        .finally(function() {
+          /* Dual-Stage Auto-Fetch GET (CORS-Safe) untuk menarik link terbaru yang baru saja disimpan di Spreadsheet */
+          setTimeout(function() {
+            fetchSpreadsheetData(true);
+            setTimeout(function() {
+              fetchSpreadsheetData(false);
+            }, 2000);
+          }, 2500);
         });
       }
     }
