@@ -656,11 +656,37 @@
     }
 
     .bank-acc {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       color: #FFFFFF;
-      margin-bottom: 4px;
+      letter-spacing: 0.5px;
       word-break: break-all;
+    }
+
+    .btn-copy-quick {
+      background: rgba(212, 163, 115, 0.16);
+      border: 1px solid var(--gold-sand);
+      color: var(--gold-sand);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-copy-quick:hover {
+      background: var(--gold-sand);
+      color: #0F2318;
+      transform: translateY(-1px);
+    }
+
+    .btn-copy-quick:active {
+      transform: scale(0.96);
     }
 
     .form-group-wrap {
@@ -1280,9 +1306,9 @@
     </div>
 
     <div class="reg-wrapper">
-      <!-- KARTU PEMBAYARAN MURNI ZIRAAT BANKASI BESERTA BIAYA PENDAFTARAN 150 TL -->
+      <!-- KARTU PEMBAYARAN ZIRAAT BANKASI BESERTA FITUR SALIN CEPAT IBAN & NAMA -->
       <div class="bank-card">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:12px; border-bottom:1px dashed rgba(212, 163, 115, 0.4); padding-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:14px; border-bottom:1px dashed rgba(212, 163, 115, 0.4); padding-bottom:12px;">
           <div>
             <div class="bank-title" style="margin-bottom:2px;">Biaya Pendaftaran / Partisipasi:</div>
             <div style="font-size:26px; font-weight:800; color:var(--gold-sand);" id="dynBiayaPendaftaran">150 TL</div>
@@ -1292,11 +1318,31 @@
           </div>
         </div>
 
-        <div class="bank-title">Tujuan Rekening Resmi PPI Sivas:</div>
-        <div>
+        <div class="bank-title" style="margin-bottom:8px;">Tujuan Rekening Resmi PPI Sivas:</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
           <div style="font-size:12.5px; color:var(--gold-sand); font-weight:700;" id="dynBankTRNama">Ziraat Bankası (Türkiye):</div>
-          <div class="bank-acc" id="dynBankTRIban">TR53 0001 0090 1062 7977 9050 02</div>
-          <div style="font-size:12.5px; color:#E0E5E1; font-weight:600;" id="dynBankTRHolder">a.n. RARA INGRID ADMADJA</div>
+          
+          <!-- Baris Salin IBAN Cepat -->
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:rgba(255,255,255,0.06); padding:10px 14px; border-radius:10px; border:1px solid rgba(212, 163, 115, 0.28);">
+            <div>
+              <div style="font-size:10px; color:var(--gold-sand); font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">NOMOR IBAN:</div>
+              <div class="bank-acc" id="dynBankTRIban">TR53 0001 0090 1062 7977 9050 02</div>
+            </div>
+            <button type="button" class="btn-copy-quick" onclick="copyIbanToClipboard();" title="Salin nomor IBAN">
+              <i class="fa-regular fa-copy"></i> Salin IBAN
+            </button>
+          </div>
+
+          <!-- Baris Salin Nama Rekening Cepat -->
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:rgba(255,255,255,0.06); padding:10px 14px; border-radius:10px; border:1px solid rgba(212, 163, 115, 0.28);">
+            <div>
+              <div style="font-size:10px; color:var(--gold-sand); font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">ATAS NAMA:</div>
+              <div style="font-size:14px; color:#FFFFFF; font-weight:800;" id="dynBankTRHolder">RARA INGRID ADMADJA</div>
+            </div>
+            <button type="button" class="btn-copy-quick" onclick="copyHolderToClipboard();" title="Salin nama pemilik rekening">
+              <i class="fa-regular fa-copy"></i> Salin Nama
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1516,7 +1562,7 @@
         </div>
       </div>
 
-      <!-- VIEW B: DAFTAR NAMA DETAIL DENGAN PANCARIAN CEPAT & FILTER STATUS -->
+      <!-- VIEW B: DAFTAR NAMA DETAIL DENGAN PENCARIAN CEPAT & FILTER STATUS -->
       <div id="scannerListDetailView" style="display:none;">
         <div style="background:#FFF; padding:14px 18px; border-radius:12px; border:1px solid #DCE3DE; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
           <div>
@@ -1650,6 +1696,49 @@
       }, 3500);
     }
 
+    /* Fungsi Salin Clipboard Universal dengan Fallback Tepercaya */
+    function copyTextToClipboard(text, label) {
+      var copySuccess = false;
+      try {
+        var tempTextArea = document.createElement('textarea');
+        tempTextArea.value = text;
+        tempTextArea.style.position = 'fixed';
+        tempTextArea.style.left = '-9999px';
+        tempTextArea.style.top = '-9999px';
+        document.body.appendChild(tempTextArea);
+        tempTextArea.focus();
+        tempTextArea.select();
+        copySuccess = document.execCommand('copy');
+        document.body.removeChild(tempTextArea);
+      } catch (e) {
+        copySuccess = false;
+      }
+
+      if (copySuccess) {
+        showToast(label + ' berhasil disalin ke clipboard!', 'fa-regular fa-circle-check');
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast(label + ' berhasil disalin ke clipboard!', 'fa-regular fa-circle-check');
+        }).catch(function() {
+          showToast('Gagal menyalin ' + label, 'fa-solid fa-triangle-exclamation');
+        });
+      } else {
+        showToast('Gagal menyalin ' + label, 'fa-solid fa-triangle-exclamation');
+      }
+    }
+
+    function copyIbanToClipboard() {
+      var ibanEl = document.getElementById('dynBankTRIban');
+      var rawIban = ibanEl ? ibanEl.textContent.trim() : 'TR53 0001 0090 1062 7977 9050 02';
+      copyTextToClipboard(rawIban, 'Nomor IBAN Ziraat');
+    }
+
+    function copyHolderToClipboard() {
+      var holderEl = document.getElementById('dynBankTRHolder');
+      var rawHolder = holderEl ? holderEl.textContent.replace(/^a\.n\.\s*/i, '').trim() : 'RARA INGRID ADMADJA';
+      copyTextToClipboard(rawHolder, 'Nama Pemilik Rekening');
+    }
+
     function saveDb() {
       localStorage.setItem('CAMPNIC_2026_DATA', JSON.stringify(participantsDb));
       updateInpageCounters();
@@ -1769,7 +1858,7 @@
       /* Informasi Rekening Bank Tunggal: Ziraat Bankası */
       if (cfg.Bank_TR_Nama) document.getElementById('dynBankTRNama').textContent = cfg.Bank_TR_Nama + ':';
       if (cfg.Bank_TR_IBAN) document.getElementById('dynBankTRIban').textContent = cfg.Bank_TR_IBAN;
-      if (cfg.Bank_TR_AtasNama) document.getElementById('dynBankTRHolder').textContent = 'a.n. ' + cfg.Bank_TR_AtasNama;
+      if (cfg.Bank_TR_AtasNama) document.getElementById('dynBankTRHolder').textContent = cfg.Bank_TR_AtasNama;
 
       /* Kontak */
       if (cfg.Kontak_WA) {
