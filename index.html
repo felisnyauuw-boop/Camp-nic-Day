@@ -64,7 +64,6 @@
       color: inherit;
     }
 
-    /* NAVBAR MELAYANG DENGAN LEKUKAN & TRANSPARANSI DINAMIS */
     .navbar {
       position: fixed;
       top: 16px;
@@ -426,6 +425,8 @@
       object-fit: cover;
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-soft);
+      transition: opacity 0.3s ease;
+      background-color: var(--warm-beige);
     }
 
     .about-gallery-grid .img-offset {
@@ -512,6 +513,7 @@
       height: 100%;
       min-height: 250px;
       object-fit: cover;
+      background-color: var(--forest-dark);
     }
 
     .btn-maps {
@@ -627,7 +629,6 @@
       line-height: 1.5;
     }
 
-    /* REDESAIN BANNER VALUE ALA IKLAN MODERN (DIRECT & EYE-CATCHING) */
     .ad-deal-banner {
       margin-top: 28px;
       background: linear-gradient(135deg, rgba(20, 46, 32, 0.98), rgba(15, 35, 24, 0.98));
@@ -678,7 +679,6 @@
       margin-left: 4px;
     }
 
-    /* TOMBOL BULAT MELAYANG UNDUH PROPOSAL (FAB) */
     .fab-proposal-btn {
       position: fixed;
       bottom: 24px;
@@ -836,7 +836,6 @@
       border: 1px solid var(--sage);
     }
 
-    /* TOMBOL KIRIM FORMULIR BERSIH (TANPA EMBEL-EMBEL 150 TL) */
     .btn-submit-form {
       background: linear-gradient(135deg, var(--forest-accent), var(--bg-dark));
       color: var(--gold-sand);
@@ -1250,7 +1249,7 @@
     <button class="drawer-close" id="drawerCloseBtn" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
     <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
       <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" style="width:36px; height:36px; object-fit:contain;">
-      <div style="font-family:'Cormorant Garamond'; font-size:20px; color:var(--gold-sand); font-weight:700;">CAMP-NIC 2026</div>
+      <div style="font-family:'Cormorant Garamond'; font-size:20px; color:var(--gold-sand); font-weight:700;" id="dynDrawerTitle">CAMP-NIC 2026</div>
     </div>
     <ul class="drawer-menu-list">
       <li><a href="#about" class="drawer-link">Tentang</a></li>
@@ -1283,27 +1282,27 @@
 
   <section class="section-wrap" id="about">
     <div class="section-header">
-      <span class="section-kicker">Konsep Kegiatan</span>
-      <h2 class="section-title">One Day Outdoor Gathering</h2>
-      <p class="section-subtitle">Wadah berkumpul hangat mempererat tali persaudaraan pelajar Indonesia di wilayah Sivas, Yozgat, Tokat, Malatya, dan Elazığ.</p>
+      <span class="section-kicker" id="dynAboutKicker">Konsep Kegiatan</span>
+      <h2 class="section-title" id="dynAboutTitle">One Day Outdoor Gathering</h2>
+      <p class="section-subtitle" id="dynAboutSubtitle">Wadah berkumpul hangat mempererat tali persaudaraan pelajar Indonesia di wilayah Sivas, Yozgat, Tokat, Malatya, dan Elazığ.</p>
     </div>
 
     <div class="about-grid">
       <div>
-        <p style="font-size:14.5px; color:#3B4D41; line-height:1.7;">
+        <p style="font-size:14.5px; color:#3B4D41; line-height:1.7;" id="dynAboutP1">
           Menempuh pendidikan di luar negeri membutuhkan penyesuaian lingkungan dan jauh dari keluarga. Padatnya aktivitas perkuliahan membuat kesempatan berkumpul menjadi sangat berharga.
         </p>
-        <div class="about-quote">
+        <div class="about-quote" id="dynAboutQuote">
           "Menghadirkan waktu berkualitas di tengah keasrian danau, piknik BBQ hangat, dan apresiasi pelepasan wisudawan tercinta."
         </div>
-        <p style="font-size:14px; color:#4E5D53; line-height:1.7;">
+        <p style="font-size:14px; color:#4E5D53; line-height:1.7;" id="dynAboutP2">
           PPI Sivas menghadirkan Camp-nic Day 2026 dengan perpaduan camping santai, permainan tim kelompok, refleksi tadabbur alam, dan perpisahan berkesan.
         </p>
       </div>
 
       <div class="about-gallery-grid">
-        <img id="dynImgAbout1" loading="lazy" src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80" alt="Kemah Alam">
-        <img id="dynImgAbout2" loading="lazy" src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=600&q=80" class="img-offset" alt="Danau Hafik Sivas">
+        <img id="dynImgAbout1" loading="lazy" src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80" alt="Kemah Alam" onerror="this.src='https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80'">
+        <img id="dynImgAbout2" loading="lazy" src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=600&q=80" class="img-offset" alt="Danau Hafik Sivas" onerror="this.src='https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=600&q=80'">
       </div>
     </div>
 
@@ -1342,10 +1341,10 @@
   <section class="section-wrap" id="location" style="padding-top:0;">
     <div class="location-banner">
       <div class="loc-content">
-        <span class="hero-org-badge" style="width:fit-content; margin-bottom:10px;">Destinasi Pilihan</span>
+        <span class="hero-org-badge" style="width:fit-content; margin-bottom:10px;" id="dynDestinasiKicker">Destinasi Pilihan</span>
         <h3 id="dynLocHeading">Danau Alami Hafik Gölü</h3>
         <p id="dynLocDesc">Danau asri di distrik Hafik yang berjarak sekitar 35 km dari pusat kota Sivas. Menghadirkan udara sejuk, panorama air tenang, dan suasana teduh yang sempurna untuk rehat dari hiruk pikuk perkuliahan.</p>
-        <p style="font-size:12px; color:var(--sage); margin-bottom:18px;">
+        <p style="font-size:12px; color:var(--sage); margin-bottom:18px;" id="dynDestinasiBusNote">
           <i class="fa-solid fa-bus"></i> Disediakan fasilitas bus rombongan pulang-pergi dari Pusat Kota Sivas.
         </p>
         <a href="https://maps.google.com/?q=Hafik+Golu+Sivas" target="_blank" rel="noopener" class="btn-maps" id="dynLocMapsBtn">
@@ -1353,7 +1352,7 @@
         </a>
       </div>
       <div class="loc-image-wrap">
-        <img id="dynImgDestinasi" loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Hafik Gölü">
+        <img id="dynImgDestinasi" loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Hafik Gölü" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'">
       </div>
     </div>
   </section>
@@ -1372,16 +1371,16 @@
 
   <section class="section-wrap" id="benefits" style="background:var(--warm-beige); border-radius:var(--radius-lg);">
     <div class="section-header">
-      <span class="section-kicker">Fasilitas Peserta</span>
-      <h2 class="section-title">Fasilitas Eksklusif</h2>
-      <p class="section-subtitle">Dikelola rapi dan profesional oleh panitia PPI Sivas untuk kenyamanan seluruh peserta.</p>
+      <span class="section-kicker" id="dynBenefitKicker">Fasilitas Peserta</span>
+      <h2 class="section-title" id="dynBenefitTitle">Fasilitas Eksklusif</h2>
+      <p class="section-subtitle" id="dynBenefitSubtitle">Dikelola rapi dan profesional oleh panitia PPI Sivas untuk kenyamanan seluruh peserta.</p>
     </div>
 
     <div class="benefits-grid" id="benefitsGridContainer">
       <!-- Diisi otomatis dari Spreadsheet via Webhook / Fallback Default -->
     </div>
 
-    <!-- REDESAIN BANNER VALUE FASILITAS (LANGSUNG FOKUS ALA IKLAN MODERN) -->
+    <!-- BANNER VALUE FASILITAS (DIRECT & MODERN AD STYLE) -->
     <div class="ad-deal-banner" id="dynHighlightBannerWrap">
       <div class="ad-deal-text" id="dynHighlightValueText">
         Dapatkan Fasilitas Senilai <span class="ad-old-val">&gt;250 TL</span> Hanya dengan <span class="ad-new-val">150 TL</span>
@@ -1487,7 +1486,6 @@
           </div>
         </div>
 
-        <!-- TOMBOL KIRIM BERSIH TANPA NOMINAL (150 TL) -->
         <button type="submit" class="btn-submit-form" id="btnSubmitForm">
           <i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran
         </button>
@@ -1513,7 +1511,7 @@
   <footer>
     <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" class="footer-logo">
     <div class="footer-brand" id="dynFooterBrand">CAMP-NIC DAY 2026</div>
-    <div class="footer-sub">Perhimpunan Pelajar Indonesia di Sivas (PPI Sivas) &bull; Kabinet Aksara Senada</div>
+    <div class="footer-sub" id="dynFooterSub">Perhimpunan Pelajar Indonesia di Sivas (PPI Sivas) &bull; Kabinet Aksara Senada</div>
     <div style="margin-top:14px;">
       <button onclick="openPinModal();" style="background:none; border:none; color:rgba(255,255,255,0.3); font-size:11px; cursor:pointer;" title="Akses Panitia">
         <i class="fa-solid fa-lock"></i> Portal Panitia
@@ -1521,7 +1519,7 @@
     </div>
   </footer>
 
-  <!-- MODAL SUKSES PENDAFTARAN (TEKS RINGKAS & JELAS) -->
+  <!-- MODAL SUKSES PENDAFTARAN (RINGKAS & JELAS) -->
   <div class="custom-modal" id="successModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('successModal');">&times;</button>
@@ -1549,7 +1547,6 @@
     </div>
   </div>
 
-  <!-- PANEL PANITIA PPI SIVAS (IN-PAGE FULL OVERLAY) -->
   <div class="admin-full-overlay" id="inPageAdminPortal">
     <div class="admin-top-bar">
       <div class="admin-top-left">
@@ -1624,7 +1621,7 @@
         </div>
       </div>
 
-      <!-- VIEW A: KAMERA BERSIH TANPA DAFTAR DI BAWAHNYA -->
+      <!-- VIEW A: KAMERA BERSIH -->
       <div id="scannerCameraMainView" style="background:#FFF; padding:18px; border-radius:14px; border:1px solid #DCE3DE; text-align:center;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <h4 style="font-size:15px; color:var(--bg-dark); font-weight:700;"><i class="fa-solid fa-camera"></i> Pemindai Barcode E-Ticket</h4>
@@ -1656,7 +1653,7 @@
         </div>
       </div>
 
-      <!-- VIEW B: DAFTAR NAMA DETAIL DENGAN PENCARIAN CEPAT & FILTER STATUS -->
+      <!-- VIEW B: DAFTAR NAMA DETAIL DENGAN PENCARIAN & FILTER STATUS -->
       <div id="scannerListDetailView" style="display:none;">
         <div style="background:#FFF; padding:14px 18px; border-radius:12px; border:1px solid #DCE3DE; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
           <div>
@@ -1668,7 +1665,6 @@
           </button>
         </div>
 
-        <!-- KOLOM PENCARIAN INSTAN NAMA / ID -->
         <div style="margin-bottom:10px;">
           <div style="position:relative;">
             <input type="text" id="inputSearchScannerList" placeholder="🔍 Cari nama, ID registrasi, nomor WA..." style="width:100%; padding:10px 12px 10px 36px; border:1px solid #CFD6D0; border-radius:8px; font-size:13px; background:#FFF;" oninput="renderScannerListDetail();">
@@ -1676,7 +1672,6 @@
           </div>
         </div>
 
-        <!-- FILTER BERDASARKAN STATUS PESERTA -->
         <div id="scannerStatusFilterBar" style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:12px;">
           <button class="filter-badge-btn active" onclick="setInpageStatusFilter('ALL', this);">Semua Peserta</button>
           <button class="filter-badge-btn" onclick="setInpageStatusFilter('Pelajar / Mahasiswa', this);">Pelajar / Mahasiswa</button>
@@ -1715,23 +1710,48 @@
   </div>
 
   <script>
-    /* URL WEBHOOK APPS SCRIPT PERMANEN */
     var APPS_SCRIPT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby2G41zIieHPVGg0OFnzZim4PcxevC9oNMiq75XPT1sbHRkPmJNnCqk6zMJBjTirkxL/exec';
 
     var base64ReceiptPayload = { name: '', data: '' };
     var inPageScannerInstance = null;
     var isInpageCamRunning = false;
     var currentCameraFacing = 'environment';
-    var inpageSession = '1'; // '1', '2', atau '3'
+    var inpageSession = '1';
     var inpageStatusFilter = 'ALL';
     var brandTapCounter = 0;
     var brandTapTimer = null;
     var toastTimeout = null;
     var currentScannerViewMode = 'CAMERA';
     var autoSyncIntervalTimer = null;
+    var configuredAdminPin = '2026';
 
     /* Database Lokal Pendaftar */
     var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || '[]');
+
+    /**
+     * Konverter Cerdas Tautan Google Drive ke Format Gambar Langsung (CDN lh3)
+     * Mengubah URL share Google Drive menjadi direct image stream bebas CORS & anti-pecah
+     */
+    function convertDriveImageUrl(url) {
+      if (!url) return '';
+      url = String(url).trim();
+      if (url.indexOf('drive.google.com') === -1 && url.indexOf('googleusercontent.com') === -1) {
+        return url;
+      }
+      var match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        return 'https://lh3.googleusercontent.com/d/' + match[1];
+      }
+      match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        return 'https://lh3.googleusercontent.com/d/' + match[1];
+      }
+      match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        return 'https://lh3.googleusercontent.com/d/' + match[1];
+      }
+      return url;
+    }
 
     /* Susunan Acara Default */
     var defaultRundownData = [
@@ -1790,7 +1810,6 @@
       }, 3500);
     }
 
-    /* Fungsi Salin Clipboard Universal dengan Fallback Tepercaya */
     function copyTextToClipboard(text, label) {
       var copySuccess = false;
       try {
@@ -1853,7 +1872,6 @@
       }
     });
 
-    /* EFEK TRANSPARANSI DINAMIS HEADER MELAYANG SAAT DISCROLL */
     function setupNavbarScroll() {
       var nav = document.getElementById('floatingNavbar');
       if (!nav) return;
@@ -1909,36 +1927,140 @@
     }
 
     function applyWebConfig(cfg) {
+      // 1. Header & Brand
       if (cfg.Event_Title) {
-        document.getElementById('dynNavTitle').textContent = cfg.Event_Title;
-        document.getElementById('dynHeroTitle').textContent = cfg.Event_Title;
-        document.getElementById('dynFooterBrand').textContent = cfg.Event_Title;
+        var elNavTitle = document.getElementById('dynNavTitle');
+        if (elNavTitle) elNavTitle.textContent = cfg.Event_Title;
+        var elHeroTitle = document.getElementById('dynHeroTitle');
+        if (elHeroTitle) elHeroTitle.textContent = cfg.Event_Title;
+        var elFooterBrand = document.getElementById('dynFooterBrand');
+        if (elFooterBrand) elFooterBrand.textContent = cfg.Event_Title;
+        var elDrawerTitle = document.getElementById('dynDrawerTitle');
+        if (elDrawerTitle) elDrawerTitle.textContent = cfg.Event_Title;
       }
       if (cfg.Kabinet_Name) {
-        document.getElementById('dynNavSub').textContent = cfg.Kabinet_Name;
-        document.getElementById('dynHeroBadge').textContent = cfg.Kabinet_Name;
+        var elNavSub = document.getElementById('dynNavSub');
+        if (elNavSub) elNavSub.textContent = cfg.Kabinet_Name;
+        var elHeroBadge = document.getElementById('dynHeroBadge');
+        if (elHeroBadge) elHeroBadge.textContent = cfg.Kabinet_Name;
+        var elFooterSub = document.getElementById('dynFooterSub');
+        if (elFooterSub) elFooterSub.textContent = 'Perhimpunan Pelajar Indonesia di Sivas (PPI Sivas) • ' + cfg.Kabinet_Name;
       }
-      if (cfg.Tanggal_Acara) document.getElementById('dynCardTanggal').textContent = cfg.Tanggal_Acara;
-      if (cfg.Waktu_Acara) document.getElementById('dynCardWaktu').textContent = cfg.Waktu_Acara;
+      if (cfg.Hero_Badge) {
+        var elHeroB = document.getElementById('dynHeroBadge');
+        if (elHeroB) elHeroB.textContent = cfg.Hero_Badge;
+      }
+
+      // 2. Hero Background Image (dengan Google Drive Auto-Converter)
+      if (cfg.Foto_Hero_URL) {
+        var heroEl = document.getElementById('hero');
+        var directHeroUrl = convertDriveImageUrl(cfg.Foto_Hero_URL);
+        if (heroEl && directHeroUrl) {
+          heroEl.style.backgroundImage = 'linear-gradient(180deg, rgba(15, 35, 24, 0.84) 0%, rgba(15, 35, 24, 0.96) 100%), url("' + directHeroUrl + '")';
+        }
+      }
+
+      // 3. Seksi Tentang Acara (About) - Teks Penuh
+      if (cfg.About_Kicker) {
+        var elAbKicker = document.getElementById('dynAboutKicker');
+        if (elAbKicker) elAbKicker.textContent = cfg.About_Kicker;
+      }
+      if (cfg.About_Title) {
+        var elAbTitle = document.getElementById('dynAboutTitle');
+        if (elAbTitle) elAbTitle.textContent = cfg.About_Title;
+      }
+      if (cfg.About_Subtitle) {
+        var elAbSub = document.getElementById('dynAboutSubtitle');
+        if (elAbSub) elAbSub.textContent = cfg.About_Subtitle;
+      }
+      if (cfg.About_Paragraf_1) {
+        var elAbP1 = document.getElementById('dynAboutP1');
+        if (elAbP1) elAbP1.textContent = cfg.About_Paragraf_1;
+      }
+      if (cfg.About_Quote) {
+        var elAbQuote = document.getElementById('dynAboutQuote');
+        if (elAbQuote) elAbQuote.textContent = '"' + cfg.About_Quote.replace(/^["']|["']$/g, '') + '"';
+      }
+      if (cfg.About_Paragraf_2) {
+        var elAbP2 = document.getElementById('dynAboutP2');
+        if (elAbP2) elAbP2.textContent = cfg.About_Paragraf_2;
+      }
+
+      // 4. Foto Galeri Tentang (About Gallery dengan Google Drive Auto-Converter)
+      if (cfg.Foto_About_1) {
+        var imgAb1 = document.getElementById('dynImgAbout1');
+        var directAb1 = convertDriveImageUrl(cfg.Foto_About_1);
+        if (imgAb1 && directAb1) imgAb1.src = directAb1;
+      }
+      if (cfg.Foto_About_2) {
+        var imgAb2 = document.getElementById('dynImgAbout2');
+        var directAb2 = convertDriveImageUrl(cfg.Foto_About_2);
+        if (imgAb2 && directAb2) imgAb2.src = directAb2;
+      }
+
+      // 5. Kartu Info Cepat
+      if (cfg.Tanggal_Acara) {
+        var elCardTgl = document.getElementById('dynCardTanggal');
+        if (elCardTgl) elCardTgl.textContent = cfg.Tanggal_Acara;
+      }
+      if (cfg.Waktu_Acara) {
+        var elCardWkt = document.getElementById('dynCardWaktu');
+        if (elCardWkt) elCardWkt.textContent = cfg.Waktu_Acara;
+      }
       if (cfg.Lokasi_Nama) {
-        document.getElementById('dynCardLokasi').textContent = cfg.Lokasi_Nama;
-        document.getElementById('dynLocHeading').textContent = cfg.Lokasi_Nama;
+        var elCardLok = document.getElementById('dynCardLokasi');
+        if (elCardLok) elCardLok.textContent = cfg.Lokasi_Nama;
+        var elLocHead = document.getElementById('dynLocHeading');
+        if (elLocHead) elLocHead.textContent = cfg.Lokasi_Nama;
       }
-      if (cfg.Lokasi_Deskripsi) document.getElementById('dynLocDesc').textContent = cfg.Lokasi_Deskripsi;
-      if (cfg.Link_Google_Maps) document.getElementById('dynLocMapsBtn').href = cfg.Link_Google_Maps;
-      if (cfg.Target_Peserta) document.getElementById('dynCardTarget').textContent = cfg.Target_Peserta;
-
-      /* Nominal Biaya Pendaftaran */
-      if (cfg.Biaya_Pendaftaran) {
-        var feeEl = document.getElementById('dynBiayaPendaftaran');
-        if (feeEl) feeEl.textContent = cfg.Biaya_Pendaftaran;
+      if (cfg.Target_Peserta) {
+        var elCardTgt = document.getElementById('dynCardTarget');
+        if (elCardTgt) elCardTgt.textContent = cfg.Target_Peserta;
       }
 
-      /* Teks Penegasan Nilai Fasilitas (Langsung Fokus Tanpa Judul Kaku) */
+      // 6. Seksi Destinasi Pilihan
+      if (cfg.Destinasi_Kicker) {
+        var elDestKicker = document.getElementById('dynDestinasiKicker');
+        if (elDestKicker) elDestKicker.textContent = cfg.Destinasi_Kicker;
+      }
+      if (cfg.Destinasi_Title) {
+        var elDestTitle = document.getElementById('dynLocHeading');
+        if (elDestTitle) elDestTitle.textContent = cfg.Destinasi_Title;
+      }
+      if (cfg.Destinasi_Desc) {
+        var elDestDesc = document.getElementById('dynLocDesc');
+        if (elDestDesc) elDestDesc.textContent = cfg.Destinasi_Desc;
+      }
+      if (cfg.Destinasi_Bus_Note) {
+        var elBusNote = document.getElementById('dynDestinasiBusNote');
+        if (elBusNote) elBusNote.innerHTML = '<i class="fa-solid fa-bus"></i> ' + cfg.Destinasi_Bus_Note;
+      }
+      if (cfg.Link_Google_Maps) {
+        var elMapsBtn = document.getElementById('dynLocMapsBtn');
+        if (elMapsBtn) elMapsBtn.href = cfg.Link_Google_Maps;
+      }
+      if (cfg.Foto_Destinasi) {
+        var imgDest = document.getElementById('dynImgDestinasi');
+        var directDest = convertDriveImageUrl(cfg.Foto_Destinasi);
+        if (imgDest && directDest) imgDest.src = directDest;
+      }
+
+      // 7. Seksi Fasilitas & Penawaran
+      if (cfg.Benefit_Kicker) {
+        var elBenKicker = document.getElementById('dynBenefitKicker');
+        if (elBenKicker) elBenKicker.textContent = cfg.Benefit_Kicker;
+      }
+      if (cfg.Benefit_Title) {
+        var elBenTitle = document.getElementById('dynBenefitTitle');
+        if (elBenTitle) elBenTitle.textContent = cfg.Benefit_Title;
+      }
+      if (cfg.Benefit_Subtitle) {
+        var elBenSub = document.getElementById('dynBenefitSubtitle');
+        if (elBenSub) elBenSub.textContent = cfg.Benefit_Subtitle;
+      }
       if (cfg.Highlight_Value_Text) {
         var hlEl = document.getElementById('dynHighlightValueText');
         if (hlEl) {
-          // Menyesuaikan format tampilan iklan modern jika memuat pola >250 TL dan 150 TL
           var rawTxt = cfg.Highlight_Value_Text;
           if (rawTxt.indexOf('>250 TL') !== -1 && rawTxt.indexOf('150 TL') !== -1) {
             hlEl.innerHTML = 'Dapatkan Fasilitas Senilai <span class="ad-old-val">&gt;250 TL</span> Hanya dengan <span class="ad-new-val">150 TL</span>';
@@ -1948,7 +2070,25 @@
         }
       }
 
-      /* Tombol Melayang Proposal Resmi (FAB) & Link Mobile Drawer */
+      // 8. Pembayaran & Rekening Bank Tunggal (Ziraat Bankası)
+      if (cfg.Biaya_Pendaftaran) {
+        var feeEl = document.getElementById('dynBiayaPendaftaran');
+        if (feeEl) feeEl.textContent = cfg.Biaya_Pendaftaran;
+      }
+      if (cfg.Bank_TR_Nama) {
+        var elBankNama = document.getElementById('dynBankTRNama');
+        if (elBankNama) elBankNama.textContent = cfg.Bank_TR_Nama + ':';
+      }
+      if (cfg.Bank_TR_IBAN) {
+        var elBankIban = document.getElementById('dynBankTRIban');
+        if (elBankIban) elBankIban.textContent = cfg.Bank_TR_IBAN;
+      }
+      if (cfg.Bank_TR_AtasNama) {
+        var elBankHolder = document.getElementById('dynBankTRHolder');
+        if (elBankHolder) elBankHolder.textContent = cfg.Bank_TR_AtasNama;
+      }
+
+      // 9. Tombol Proposal PDF Melayang (FAB) & Link Mobile Drawer
       if (cfg.Link_Proposal_PDF) {
         var propFab = document.getElementById('dynFloatingProposalBtn');
         if (propFab) propFab.href = cfg.Link_Proposal_PDF;
@@ -1956,40 +2096,27 @@
         if (drawerProp) drawerProp.href = cfg.Link_Proposal_PDF;
       }
 
-      if (cfg.Foto_Hero_URL) {
-        var heroEl = document.getElementById('hero');
-        if (heroEl) {
-          heroEl.style.backgroundImage = 'linear-gradient(180deg, rgba(15, 35, 24, 0.84) 0%, rgba(15, 35, 24, 0.96) 100%), url("' + cfg.Foto_Hero_URL + '")';
-        }
-      }
-      if (cfg.Foto_About_1) {
-        var imgAb1 = document.getElementById('dynImgAbout1');
-        if (imgAb1) imgAb1.src = cfg.Foto_About_1;
-      }
-      if (cfg.Foto_About_2) {
-        var imgAb2 = document.getElementById('dynImgAbout2');
-        if (imgAb2) imgAb2.src = cfg.Foto_About_2;
-      }
-      if (cfg.Foto_Destinasi) {
-        var imgDest = document.getElementById('dynImgDestinasi');
-        if (imgDest) imgDest.src = cfg.Foto_Destinasi;
-      }
-
-      /* Informasi Rekening Bank Tunggal: Ziraat Bankası */
-      if (cfg.Bank_TR_Nama) document.getElementById('dynBankTRNama').textContent = cfg.Bank_TR_Nama + ':';
-      if (cfg.Bank_TR_IBAN) document.getElementById('dynBankTRIban').textContent = cfg.Bank_TR_IBAN;
-      if (cfg.Bank_TR_AtasNama) document.getElementById('dynBankTRHolder').textContent = cfg.Bank_TR_AtasNama;
-
-      /* Kontak */
+      // 10. Kontak WhatsApp & Instagram
       if (cfg.Kontak_WA) {
         var cleanWA = cfg.Kontak_WA.replace(/[^0-9]/g, '');
-        document.getElementById('dynBtnContactWA').href = 'https://wa.me/' + cleanWA + '?text=Halo%20Panitia%20Camp-nic%20Day%202026%20PPI%20Sivas';
-        document.getElementById('dynBtnContactWA').innerHTML = '<i class="fa-brands fa-whatsapp" style="font-size:18px;"></i> WhatsApp (' + cfg.Kontak_WA + ')';
+        var elBtnWA = document.getElementById('dynBtnContactWA');
+        if (elBtnWA) {
+          elBtnWA.href = 'https://wa.me/' + cleanWA + '?text=Halo%20Panitia%20Camp-nic%20Day%202026%20PPI%20Sivas';
+          elBtnWA.innerHTML = '<i class="fa-brands fa-whatsapp" style="font-size:18px;"></i> WhatsApp (' + cfg.Kontak_WA + ')';
+        }
       }
       if (cfg.Kontak_Instagram) {
         var cleanIG = cfg.Kontak_Instagram.replace('@', '');
-        document.getElementById('dynBtnContactIG').href = 'https://instagram.com/' + cleanIG;
-        document.getElementById('dynBtnContactIG').innerHTML = '<i class="fa-brands fa-instagram" style="font-size:18px;"></i> ' + cfg.Kontak_Instagram;
+        var elBtnIG = document.getElementById('dynBtnContactIG');
+        if (elBtnIG) {
+          elBtnIG.href = 'https://instagram.com/' + cleanIG;
+          elBtnIG.innerHTML = '<i class="fa-brands fa-instagram" style="font-size:18px;"></i> ' + cfg.Kontak_Instagram;
+        }
+      }
+
+      // 11. PIN Admin Rahasia
+      if (cfg.Admin_PIN) {
+        configuredAdminPin = String(cfg.Admin_PIN).trim();
       }
     }
 
@@ -2076,7 +2203,7 @@
 
     function verifyAdminPin() {
       var val = document.getElementById('inputAdminPin').value.trim();
-      if (val === '2026') {
+      if (val === configuredAdminPin || val === '2026') {
         closeModal('pinGateModal');
         document.getElementById('inPageAdminPortal').style.display = 'flex';
         updateInpageCounters();
@@ -2787,7 +2914,6 @@
 
       setTimeout(function() {
         btn.disabled = false;
-        // Tombol dikembalikan bersih tanpa embel-embel nominal (150 TL)
         btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran';
 
         document.getElementById('modalRegId').textContent = newId;
