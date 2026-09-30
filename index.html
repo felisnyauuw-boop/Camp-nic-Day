@@ -91,23 +91,25 @@
     }
 
     .nav-container {
-      padding: 10px 20px;
+      padding: 8px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      min-height: 52px;
     }
 
     .brand-logo-wrap {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
       user-select: none;
+      min-width: 0;
     }
 
     .brand-logo-img {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       object-fit: contain;
       background: transparent !important;
       border: none !important;
@@ -115,22 +117,25 @@
       padding: 0 !important;
       border-radius: 0 !important;
       display: block;
+      flex-shrink: 0;
     }
 
     .brand-logo-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
       color: #FFFFFF;
-      letter-spacing: 1.2px;
-      line-height: 1.1;
+      letter-spacing: 1px;
+      line-height: 1;
+      white-space: nowrap;
     }
 
     .brand-logo-sub {
-      font-size: 10.5px;
+      font-size: 10px;
       color: var(--gold-sand);
       letter-spacing: 0.5px;
       display: block;
+      margin-top: 2px;
     }
 
     .nav-links-desktop {
@@ -155,6 +160,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      flex-shrink: 0;
     }
 
     .btn-nav-cta {
@@ -184,12 +190,18 @@
       background: none;
       border: none;
       color: var(--gold-sand);
-      font-size: 24px;
+      font-size: 22px;
       min-width: 40px;
       min-height: 40px;
       cursor: pointer;
       align-items: center;
       justify-content: center;
+      border-radius: 50%;
+      transition: background-color 0.2s;
+    }
+
+    .hamburger-toggle:hover {
+      background: rgba(212, 163, 115, 0.12);
     }
 
     .mobile-drawer {
@@ -425,7 +437,7 @@
       object-fit: cover;
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-soft);
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
       background-color: var(--warm-beige);
     }
 
@@ -514,6 +526,7 @@
       min-height: 250px;
       object-fit: cover;
       background-color: var(--forest-dark);
+      transition: opacity 0.3s ease;
     }
 
     .btn-maps {
@@ -708,8 +721,8 @@
 
     @media (max-width: 600px) {
       .fab-proposal-btn {
-        width: 52px;
-        height: 52px;
+        width: 50px;
+        height: 50px;
         padding: 0;
         border-radius: 50%;
         bottom: 20px;
@@ -1129,15 +1142,57 @@
     }
 
     @media (max-width: 768px) {
-      .nav-links-desktop { display: none; }
-      .hamburger-toggle { display: inline-flex; }
-      .brand-logo-sub { display: none; }
-      .about-grid, .location-banner { grid-template-columns: 1fr; }
-      .info-cards-grid, .benefits-grid { grid-template-columns: 1fr; }
-      .timeline::before { left: 16px; }
-      .timeline-dot { left: 10px; }
-      .timeline-item { padding-left: 36px; }
-      .hero-title { margin-bottom: 26px; }
+      .navbar {
+        top: 10px;
+        width: calc(100% - 24px);
+      }
+      .nav-container {
+        padding: 6px 14px;
+        min-height: 48px;
+      }
+      .nav-links-desktop { 
+        display: none !important; 
+      }
+      .btn-nav-cta { 
+        display: none !important; /* Hilangkan tombol daftar di navbar HP agar lega */
+      }
+      .hamburger-toggle { 
+        display: inline-flex; 
+        font-size: 21px;
+      }
+      .brand-logo-wrap {
+        gap: 8px;
+      }
+      .brand-logo-img {
+        width: 32px;
+        height: 32px;
+      }
+      .brand-logo-title {
+        font-size: 16px;
+        white-space: nowrap; /* Kunci judul 1 baris, tidak boleh patah ke bawah */
+        letter-spacing: 0.8px;
+      }
+      .brand-logo-sub { 
+        display: none !important; 
+      }
+      .about-grid, .location-banner { 
+        grid-template-columns: 1fr; 
+      }
+      .info-cards-grid, .benefits-grid { 
+        grid-template-columns: 1fr; 
+      }
+      .timeline::before { 
+        left: 16px; 
+      }
+      .timeline-dot { 
+        left: 10px; 
+      }
+      .timeline-item { 
+        padding-left: 36px; 
+      }
+      .hero-title { 
+        margin-bottom: 26px; 
+      }
     }
   </style>
 </head>
@@ -1217,7 +1272,7 @@
     </div>
   </div>
 
-  <!-- NAVBAR MELAYANG DENGAN LEKUKAN ELEGAN -->
+  <!-- NAVBAR MELAYANG DENGAN LEKUKAN ELEGAN (LEGA DI HP) -->
   <nav class="navbar" id="floatingNavbar">
     <div class="nav-container">
       <div class="brand-logo-wrap" id="brandLogoTrigger" title="Ketuk 3x untuk Panel Panitia">
@@ -1301,8 +1356,8 @@
       </div>
 
       <div class="about-gallery-grid">
-        <img id="dynImgAbout1" loading="lazy" src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80" alt="Kemah Alam" onerror="this.src='https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80'">
-        <img id="dynImgAbout2" loading="lazy" src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=600&q=80" class="img-offset" alt="Danau Hafik Sivas" onerror="this.src='https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=600&q=80'">
+        <img id="dynImgAbout1" loading="eager" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80" alt="Kemah Alam" onerror="this.src='https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80'">
+        <img id="dynImgAbout2" loading="eager" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=600&q=80" class="img-offset" alt="Danau Hafik Sivas" onerror="this.src='https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=600&q=80'">
       </div>
     </div>
 
@@ -1352,7 +1407,7 @@
         </a>
       </div>
       <div class="loc-image-wrap">
-        <img id="dynImgDestinasi" loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Hafik Gölü" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'">
+        <img id="dynImgDestinasi" loading="eager" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Hafik Gölü" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'">
       </div>
     </div>
   </section>
@@ -1365,7 +1420,7 @@
     </div>
 
     <div class="timeline" id="rundownTimelineContainer">
-      <!-- Diisi otomatis dari Spreadsheet via Webhook / Fallback Default -->
+      <!-- Diisi otomatis dari Cache / Spreadsheet via Webhook -->
     </div>
   </section>
 
@@ -1377,7 +1432,7 @@
     </div>
 
     <div class="benefits-grid" id="benefitsGridContainer">
-      <!-- Diisi otomatis dari Spreadsheet via Webhook / Fallback Default -->
+      <!-- Diisi otomatis dari Cache / Spreadsheet via Webhook -->
     </div>
 
     <!-- BANNER VALUE FASILITAS (DIRECT & MODERN AD STYLE) -->
@@ -1857,14 +1912,49 @@
       updateInpageCounters();
     }
 
+    /**
+     * Bootstrap Instan (0.01 Detik) Menggunakan Cache Memori Lokal
+     * Mencegah jeda loading 5 detik saat web dibuka kembali
+     */
     document.addEventListener('DOMContentLoaded', function() {
       setupDrawer();
       setupSecretTrigger();
       setupNavbarScroll();
-      renderRundownUI(defaultRundownData);
-      renderBenefitsUI(defaultBenefitsData);
 
-      fetchSpreadsheetData(false);
+      // 1. Muat Konfigurasi Teks & Foto dari Cache Lokal (0 Detik)
+      var cachedCfg = localStorage.getItem('CAMPNIC_2026_CONFIG');
+      if (cachedCfg) {
+        try {
+          applyWebConfig(JSON.parse(cachedCfg));
+        } catch(e){}
+      }
+
+      // 2. Muat Rundown dari Cache Lokal
+      var cachedRundown = localStorage.getItem('CAMPNIC_2026_RUNDOWN');
+      if (cachedRundown) {
+        try {
+          renderRundownUI(JSON.parse(cachedRundown));
+        } catch(e){
+          renderRundownUI(defaultRundownData);
+        }
+      } else {
+        renderRundownUI(defaultRundownData);
+      }
+
+      // 3. Muat Fasilitas dari Cache Lokal
+      var cachedBenefits = localStorage.getItem('CAMPNIC_2026_BENEFITS');
+      if (cachedBenefits) {
+        try {
+          renderBenefitsUI(JSON.parse(cachedBenefits));
+        } catch(e){
+          renderBenefitsUI(defaultBenefitsData);
+        }
+      } else {
+        renderBenefitsUI(defaultBenefitsData);
+      }
+
+      // 4. Sinkronisasi Data Segar di Latar Belakang (Stale-While-Revalidate)
+      fetchSpreadsheetData(true);
       startMultiDeviceAutoSync();
 
       if (window.location.search.indexOf('admin=true') !== -1) {
@@ -1894,9 +1984,19 @@
         .then(function(res) { return res.json(); })
         .then(function(data) {
           if (data && data.status === 'success') {
-            if (data.config) applyWebConfig(data.config);
-            if (data.rundown && data.rundown.length) renderRundownUI(data.rundown);
-            if (data.benefits && data.benefits.length) renderBenefitsUI(data.benefits);
+            if (data.config) {
+              // Simpan ke Cache Lokal agar kunjungan berikutnya 0 detik
+              localStorage.setItem('CAMPNIC_2026_CONFIG', JSON.stringify(data.config));
+              applyWebConfig(data.config);
+            }
+            if (data.rundown && data.rundown.length) {
+              localStorage.setItem('CAMPNIC_2026_RUNDOWN', JSON.stringify(data.rundown));
+              renderRundownUI(data.rundown);
+            }
+            if (data.benefits && data.benefits.length) {
+              localStorage.setItem('CAMPNIC_2026_BENEFITS', JSON.stringify(data.benefits));
+              renderBenefitsUI(data.benefits);
+            }
 
             if (data.participants && data.participants.length) {
               participantsDb = data.participants;
@@ -1986,7 +2086,7 @@
         if (elAbP2) elAbP2.textContent = cfg.About_Paragraf_2;
       }
 
-      // 4. Foto Galeri Tentang (About Gallery dengan Google Drive Auto-Converter)
+      // 4. Foto Galeri Tentang (Direct CDN Image Load)
       if (cfg.Foto_About_1) {
         var imgAb1 = document.getElementById('dynImgAbout1');
         var directAb1 = convertDriveImageUrl(cfg.Foto_About_1);
