@@ -644,15 +644,14 @@
 
     .ad-deal-banner {
       margin-top: 28px;
-      background: linear-gradient(135deg, rgba(20, 46, 32, 0.98), rgba(15, 35, 24, 0.98));
-      border: 1.5px solid var(--gold-sand);
+      background: linear-gradient(135deg, #0d2116 0%, #163622 50%, #0c1e14 100%);
+      border: 1.5px solid rgba(212, 163, 115, 0.7);
       border-radius: var(--radius-md);
       padding: 22px 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 18px rgba(212, 163, 115, 0.22);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28), 0 0 22px rgba(212, 163, 115, 0.22);
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -665,31 +664,52 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(212, 163, 115, 0.14) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(212, 163, 115, 0.18) 0%, transparent 65%);
       pointer-events: none;
     }
 
     .ad-deal-text {
-      font-size: clamp(16px, 4.2vw, 22px);
+      font-size: clamp(16px, 4.3vw, 22px);
       font-weight: 800;
       color: #FFFFFF;
-      line-height: 1.45;
+      line-height: 1.5;
       z-index: 1;
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 4px 6px;
     }
 
+    /* Efek coret elegan: Tembaga halus dengan opasitas lembut */
     .ad-old-val {
-      text-decoration: line-through;
-      color: #A6BBAA;
+      position: relative;
+      color: #A3B8A7;
       font-weight: 700;
       margin: 0 4px;
+      text-decoration: line-through;
+      text-decoration-color: #E29578;
+      text-decoration-thickness: 2.5px;
+      opacity: 0.88;
+      padding: 0 2px;
+      letter-spacing: 0.3px;
     }
 
+    /* Efek 150 TL ultra-mewah: Gradasi emas bersinar dengan pendaran ganda */
     .ad-new-val {
-      color: var(--gold-sand);
+      display: inline-block;
+      color: #FFE5B4;
+      background: linear-gradient(135deg, #FFFFFF 0%, #FFE2B7 25%, #E5B27D 60%, #D4A373 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       font-weight: 800;
-      font-size: 1.16em;
-      text-shadow: 0 0 12px rgba(212, 163, 115, 0.45);
+      font-size: 1.25em;
+      letter-spacing: 0.8px;
+      filter: drop-shadow(0 0 12px rgba(212, 163, 115, 0.9)) drop-shadow(0 0 24px rgba(255, 226, 183, 0.5));
+      text-shadow: 0 0 14px rgba(212, 163, 115, 0.7);
       margin-left: 4px;
+      padding: 0 4px;
+      vertical-align: baseline;
     }
 
     .fab-proposal-btn {
@@ -1154,7 +1174,7 @@
         display: none !important; 
       }
       .btn-nav-cta { 
-        display: none !important; /* Hilangkan tombol daftar di navbar HP agar lega */
+        display: none !important; 
       }
       .hamburger-toggle { 
         display: inline-flex; 
@@ -1169,7 +1189,7 @@
       }
       .brand-logo-title {
         font-size: 16px;
-        white-space: nowrap; /* Kunci judul 1 baris, tidak boleh patah ke bawah */
+        white-space: nowrap; 
         letter-spacing: 0.8px;
       }
       .brand-logo-sub { 
@@ -1272,7 +1292,6 @@
     </div>
   </div>
 
-  <!-- NAVBAR MELAYANG DENGAN LEKUKAN ELEGAN (LEGA DI HP) -->
   <nav class="navbar" id="floatingNavbar">
     <div class="nav-container">
       <div class="brand-logo-wrap" id="brandLogoTrigger" title="Ketuk 3x untuk Panel Panitia">
@@ -1435,7 +1454,7 @@
       <!-- Diisi otomatis dari Cache / Spreadsheet via Webhook -->
     </div>
 
-    <!-- BANNER VALUE FASILITAS (DIRECT & MODERN AD STYLE) -->
+    <!-- BANNER VALUE FASILITAS (DAPATKAN FASILITAS SENILAI >X HANYA DENGAN Y) -->
     <div class="ad-deal-banner" id="dynHighlightBannerWrap">
       <div class="ad-deal-text" id="dynHighlightValueText">
         Dapatkan Fasilitas Senilai <span class="ad-old-val">&gt;250 TL</span> Hanya dengan <span class="ad-new-val">150 TL</span>
@@ -1785,7 +1804,6 @@
 
     /**
      * Konverter Cerdas Tautan Google Drive ke Format Gambar Langsung (CDN lh3)
-     * Mengubah URL share Google Drive menjadi direct image stream bebas CORS & anti-pecah
      */
     function convertDriveImageUrl(url) {
       if (!url) return '';
@@ -1806,6 +1824,54 @@
         return 'https://lh3.googleusercontent.com/d/' + match[1];
       }
       return url;
+    }
+
+    /**
+     * Smart Dynamic Deal Text Parser:
+     * Otomatis mendeteksi angka pertama (harga asli) untuk dicoret (.ad-old-val)
+     * dan angka kedua (harga bayar) untuk diberi pendaran emas mewah (.ad-new-val)
+     * tanpa peduli perubahan nominal di Spreadsheet!
+     */
+    function formatHighlightDealText(rawTxt) {
+      if (!rawTxt) return '';
+      if (rawTxt.indexOf('ad-old-val') !== -1 || rawTxt.indexOf('ad-new-val') !== -1) {
+        return rawTxt;
+      }
+
+      // Regex mendeteksi angka dan mata uang tanpa memakan spasi depan
+      var priceRegex = /(?:[><]\s*)?₺?\s*\d+[\d.,]*(?:\s*(?:TL|tl|₺))?/g;
+      var matches = [];
+      var m;
+      while ((m = priceRegex.exec(rawTxt)) !== null) {
+        var str = m[0].trim();
+        if (/\d/.test(str)) {
+          matches.push({
+            val: str,
+            index: m.index,
+            length: m[0].length
+          });
+        }
+      }
+
+      if (matches.length >= 2) {
+        var mOld = matches[0];
+        var mNew = matches[1];
+
+        var partBefore = rawTxt.substring(0, mOld.index);
+        var oldFormatted = '<span class="ad-old-val">' + mOld.val.replace(/>/g, '&gt;').replace(/</g, '&lt;') + '</span>';
+        var partBetween = rawTxt.substring(mOld.index + mOld.length, mNew.index);
+        var newFormatted = '<span class="ad-new-val">' + mNew.val.replace(/>/g, '&gt;').replace(/</g, '&lt;') + '</span>';
+        var partAfter = rawTxt.substring(mNew.index + mNew.length);
+
+        return partBefore + oldFormatted + partBetween + newFormatted + partAfter;
+      } else if (matches.length === 1) {
+        var mSingle = matches[0];
+        return rawTxt.substring(0, mSingle.index) +
+               '<span class="ad-new-val">' + mSingle.val.replace(/>/g, '&gt;').replace(/</g, '&lt;') + '</span>' +
+               rawTxt.substring(mSingle.index + mSingle.length);
+      }
+
+      return rawTxt;
     }
 
     /* Susunan Acara Default */
@@ -1912,16 +1978,12 @@
       updateInpageCounters();
     }
 
-    /**
-     * Bootstrap Instan (0.01 Detik) Menggunakan Cache Memori Lokal
-     * Mencegah jeda loading 5 detik saat web dibuka kembali
-     */
     document.addEventListener('DOMContentLoaded', function() {
       setupDrawer();
       setupSecretTrigger();
       setupNavbarScroll();
 
-      // 1. Muat Konfigurasi Teks & Foto dari Cache Lokal (0 Detik)
+      // 1. Muat Konfigurasi Teks & Foto dari Cache Lokal (0 Detik Instan)
       var cachedCfg = localStorage.getItem('CAMPNIC_2026_CONFIG');
       if (cachedCfg) {
         try {
@@ -2145,7 +2207,7 @@
         if (imgDest && directDest) imgDest.src = directDest;
       }
 
-      // 7. Seksi Fasilitas & Penawaran
+      // 7. Seksi Fasilitas & Penawaran Dinamis
       if (cfg.Benefit_Kicker) {
         var elBenKicker = document.getElementById('dynBenefitKicker');
         if (elBenKicker) elBenKicker.textContent = cfg.Benefit_Kicker;
@@ -2161,12 +2223,7 @@
       if (cfg.Highlight_Value_Text) {
         var hlEl = document.getElementById('dynHighlightValueText');
         if (hlEl) {
-          var rawTxt = cfg.Highlight_Value_Text;
-          if (rawTxt.indexOf('>250 TL') !== -1 && rawTxt.indexOf('150 TL') !== -1) {
-            hlEl.innerHTML = 'Dapatkan Fasilitas Senilai <span class="ad-old-val">&gt;250 TL</span> Hanya dengan <span class="ad-new-val">150 TL</span>';
-          } else {
-            hlEl.innerHTML = rawTxt;
-          }
+          hlEl.innerHTML = formatHighlightDealText(cfg.Highlight_Value_Text);
         }
       }
 
