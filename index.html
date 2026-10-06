@@ -850,6 +850,44 @@
       box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
     }
 
+    /* WhatsApp Dual-Input Group (+90 / +62) */
+    .wa-input-group {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .wa-code-select {
+      width: 148px;
+      min-width: 135px;
+      flex-shrink: 0;
+      font-weight: 700;
+      background: var(--warm-cream);
+      border: 1px solid #CFD6D0;
+      border-radius: var(--radius-sm);
+      padding: 12px 10px;
+      font-size: 13px;
+      color: var(--bg-dark);
+      cursor: pointer;
+    }
+
+    .wa-code-select:focus {
+      outline: none;
+      border-color: var(--gold-sand);
+      box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
+    }
+
+    .wa-number-input {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #CFD6D0;
+      font-family: inherit;
+      font-size: 14px;
+      background: var(--warm-cream);
+    }
+
     .file-drop-box {
       border: 2px dashed var(--sage);
       border-radius: var(--radius-md);
@@ -1211,6 +1249,11 @@
       .hero-title { 
         margin-bottom: 26px; 
       }
+      .wa-code-select {
+        width: 130px;
+        min-width: 120px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -1455,7 +1498,7 @@
     <!-- BANNER VALUE FASILITAS DINAMIS (DAPATKAN FASILITAS SENILAI >X HANYA DENGAN Y) -->
     <div class="ad-deal-banner" id="dynHighlightBannerWrap">
       <div class="ad-deal-text" id="dynHighlightValueText">
-        Dapatkan Fasilitas Senilai <span class="ad-old-val">&gt;250 TL</span> Hanya dengan <span class="ad-new-val">150 TL</span>
+        Dapatkan Fasilitas Senilai <span class="ad-old-val">&gt;350 TL</span> Hanya dengan <span class="ad-new-val">150 TL</span>
       </div>
     </div>
   </section>
@@ -1520,11 +1563,18 @@
             <input type="email" id="formEmail" required placeholder="aufa@example.com">
           </div>
 
+          <!-- INPUT GROUP KODE NEGARA WHATSAPP (+90 / +62) -->
           <div class="form-item">
-            <label for="formWa">Nomor WhatsApp Aktif *</label>
-            <input type="tel" id="formWa" required placeholder="Contoh: +90 507 638 23 58 atau 0812 7262 9990">
-            <span style="font-size:11.5px; color:#666;">
-              * Masukkan nomor WhatsApp aktif Anda (Contoh: <strong>+90 507...</strong> untuk Turki atau <strong>+62 812... / 0812...</strong> untuk Indonesia).
+            <label for="inputWaNumber">Nomor WhatsApp Aktif *</label>
+            <div class="wa-input-group">
+              <select id="selectWaCountryCode" class="wa-code-select" onchange="handleWaCountryChange();">
+                <option value="+90">🇹🇷 +90 (Türkiye)</option>
+                <option value="+62">🇮🇩 +62 (Indonesia)</option>
+              </select>
+              <input type="tel" id="inputWaNumber" class="wa-number-input" required placeholder="Contoh: 507 638 23 58">
+            </div>
+            <span style="font-size:11.5px; color:#666;" id="waHelperText">
+              * Pilih kode negara lalu masukkan nomor WA Anda tanpa angka 0 di depan.
             </span>
           </div>
 
@@ -1593,7 +1643,7 @@
     </div>
   </footer>
 
-  <!-- MODAL SUKSES PENDAFTARAN (RINGKAS & JELAS) -->
+  <!-- MODAL SUKSES PENDAFTARAN -->
   <div class="custom-modal" id="successModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('successModal');">&times;</button>
@@ -1605,7 +1655,7 @@
 
       <div style="background:var(--warm-beige); padding:12px; border-radius:8px; border:1px dashed var(--gold-sand); margin-bottom:14px;">
         <div style="font-size:11px; color:var(--forest-accent); font-weight:700;">ID REGISTRASI ANDA:</div>
-        <div style="font-size:18px; font-weight:800; color:var(--bg-dark);" id="modalRegId">CAMP-20261031-0001</div>
+        <div style="font-size:18px; font-weight:800; color:var(--bg-dark);" id="modalRegId">CAMP-20261031-001</div>
         <div style="font-size:11px; color:#856404; background:#FFF3CD; padding:4px 8px; border-radius:6px; margin-top:6px; font-weight:700;">
           Status: Menunggu Verifikasi Pembayaran
         </div>
@@ -1717,11 +1767,11 @@
           </button>
         </div>
 
-        <!-- INPUT MANUAL ID -->
+        <!-- INPUT MANUAL ID (Dukungan Format 3 Digit: CAMP-YYYYMMDD-001) -->
         <div style="text-align:left; margin-top:16px; border-top:1px dashed #DDD; padding-top:14px;">
           <label style="font-size:11px; font-weight:700; color:#555; text-transform:uppercase;">Input Manual ID Registrasi:</label>
           <div style="display:flex; gap:6px; margin-top:6px;">
-            <input type="text" id="inPageManualId" placeholder="CAMP-20261031-XXXX" style="flex:1; padding:10px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
+            <input type="text" id="inPageManualId" placeholder="CAMP-20261031-001" style="flex:1; padding:10px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
             <button onclick="submitManualCheckIn();" class="btn-hero-primary" style="padding:8px 18px; font-size:12px;">Check-In</button>
           </div>
         </div>
@@ -1806,49 +1856,103 @@
     var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || '[]');
 
     /**
-     * Smart Phone Normalizer:
-     * Menghapus spasi, strip, tanda kurung (), titik, dan karakter gaib (\u200E dll).
-     * Otomatis melengkapi awalan kode negara (+) jika lupa diketik.
-     * Mengoreksi angka 0 berlebih (+6208... -> +628... / +9005... -> +905...).
+     * Generator Nomor Urut 3 Digit Murni Mulai dari 001:
+     * Memindai ID yang ada di database untuk menemukan nomor urut tertinggi.
+     * Jika database kosong, otomatis mengembalikan '001'.
      */
-    function cleanAndNormalizePhone(raw) {
-      if (!raw) return '';
-      var cleaned = String(raw).trim();
-      
-      // Hapus karakter non-digit dan non-plus
+    function getNextRegistrationSequence_() {
+      var maxSeq = 0;
+      for (var i = 0; i < participantsDb.length; i++) {
+        var pId = String(participantsDb[i].id || '').toUpperCase().trim();
+        var match = pId.match(/CAMP-\d{8}-(\d+)/);
+        if (match && match[1]) {
+          var num = parseInt(match[1], 10);
+          if (!isNaN(num) && num > maxSeq) {
+            maxSeq = num;
+          }
+        }
+      }
+      var nextNum = maxSeq + 1;
+      if (nextNum < 10) return '00' + nextNum;
+      if (nextNum < 100) return '0' + nextNum;
+      return String(nextNum);
+    }
+
+    /**
+     * Mengubah placeholder nomor telepon secara otomatis sesuai negara yang dipilih
+     */
+    function handleWaCountryChange() {
+      var countrySelect = document.getElementById('selectWaCountryCode');
+      var numInput = document.getElementById('inputWaNumber');
+      if (!countrySelect || !numInput) return;
+
+      if (countrySelect.value === '+90') {
+        numInput.placeholder = 'Contoh: 507 638 23 58';
+      } else {
+        numInput.placeholder = 'Contoh: 812 7262 9990';
+      }
+    }
+
+    /**
+     * Smart Phone Combiner & Normalizer:
+     * Menggabungkan kode negara terpilih (+90 / +62) dengan nomor yang diketik peserta.
+     * Otomatis memangkas angka 0 berlebih jika peserta mengetik 05xx / 08xx.
+     */
+    function buildFullWhatsAppNumber(countryCode, rawNumber) {
+      if (!rawNumber) return '';
+      var cleaned = String(rawNumber).trim();
+
+      // Hapus kurung, strip, titik, spasi, dan karakter Unicode tak kasat mata
       cleaned = cleaned.replace(/[\s\-\(\)\.\u200E\u200F\uFEFF]/g, '');
       cleaned = cleaned.replace(/[^\d+]/g, '');
 
-      // Jika diawali +6208... ubah menjadi +628...
+      // Jika peserta mem-paste nomor lengkap dengan tanda +
+      if (cleaned.indexOf('+') === 0) {
+        return cleanAndNormalizePhone(cleaned);
+      }
+
+      // Jika peserta mengetik kode negara langsung di kotak nomor
+      if (cleaned.indexOf('90') === 0 && cleaned.length >= 10) {
+        return '+' + cleaned;
+      }
+      if (cleaned.indexOf('62') === 0 && cleaned.length >= 10) {
+        return '+' + cleaned;
+      }
+
+      // Hapus awalan angka nol jika peserta mengetik 05xx atau 08xx
+      if (cleaned.indexOf('0') === 0) {
+        cleaned = cleaned.substring(1);
+      }
+
+      return countryCode + cleaned;
+    }
+
+    function cleanAndNormalizePhone(raw) {
+      if (!raw) return '';
+      var cleaned = String(raw).trim();
+      cleaned = cleaned.replace(/[\s\-\(\)\.\u200E\u200F\uFEFF]/g, '');
+      cleaned = cleaned.replace(/[^\d+]/g, '');
+
       if (cleaned.indexOf('+620') === 0) {
         cleaned = '+62' + cleaned.substring(4);
       }
-      // Jika diawali +9005... ubah menjadi +905...
       if (cleaned.indexOf('+900') === 0) {
         cleaned = '+90' + cleaned.substring(4);
       }
-
-      // Jika tanpa tanda + namun berawalan 62 atau 90
       if (cleaned.indexOf('62') === 0) {
         cleaned = '+' + cleaned;
       } else if (cleaned.indexOf('90') === 0) {
         cleaned = '+' + cleaned;
       } else if (cleaned.indexOf('08') === 0) {
-        // Format lokal Indonesia (08xx) -> +628xx
         cleaned = '+62' + cleaned.substring(1);
       } else if (cleaned.indexOf('05') === 0) {
-        // Format lokal Turki (05xx) -> +905xx
         cleaned = '+90' + cleaned.substring(1);
       } else if (cleaned.indexOf('+') !== 0 && cleaned.length > 5) {
         cleaned = '+' + cleaned;
       }
-
       return cleaned;
     }
 
-    /**
-     * Konverter Cerdas Tautan Google Drive ke Format Gambar Langsung (CDN lh3)
-     */
     function convertDriveImageUrl(url) {
       if (!url) return '';
       url = String(url).trim();
@@ -1870,19 +1974,12 @@
       return url;
     }
 
-    /**
-     * Smart Dynamic Deal Text Parser:
-     * Otomatis mendeteksi angka pertama (harga asli) untuk dicoret (.ad-old-val)
-     * dan angka kedua (harga bayar) untuk diberi pendaran emas mewah (.ad-new-val)
-     * tanpa peduli perubahan nominal di Spreadsheet!
-     */
     function formatHighlightDealText(rawTxt) {
       if (!rawTxt) return '';
       if (rawTxt.indexOf('ad-old-val') !== -1 || rawTxt.indexOf('ad-new-val') !== -1) {
         return rawTxt;
       }
 
-      // Regex mendeteksi angka dan mata uang tanpa memakan spasi depan
       var priceRegex = /(?:[><]\s*)?₺?\s*\d+[\d.,]*(?:\s*(?:TL|tl|₺))?/g;
       var matches = [];
       var m;
@@ -2026,6 +2123,7 @@
       setupDrawer();
       setupSecretTrigger();
       setupNavbarScroll();
+      handleWaCountryChange();
 
       // 1. Muat Konfigurasi Teks & Foto dari Cache Lokal (0 Detik Instan)
       var cachedCfg = localStorage.getItem('CAMPNIC_2026_CONFIG');
@@ -2091,7 +2189,6 @@
         .then(function(data) {
           if (data && data.status === 'success') {
             if (data.config) {
-              // Simpan ke Cache Lokal agar kunjungan berikutnya 0 detik
               localStorage.setItem('CAMPNIC_2026_CONFIG', JSON.stringify(data.config));
               applyWebConfig(data.config);
             }
@@ -2105,18 +2202,15 @@
             }
 
             if (data.participants && data.participants.length) {
-              // PROTEKSI LIVE SYNC: Jangan timpa status peserta yang sedang dalam proses pencetakan PDF
               for (var i = 0; i < data.participants.length; i++) {
                 var incomingP = data.participants[i];
                 if (pendingPdfGeneration[incomingP.id]) {
-                  // Jika di server belum ada link, pertahankan status lokal agar tombol tidak mental
                   if (!incomingP.linkPdf || incomingP.linkPdf === '-') {
                     var localItem = participantsDb.find(function(it){ return it.id === incomingP.id; });
                     if (localItem && localItem.linkPdf && localItem.linkPdf !== '-') {
                       incomingP.linkPdf = localItem.linkPdf;
                     }
                   } else {
-                    // Jika di server sudah ada link, lepaskan status pending
                     delete pendingPdfGeneration[incomingP.id];
                   }
                 }
@@ -2150,7 +2244,6 @@
     }
 
     function applyWebConfig(cfg) {
-      // 1. Header & Brand
       if (cfg.Event_Title) {
         var elNavTitle = document.getElementById('dynNavTitle');
         if (elNavTitle) elNavTitle.textContent = cfg.Event_Title;
@@ -2174,7 +2267,6 @@
         if (elHeroB) elHeroB.textContent = cfg.Hero_Badge;
       }
 
-      // 2. Hero Background Image (dengan Google Drive Auto-Converter)
       if (cfg.Foto_Hero_URL) {
         var heroEl = document.getElementById('hero');
         var directHeroUrl = convertDriveImageUrl(cfg.Foto_Hero_URL);
@@ -2183,7 +2275,6 @@
         }
       }
 
-      // 3. Seksi Tentang Acara (About) - Teks Penuh
       if (cfg.About_Kicker) {
         var elAbKicker = document.getElementById('dynAboutKicker');
         if (elAbKicker) elAbKicker.textContent = cfg.About_Kicker;
@@ -2209,7 +2300,6 @@
         if (elAbP2) elAbP2.textContent = cfg.About_Paragraf_2;
       }
 
-      // 4. Foto Galeri Tentang (Direct CDN Image Load)
       if (cfg.Foto_About_1) {
         var imgAb1 = document.getElementById('dynImgAbout1');
         var directAb1 = convertDriveImageUrl(cfg.Foto_About_1);
@@ -2221,7 +2311,6 @@
         if (imgAb2 && directAb2) imgAb2.src = directAb2;
       }
 
-      // 5. Kartu Info Cepat
       if (cfg.Tanggal_Acara) {
         var elCardTgl = document.getElementById('dynCardTanggal');
         if (elCardTgl) elCardTgl.textContent = cfg.Tanggal_Acara;
@@ -2241,7 +2330,6 @@
         if (elCardTgt) elCardTgt.textContent = cfg.Target_Peserta;
       }
 
-      // 6. Seksi Destinasi Pilihan
       if (cfg.Destinasi_Kicker) {
         var elDestKicker = document.getElementById('dynDestinasiKicker');
         if (elDestKicker) elDestKicker.textContent = cfg.Destinasi_Kicker;
@@ -2268,7 +2356,6 @@
         if (imgDest && directDest) imgDest.src = directDest;
       }
 
-      // 7. Seksi Fasilitas & Penawaran Dinamis
       if (cfg.Benefit_Kicker) {
         var elBenKicker = document.getElementById('dynBenefitKicker');
         if (elBenKicker) elBenKicker.textContent = cfg.Benefit_Kicker;
@@ -2288,7 +2375,6 @@
         }
       }
 
-      // 8. Pembayaran & Rekening Bank Tunggal (Ziraat Bankası)
       if (cfg.Biaya_Pendaftaran) {
         var feeEl = document.getElementById('dynBiayaPendaftaran');
         if (feeEl) feeEl.textContent = cfg.Biaya_Pendaftaran;
@@ -2306,7 +2392,6 @@
         if (elBankHolder) elBankHolder.textContent = cfg.Bank_TR_AtasNama;
       }
 
-      // 9. Tombol Proposal PDF Melayang (FAB) & Link Mobile Drawer
       if (cfg.Link_Proposal_PDF) {
         var propFab = document.getElementById('dynFloatingProposalBtn');
         if (propFab) propFab.href = cfg.Link_Proposal_PDF;
@@ -2314,7 +2399,6 @@
         if (drawerProp) drawerProp.href = cfg.Link_Proposal_PDF;
       }
 
-      // 10. Kontak WhatsApp & Instagram
       if (cfg.Kontak_WA) {
         var cleanWA = cfg.Kontak_WA.replace(/[^0-9]/g, '');
         var elBtnWA = document.getElementById('dynBtnContactWA');
@@ -2332,7 +2416,6 @@
         }
       }
 
-      // 11. PIN Admin Rahasia
       if (cfg.Admin_PIN) {
         configuredAdminPin = String(cfg.Admin_PIN).trim();
       }
@@ -2770,7 +2853,8 @@
     }
 
     function processCheckIn(idText) {
-      var match = idText.match(/CAMP-\d{8}-\d{4}/i);
+      // Pola fleksibel mendukung ID 3 digit (CAMP-20261031-001) maupun lama
+      var match = idText.match(/CAMP-\d{8}-\d+/i);
       var clean = match ? match[0].toUpperCase() : idText.toUpperCase().trim();
 
       var found = null;
@@ -2968,7 +3052,6 @@
         return;
       }
 
-      // Kunci tombol secara fisik agar tidak bisa diklik dobel
       pendingPdfGeneration[id] = true;
       showToast('Memproses PDF E-Ticket resmi di Google Drive...', 'fa-solid fa-spinner fa-spin');
 
@@ -3065,17 +3148,19 @@
     function submitRegistration() {
       var namaInput = document.getElementById('formNama');
       var emailInput = document.getElementById('formEmail');
-      var waInput = document.getElementById('formWa');
+      var countrySelect = document.getElementById('selectWaCountryCode');
+      var numInput = document.getElementById('inputWaNumber');
       var statusInput = document.getElementById('formStatus');
       var wilayahInput = document.getElementById('formWilayah');
 
       var nama = (namaInput.value || '').trim();
       var email = (emailInput.value || '').trim();
-      var rawWa = (waInput.value || '').trim();
+      var countryCode = countrySelect ? countrySelect.value : '+90';
+      var rawNumber = (numInput.value || '').trim();
       var statusPeserta = (statusInput.value || '').trim();
       var wilayah = (wilayahInput.value || '').trim();
 
-      if (!nama || !email || !rawWa || !statusPeserta || !wilayah) {
+      if (!nama || !email || !rawNumber || !statusPeserta || !wilayah) {
         showToast('Harap lengkapi semua kolom pendaftaran yang wajib diisi!', 'fa-solid fa-triangle-exclamation');
         return;
       }
@@ -3087,14 +3172,13 @@
         return;
       }
 
-      // SMART PHONE NORMALIZATION: Bersihkan tanda kurung, titik, strip, spasi & karakter gaib
-      var normalizedWa = cleanAndNormalizePhone(rawWa);
+      // Gabungkan kode negara (+90 / +62) dengan nomor yang diketik peserta
+      var normalizedWa = buildFullWhatsAppNumber(countryCode, rawNumber);
       var digitsOnly = normalizedWa.replace(/[^\d]/g, '');
 
-      // Nomor valid internasional minimal 9 digit angka (misal Turki 90 5xx atau Indo 62 8xx)
       if (digitsOnly.length < 9 || digitsOnly.length > 15 || !normalizedWa.startsWith('+')) {
-        showToast('Format nomor WhatsApp belum sesuai. Pastikan menyertakan kode negara (Contoh: +90 507... atau +62 812...)!', 'fa-solid fa-triangle-exclamation');
-        waInput.focus();
+        showToast('Nomor WhatsApp belum lengkap. Silakan periksa kembali nomor Anda!', 'fa-solid fa-triangle-exclamation');
+        numInput.focus();
         return;
       }
 
@@ -3107,7 +3191,8 @@
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Data...';
 
-      var newSeq = ('000' + (participantsDb.length + 1)).slice(-4);
+      // GENERATOR 3 DIGIT MULAI TEPAT DARI 001
+      var newSeq = getNextRegistrationSequence_();
       var newId = 'CAMP-20261031-' + newSeq;
 
       var ext = 'jpg';
@@ -3159,6 +3244,7 @@
         openModal('successModal');
 
         document.getElementById('participantForm').reset();
+        handleWaCountryChange();
         document.getElementById('receiptPreview').style.display = 'none';
         document.getElementById('fileLabelText').textContent = 'Pilih Foto Struk Pembayaran (JPG/PNG)';
         base64ReceiptPayload = { name: '', data: '' };
