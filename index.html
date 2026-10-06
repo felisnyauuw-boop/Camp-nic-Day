@@ -681,7 +681,6 @@
       gap: 4px 6px;
     }
 
-    /* Efek coret elegan: Tembaga halus dengan opasitas lembut */
     .ad-old-val {
       position: relative;
       color: #A3B8A7;
@@ -695,7 +694,6 @@
       letter-spacing: 0.3px;
     }
 
-    /* Efek 150 TL ultra-mewah: Gradasi emas bersinar dengan pendaran ganda */
     .ad-new-val {
       display: inline-block;
       color: #FFE5B4;
@@ -1454,7 +1452,7 @@
       <!-- Diisi otomatis dari Cache / Spreadsheet via Webhook -->
     </div>
 
-    <!-- BANNER VALUE FASILITAS (DAPATKAN FASILITAS SENILAI >X HANYA DENGAN Y) -->
+    <!-- BANNER VALUE FASILITAS DINAMIS (DAPATKAN FASILITAS SENILAI >X HANYA DENGAN Y) -->
     <div class="ad-deal-banner" id="dynHighlightBannerWrap">
       <div class="ad-deal-text" id="dynHighlightValueText">
         Dapatkan Fasilitas Senilai <span class="ad-old-val">&gt;250 TL</span> Hanya dengan <span class="ad-new-val">150 TL</span>
@@ -1523,9 +1521,11 @@
           </div>
 
           <div class="form-item">
-            <label for="formWa">Nomor WhatsApp Aktif (Wajib Gunakan Tanda + dan Kode Negara) *</label>
-            <input type="tel" id="formWa" required placeholder="Contoh: +90 507 638 23 58 atau +62 812 7262 9990">
-            <span style="font-size:11px; color:#666;">* Pastikan diawali kode negara dengan tanda + (Contoh: <strong>+90</strong> untuk Turki atau <strong>+62</strong> untuk Indonesia)</span>
+            <label for="formWa">Nomor WhatsApp Aktif *</label>
+            <input type="tel" id="formWa" required placeholder="Contoh: +90 507 638 23 58 atau 0812 7262 9990">
+            <span style="font-size:11.5px; color:#666;">
+              * Masukkan nomor WhatsApp aktif Anda (Contoh: <strong>+90 507...</strong> untuk Turki atau <strong>+62 812... / 0812...</strong> untuk Indonesia).
+            </span>
           </div>
 
           <div class="form-item">
@@ -1799,8 +1799,52 @@
     var autoSyncIntervalTimer = null;
     var configuredAdminPin = '2026';
 
+    // State Pengunci Pembuatan PDF untuk Mencegah Tombol Mental & Double Creation
+    var pendingPdfGeneration = {};
+
     /* Database Lokal Pendaftar */
     var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || '[]');
+
+    /**
+     * Smart Phone Normalizer:
+     * Menghapus spasi, strip, tanda kurung (), titik, dan karakter gaib (\u200E dll).
+     * Otomatis melengkapi awalan kode negara (+) jika lupa diketik.
+     * Mengoreksi angka 0 berlebih (+6208... -> +628... / +9005... -> +905...).
+     */
+    function cleanAndNormalizePhone(raw) {
+      if (!raw) return '';
+      var cleaned = String(raw).trim();
+      
+      // Hapus karakter non-digit dan non-plus
+      cleaned = cleaned.replace(/[\s\-\(\)\.\u200E\u200F\uFEFF]/g, '');
+      cleaned = cleaned.replace(/[^\d+]/g, '');
+
+      // Jika diawali +6208... ubah menjadi +628...
+      if (cleaned.indexOf('+620') === 0) {
+        cleaned = '+62' + cleaned.substring(4);
+      }
+      // Jika diawali +9005... ubah menjadi +905...
+      if (cleaned.indexOf('+900') === 0) {
+        cleaned = '+90' + cleaned.substring(4);
+      }
+
+      // Jika tanpa tanda + namun berawalan 62 atau 90
+      if (cleaned.indexOf('62') === 0) {
+        cleaned = '+' + cleaned;
+      } else if (cleaned.indexOf('90') === 0) {
+        cleaned = '+' + cleaned;
+      } else if (cleaned.indexOf('08') === 0) {
+        // Format lokal Indonesia (08xx) -> +628xx
+        cleaned = '+62' + cleaned.substring(1);
+      } else if (cleaned.indexOf('05') === 0) {
+        // Format lokal Turki (05xx) -> +905xx
+        cleaned = '+90' + cleaned.substring(1);
+      } else if (cleaned.indexOf('+') !== 0 && cleaned.length > 5) {
+        cleaned = '+' + cleaned;
+      }
+
+      return cleaned;
+    }
 
     /**
      * Konverter Cerdas Tautan Google Drive ke Format Gambar Langsung (CDN lh3)
@@ -2061,6 +2105,23 @@
             }
 
             if (data.participants && data.participants.length) {
+              // PROTEKSI LIVE SYNC: Jangan timpa status peserta yang sedang dalam proses pencetakan PDF
+              for (var i = 0; i < data.participants.length; i++) {
+                var incomingP = data.participants[i];
+                if (pendingPdfGeneration[incomingP.id]) {
+                  // Jika di server belum ada link, pertahankan status lokal agar tombol tidak mental
+                  if (!incomingP.linkPdf || incomingP.linkPdf === '-') {
+                    var localItem = participantsDb.find(function(it){ return it.id === incomingP.id; });
+                    if (localItem && localItem.linkPdf && localItem.linkPdf !== '-') {
+                      incomingP.linkPdf = localItem.linkPdf;
+                    }
+                  } else {
+                    // Jika di server sudah ada link, lepaskan status pending
+                    delete pendingPdfGeneration[incomingP.id];
+                  }
+                }
+              }
+
               participantsDb = data.participants;
               saveDb();
               if (currentScannerViewMode !== 'CAMERA') {
@@ -2856,6 +2917,7 @@
 
         var rawLink = (p.linkPdf || '').trim();
         var hasDriveLink = (rawLink !== '' && rawLink !== '-' && (rawLink.indexOf('http') === 0 || rawLink.indexOf('drive.google.com') !== -1));
+        var isProcessing = pendingPdfGeneration[p.id] === true;
 
         html += '<div style="background:#FFF; border-radius:14px; border:1px solid #DCE3DE; padding:16px; margin-bottom:12px; font-size:13px; display:flex; flex-direction:column; gap:6px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">' +
           '<div style="display:flex; justify-content:space-between; align-items:center;">' +
@@ -2870,12 +2932,18 @@
             '<div style="font-size:10.5px; font-weight:800; color:#444; margin-bottom:2px;"><i class="fa-brands fa-google-drive" style="color:#0F9D58;"></i> LINK TIKET GDRIVE (DARI SPREADSHEET):</div>' +
             (hasDriveLink
               ? '<a href="' + rawLink + '" target="_blank" style="font-size:11.5px; color:#0B5ED7; text-decoration:underline; word-break:break-all; font-weight:600;">' + rawLink + '</a>'
-              : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Klik "Verifikasi Lunas" untuk buat otomatis ke Drive)</div>') +
+              : (isProcessing 
+                  ? '<div style="font-size:11px; color:#B88554; font-weight:700;"><i class="fa-solid fa-spinner fa-spin"></i> Sedang mencetak PDF & mengaitkan tautan Drive...</div>'
+                  : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Klik "Verifikasi Lunas" untuk buat otomatis ke Drive)</div>')) +
           '</div>' +
 
           '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:10px; margin-top:6px;">';
 
-        if (!isLunas) {
+        if (isProcessing) {
+          html += '<button disabled style="flex:1; background:#6C757D; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:9px 12px; cursor:not-allowed; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
+                    '<i class="fa-solid fa-spinner fa-spin"></i> Sedang Memproses PDF...' +
+                  '</button>';
+        } else if (!isLunas) {
           html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:12px; font-weight:700; padding:9px 12px; cursor:pointer;">' +
                     '<i class="fa-solid fa-check"></i> Verifikasi Lunas & Buat PDF Drive' +
                   '</button>';
@@ -2895,7 +2963,14 @@
     }
 
     function verifyParticipantInPage(id) {
-      showToast('Membuat PDF E-Ticket resmi di Google Drive...', 'fa-solid fa-spinner fa-spin');
+      if (pendingPdfGeneration[id]) {
+        showToast('Sedang diproses, mohon tunggu sebentar...', 'fa-solid fa-spinner fa-spin');
+        return;
+      }
+
+      // Kunci tombol secara fisik agar tidak bisa diklik dobel
+      pendingPdfGeneration[id] = true;
+      showToast('Memproses PDF E-Ticket resmi di Google Drive...', 'fa-solid fa-spinner fa-spin');
 
       var found = null;
       for (var i = 0; i < participantsDb.length; i++) {
@@ -2918,6 +2993,7 @@
         .then(function(resData) {
           if (resData && resData.success && resData.pdfUrl) {
             if (found) found.linkPdf = resData.pdfUrl;
+            delete pendingPdfGeneration[id];
             saveDb();
             renderAdminList();
             showToast('Lunas! PDF berhasil dibuat & link Drive tersimpan.', 'fa-solid fa-circle-check');
@@ -2930,10 +3006,13 @@
           setTimeout(function() {
             fetchSpreadsheetData(true);
             setTimeout(function() {
+              delete pendingPdfGeneration[id];
               fetchSpreadsheetData(false);
-            }, 2000);
+            }, 2500);
           }, 2500);
         });
+      } else {
+        delete pendingPdfGeneration[id];
       }
     }
 
@@ -2992,11 +3071,11 @@
 
       var nama = (namaInput.value || '').trim();
       var email = (emailInput.value || '').trim();
-      var wa = (waInput.value || '').trim();
+      var rawWa = (waInput.value || '').trim();
       var statusPeserta = (statusInput.value || '').trim();
       var wilayah = (wilayahInput.value || '').trim();
 
-      if (!nama || !email || !wa || !statusPeserta || !wilayah) {
+      if (!nama || !email || !rawWa || !statusPeserta || !wilayah) {
         showToast('Harap lengkapi semua kolom pendaftaran yang wajib diisi!', 'fa-solid fa-triangle-exclamation');
         return;
       }
@@ -3008,10 +3087,13 @@
         return;
       }
 
-      var cleanWaDigits = wa.replace(/[\s-]/g, '');
-      var waRegex = /^\+[1-9]\d{8,14}$/;
-      if (!wa.startsWith('+') || !waRegex.test(cleanWaDigits)) {
-        showToast('Nomor WA wajib diawali kode negara dengan tanda + (Contoh: +90 507 638 23 58 atau +62 812 7262 9990)!', 'fa-solid fa-triangle-exclamation');
+      // SMART PHONE NORMALIZATION: Bersihkan tanda kurung, titik, strip, spasi & karakter gaib
+      var normalizedWa = cleanAndNormalizePhone(rawWa);
+      var digitsOnly = normalizedWa.replace(/[^\d]/g, '');
+
+      // Nomor valid internasional minimal 9 digit angka (misal Turki 90 5xx atau Indo 62 8xx)
+      if (digitsOnly.length < 9 || digitsOnly.length > 15 || !normalizedWa.startsWith('+')) {
+        showToast('Format nomor WhatsApp belum sesuai. Pastikan menyertakan kode negara (Contoh: +90 507... atau +62 812...)!', 'fa-solid fa-triangle-exclamation');
         waInput.focus();
         return;
       }
@@ -3040,7 +3122,7 @@
         timestamp: UtilitiesFormatDateNow_(),
         nama: nama,
         email: email,
-        wa: wa,
+        wa: normalizedWa,
         statusPeserta: statusPeserta,
         wilayah: wilayah,
         statusBayar: 'Menunggu Verifikasi',
