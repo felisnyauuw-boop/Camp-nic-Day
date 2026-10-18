@@ -762,6 +762,17 @@
       margin: 0 auto;
     }
 
+    .waiting-list-notice-banner {
+      background: #FFF9EB;
+      border: 1.5px solid #F59E0B;
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      margin-bottom: 22px;
+      display: none;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
     .bank-card {
       background: var(--bg-dark);
       color: #FFFFFF;
@@ -1353,7 +1364,7 @@
       </ul>
 
       <div class="nav-right-actions">
-        <a href="#registration" class="btn-nav-cta">Daftar</a>
+        <a href="#registration" class="btn-nav-cta" id="dynNavCtaBtn">Daftar</a>
         <button class="hamburger-toggle" id="drawerOpenBtn" aria-label="Buka Menu"><i class="fa-solid fa-bars"></i></button>
       </div>
     </div>
@@ -1375,7 +1386,7 @@
       <li><a href="#contact" class="drawer-link">Kontak</a></li>
       <li><a href="https://drive.google.com" target="_blank" rel="noopener" id="dynDrawerProposalLink" class="drawer-link" style="color:var(--gold-sand);"><i class="fa-solid fa-file-pdf"></i> Unduh Proposal</a></li>
     </ul>
-    <a href="#registration" class="btn-hero-primary drawer-link" style="text-align:center; margin-top:16px;">Daftar Sekarang</a>
+    <a href="#registration" class="btn-hero-primary drawer-link" id="dynDrawerCtaBtn" style="text-align:center; margin-top:16px;">Daftar Sekarang</a>
   </div>
 
   <section class="hero-section" id="hero">
@@ -1385,7 +1396,7 @@
       <h1 class="hero-title" id="dynHeroTitle">CAMP-NIC DAY 2026</h1>
 
       <div class="hero-dual-actions">
-        <a href="#registration" class="btn-hero-primary">
+        <a href="#registration" class="btn-hero-primary" id="dynHeroPrimaryCta">
           <i class="fa-solid fa-ticket"></i> DAFTAR SEKARANG
         </a>
         <a href="#about" class="btn-hero-secondary">
@@ -1505,14 +1516,23 @@
 
   <section class="section-wrap" id="registration">
     <div class="section-header">
-      <span class="section-kicker">Gabung Bersama Kami</span>
-      <h2 class="section-title">Formulir Pendaftaran</h2>
-      <p class="section-subtitle">Isi data diri Anda di bawah ini secara lengkap. E-Ticket resmi ber-QR Code akan dikirimkan panitia ke WhatsApp Anda setelah verifikasi pembayaran.</p>
+      <span class="section-kicker" id="regSectionKicker">Gabung Bersama Kami</span>
+      <h2 class="section-title" id="regSectionTitle">Formulir Pendaftaran</h2>
+      <p class="section-subtitle" id="regSectionSubtitle">Isi data diri Anda di bawah ini secara lengkap. E-Ticket resmi ber-QR Code akan dikirimkan panitia ke WhatsApp Anda setelah verifikasi pembayaran.</p>
     </div>
 
     <div class="reg-wrapper">
-      <!-- KARTU PEMBAYARAN ZIRAAT BANKASI -->
-      <div class="bank-card">
+      <!-- BANNER PENGUMUMAN KHUSUS SAAT WAITING LIST AKTIF (SEMBUNYI SAAT OPEN) -->
+      <div class="waiting-list-notice-banner" id="waitingListBannerBox">
+        <i class="fa-solid fa-clipboard-user" style="font-size:22px; color:#D97706; margin-top:2px;"></i>
+        <div style="font-size:13px; color:#78350F; line-height:1.5;">
+          <strong style="display:block; font-size:14px; color:#92400E; margin-bottom:2px;">Pendaftaran Reguler Ditutup — Mode Daftar Tunggu (Waiting List)</strong>
+          Kuota reguler saat ini telah terpenuhi. Silakan lengkapi identitas Anda di bawah ini <strong>tanpa melakukan pembayaran terlebih dahulu</strong>. Panitia akan menghubungi WhatsApp Anda jika terdapat kuota tambahan.
+        </div>
+      </div>
+
+      <!-- KARTU PEMBAYARAN ZIRAAT BANKASI (OTOMATIS DISEMBUNYIKAN SAAT WAITING LIST) -->
+      <div class="bank-card" id="regBankCardBox">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:14px; border-bottom:1px dashed rgba(212, 163, 115, 0.4); padding-bottom:12px;">
           <div>
             <div class="bank-title" style="margin-bottom:2px;">Biaya Pendaftaran / Partisipasi:</div>
@@ -1598,7 +1618,8 @@
             </select>
           </div>
 
-          <div class="form-item">
+          <!-- UNGGAH STRUK BUKTI TRANSFER (OTOMATIS DISEMBUNYIKAN SAAT WAITING LIST) -->
+          <div class="form-item" id="regUploadReceiptWrap">
             <label>Unggah Struk Bukti Transfer (JPG/PNG) *</label>
             <div class="file-drop-box" onclick="document.getElementById('inputReceiptFile').click();">
               <i class="fa-solid fa-cloud-arrow-up" style="font-size:26px; color:var(--gold-sand); margin-bottom:6px;"></i>
@@ -1643,25 +1664,25 @@
     </div>
   </footer>
 
-  <!-- MODAL SUKSES PENDAFTARAN -->
+  <!-- MODAL SUKSES PENDAFTARAN (ADAPTIF REGULER & WAITING LIST) -->
   <div class="custom-modal" id="successModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('successModal');">&times;</button>
-      <div style="width:52px; height:52px; background:#D1E7DD; color:#0F5132; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; margin:0 auto 10px auto;">
-        <i class="fa-solid fa-check"></i>
+      <div id="modalSuccessIconBox" style="width:52px; height:52px; background:#D1E7DD; color:#0F5132; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; margin:0 auto 10px auto;">
+        <i id="modalSuccessIcon" class="fa-solid fa-check"></i>
       </div>
-      <h3 style="font-size:22px; color:var(--bg-dark); margin-bottom:4px;">Pendaftaran Diterima!</h3>
-      <p style="font-size:13px; color:#555; margin-bottom:12px;">Data dan bukti transfer Anda berhasil dikirim ke sistem panitia PPI Sivas.</p>
+      <h3 style="font-size:22px; color:var(--bg-dark); margin-bottom:4px;" id="modalSuccessTitle">Pendaftaran Diterima!</h3>
+      <p style="font-size:13px; color:#555; margin-bottom:12px;" id="modalSuccessDesc">Data dan bukti transfer Anda berhasil dikirim ke sistem panitia PPI Sivas.</p>
 
       <div style="background:var(--warm-beige); padding:12px; border-radius:8px; border:1px dashed var(--gold-sand); margin-bottom:14px;">
         <div style="font-size:11px; color:var(--forest-accent); font-weight:700;">ID REGISTRASI ANDA:</div>
         <div style="font-size:18px; font-weight:800; color:var(--bg-dark);" id="modalRegId">CAMP-20261031-001</div>
-        <div style="font-size:11px; color:#856404; background:#FFF3CD; padding:4px 8px; border-radius:6px; margin-top:6px; font-weight:700;">
+        <div id="modalRegStatusBadge" style="font-size:11px; color:#856404; background:#FFF3CD; padding:4px 8px; border-radius:6px; margin-top:6px; font-weight:700;">
           Status: Menunggu Verifikasi Pembayaran
         </div>
       </div>
 
-      <p style="font-size:12.5px; color:#555; line-height:1.5; margin-bottom:16px;">
+      <p style="font-size:12.5px; color:#555; line-height:1.5; margin-bottom:16px;" id="modalSuccessFooterNote">
         Panitia akan memeriksa pembayaran Anda di Ziraat Bankası. Setelah pembayaran terverifikasi, file PDF E-Ticket resmi akan dikirimkan langsung melalui WhatsApp Anda.
       </p>
 
@@ -1770,7 +1791,7 @@
           </button>
         </div>
 
-        <!-- INPUT MANUAL ID (Dukungan Format 3 Digit: CAMP-YYYYMMDD-001) -->
+        <!-- INPUT MANUAL ID -->
         <div style="text-align:left; margin-top:16px; border-top:1px dashed #DDD; padding-top:14px;">
           <label style="font-size:11px; font-weight:700; color:#555; text-transform:uppercase;">Input Manual ID Registrasi:</label>
           <div style="display:flex; gap:6px; margin-top:6px;">
@@ -1780,7 +1801,7 @@
         </div>
       </div>
 
-      <!-- VIEW B: DAFTAR NAMA DETAIL DENGAN PENCARIAN & FILTER STATUS -->
+      <!-- VIEW B: DAFTAR NAMA DETAIL -->
       <div id="scannerListDetailView" style="display:none;">
         <div style="background:#FFF; padding:14px 18px; border-radius:12px; border:1px solid #DCE3DE; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
           <div>
@@ -1809,8 +1830,28 @@
       </div>
     </div>
 
-    <!-- MODE 2: KELOLA PEMBAYARAN & LINK GOOGLE DRIVE -->
+    <!-- MODE 2: KELOLA PEMBAYARAN, SAKELAR PENDAFTARAN & LINK GOOGLE DRIVE -->
     <div id="inpageSecPayment" style="padding:16px; max-width:900px; margin:0 auto; width:100%; display:none;">
+      
+      <!-- KARTU SAKELAR BUKA / TUTUP PENDAFTARAN (WAITING LIST MODE) -->
+      <div style="background:var(--forest-dark); color:#FFF; padding:16px 18px; border-radius:14px; border:1.5px solid var(--gold-sand); margin-bottom:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; box-shadow:0 6px 18px rgba(0,0,0,0.12);">
+        <div>
+          <div style="font-size:11px; color:var(--gold-sand); font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:3px;">
+            <i class="fa-solid fa-sliders"></i> KONTROL STATUS PENDAFTARAN WEB:
+          </div>
+          <div style="font-size:15px; font-weight:800; display:flex; align-items:center; gap:8px;" id="adminRegStatusLabel">
+            <span style="width:10px; height:10px; border-radius:50%; background:#25D366; display:inline-block;"></span>
+            DIBUKA (Mode Pembayaran Normal)
+          </div>
+          <div style="font-size:11.5px; color:#DCE3DE; margin-top:2px;" id="adminRegStatusSub">
+            Formulir menampilkan rekening Ziraat Bankası & mewajibkan unggah bukti transfer.
+          </div>
+        </div>
+        <button id="btnToggleRegStatus" onclick="toggleRegistrationStatusAdmin();" style="background:#DC3545; color:#FFF; border:1px solid rgba(255,255,255,0.3); padding:10px 18px; border-radius:25px; font-size:12px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:7px; box-shadow:0 4px 12px rgba(0,0,0,0.2); transition:all 0.2s;">
+          <i class="fa-solid fa-lock"></i> Tutup Pendaftaran (Waiting List)
+        </button>
+      </div>
+
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
         <h3 style="font-size:18px; color:var(--forest-dark); font-weight:700;">
           <i class="fa-solid fa-wallet"></i> Verifikasi Pembayaran & Link Tiket Google Drive
@@ -1823,11 +1864,12 @@
         Klik <strong>Verifikasi Lunas</strong> untuk otomatis mencetak PDF ke Google Drive dan mengisi link di Spreadsheet, atau klik <strong>Kirim Tiket via WA</strong> setelah link terisi.
       </p>
 
-      <div style="display:flex; gap:8px; margin-bottom:14px;">
-        <input type="text" id="adminSearchInput" placeholder="Cari nama, ID, WA, wilayah..." style="flex:1; padding:10px 12px; border:1px solid #CCC; border-radius:6px; font-size:13px;" oninput="renderAdminList();">
+      <div style="display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;">
+        <input type="text" id="adminSearchInput" placeholder="Cari nama, ID, WA, wilayah..." style="flex:1; min-width:200px; padding:10px 12px; border:1px solid #CCC; border-radius:6px; font-size:13px;" oninput="renderAdminList();">
         <select id="adminStatusFilter" style="padding:10px; border:1px solid #CCC; border-radius:6px; font-size:13px;" onchange="renderAdminList();">
           <option value="ALL">Semua Status</option>
           <option value="PENDING">Menunggu Verifikasi</option>
+          <option value="WAITING_LIST">Waiting List (Daftar Tunggu)</option>
           <option value="LUNAS">Terverifikasi Lunas</option>
         </select>
       </div>
@@ -1851,6 +1893,10 @@
     var currentScannerViewMode = 'CAMERA';
     var autoSyncIntervalTimer = null;
     var configuredAdminPin = '2026';
+
+    // State Status Pendaftaran: 'OPEN' (Normal) atau 'CLOSED' (Waiting List Tanpa Bayar)
+    var currentRegistrationStatus = 'OPEN';
+    var isTogglingRegStatus = false;
 
     // State Pengunci Pembuatan PDF untuk Mencegah Tombol Mental & Double Creation
     var pendingPdfGeneration = {};
@@ -1881,9 +1927,6 @@
       return String(nextNum);
     }
 
-    /**
-     * Mengubah placeholder nomor telepon secara otomatis sesuai negara yang dipilih
-     */
     function handleWaCountryChange() {
       var countrySelect = document.getElementById('selectWaCountryCode');
       var numInput = document.getElementById('inputWaNumber');
@@ -1900,16 +1943,13 @@
       if (!rawNumber) return '';
       var cleaned = String(rawNumber).trim();
 
-      // Hapus kurung, strip, titik, spasi, dan karakter Unicode tak kasat mata
       cleaned = cleaned.replace(/[\s\-\(\)\.\u200E\u200F\uFEFF]/g, '');
       cleaned = cleaned.replace(/[^\d+]/g, '');
 
-      // Jika peserta mem-paste nomor lengkap dengan tanda +
       if (cleaned.indexOf('+') === 0) {
         return cleanAndNormalizePhone(cleaned);
       }
 
-      // Jika peserta mengetik kode negara langsung di kotak nomor
       if (cleaned.indexOf('90') === 0 && cleaned.length >= 10) {
         return '+' + cleaned;
       }
@@ -1917,7 +1957,6 @@
         return '+' + cleaned;
       }
 
-      // Hapus awalan angka nol jika peserta mengetik 05xx atau 08xx
       if (cleaned.indexOf('0') === 0) {
         cleaned = cleaned.substring(1);
       }
@@ -2013,7 +2052,6 @@
       return rawTxt;
     }
 
-    /* Susunan Acara Default */
     var defaultRundownData = [
       { jam: '08.30 - 10.00', judul: 'Keberangkatan Menuju Lokasi Kegiatan', deskripsi: 'Kumpul rombongan di titik pusat Sivas, presensi bus pagi, dan perjalanan menuju Hafik Gölü.' },
       { jam: '10.00 - 10.30', judul: 'Pembukaan & Sambutan Singkat', deskripsi: 'Pembukaan acara oleh panitia pelaksana dan sambutan hangat Ketua PPI Sivas.' },
@@ -2029,7 +2067,6 @@
       { jam: '21.00 - Selesai', judul: 'Persiapan Kepulangan dan Perpulangan', deskripsi: 'Operasi semut kebersihan area danau, presensi bus kepulangan, dan kembali ke Sivas.' }
     ];
 
-    /* Fasilitas Default */
     var defaultBenefitsData = [
       { judul: 'Transportasi Bus PP', deskripsi: 'Akomodasi bus pariwisata nyaman pulang-pergi dari pusat kota Sivas ke Hafik Gölü.', icon: 'fa-solid fa-bus' },
       { judul: 'Sajian BBQ & Makan Siang', deskripsi: 'Hidangan makan siang lezat, sajian pesta BBQ hangat, aneka camilan, dan minuman teh segar.', icon: 'fa-solid fa-fire-burner' },
@@ -2131,7 +2168,7 @@
       setupNavbarScroll();
       handleWaCountryChange();
 
-      // 1. Muat Konfigurasi Teks & Foto dari Cache Lokal (0 Detik Instan)
+      // 1. Muat Konfigurasi Teks, Foto & Status Pendaftaran dari Cache Lokal (0 Detik Instan)
       var cachedCfg = localStorage.getItem('CAMPNIC_2026_CONFIG');
       if (cachedCfg) {
         try {
@@ -2207,10 +2244,8 @@
               renderBenefitsUI(data.benefits);
             }
 
-            // SINKRONISASI PARTISIPAN & ZERO-RESET DETECTION
             if (data.participants !== undefined && Array.isArray(data.participants)) {
               if (data.participants.length === 0) {
-                // SPREADSHEET KOSONG: Bersihkan memori HP seketika agar ID registrasi kembali murni ke 001!
                 participantsDb = [];
                 saveDb();
                 if (currentScannerViewMode !== 'CAMERA') {
@@ -2221,15 +2256,11 @@
                   showToast('Database Spreadsheet kosong. Nomor ID direset ke 001.', 'fa-solid fa-rotate-left');
                 }
               } else {
-                // SPREADSHEET BERISI: Terapkan Anti-Downgrade Shield untuk menjaga keutuhan link Drive
                 var mergedList = [];
                 for (var i = 0; i < data.participants.length; i++) {
                   var incomingP = data.participants[i];
                   var existingLocal = participantsDb.find(function(it){ return it.id === incomingP.id; });
 
-                  // ANTI-DOWNGRADE SHIELD:
-                  // Jika data lokal sudah punya link PDF Google Drive valid, dan data incoming masih '-' (akibat jeda server Sheets),
-                  // KUNCI DAN PERTAHANKAN link lokal agar tombol TIDAK BERKEDIP atau membal ke tombol buat PDF!
                   var incomingHasLink = incomingP.linkPdf && incomingP.linkPdf !== '-' && (incomingP.linkPdf.indexOf('http') === 0 || incomingP.linkPdf.indexOf('drive.google.com') !== -1);
                   var localHasLink = existingLocal && existingLocal.linkPdf && existingLocal.linkPdf !== '-' && (existingLocal.linkPdf.indexOf('http') === 0 || existingLocal.linkPdf.indexOf('drive.google.com') !== -1);
 
@@ -2272,13 +2303,143 @@
       if (autoSyncIntervalTimer) clearInterval(autoSyncIntervalTimer);
       autoSyncIntervalTimer = setInterval(function() {
         var portal = document.getElementById('inPageAdminPortal');
-        if (portal && portal.style.display !== 'none') {
+        if (portal && portal.style.display !== 'none' && !isTogglingRegStatus) {
           fetchSpreadsheetData(true);
         }
       }, 5000);
     }
 
+    /**
+     * Menerapkan Tampilan Formulir Publik & Sakelar Admin berdasarkan Status_Pendaftaran ('OPEN' / 'CLOSED')
+     */
+    function applyRegistrationStatusUI(statusVal) {
+      var cleanStat = String(statusVal || 'OPEN').toUpperCase().trim();
+      currentRegistrationStatus = (cleanStat === 'CLOSED') ? 'CLOSED' : 'OPEN';
+
+      var isWaitingList = (currentRegistrationStatus === 'CLOSED');
+
+      // 1. Update Elemen Formulir Pendaftaran Publik
+      var bankCard = document.getElementById('regBankCardBox');
+      var uploadWrap = document.getElementById('regUploadReceiptWrap');
+      var wlBanner = document.getElementById('waitingListBannerBox');
+      var regKicker = document.getElementById('regSectionKicker');
+      var regTitle = document.getElementById('regSectionTitle');
+      var regSub = document.getElementById('regSectionSubtitle');
+      var btnSubmit = document.getElementById('btnSubmitForm');
+      var heroCta = document.getElementById('dynHeroPrimaryCta');
+      var navCta = document.getElementById('dynNavCtaBtn');
+      var drawerCta = document.getElementById('dynDrawerCtaBtn');
+
+      if (isWaitingList) {
+        if (bankCard) bankCard.style.display = 'none';
+        if (uploadWrap) uploadWrap.style.display = 'none';
+        if (wlBanner) wlBanner.style.display = 'flex';
+        if (regKicker) regKicker.textContent = 'Kuota Reguler Terpenuhi';
+        if (regTitle) regTitle.textContent = 'Formulir Waiting List';
+        if (regSub) regSub.textContent = 'Isi identitas Anda di bawah ini tanpa melakukan pembayaran. Panitia akan menghubungi WhatsApp Anda jika kuota tambahan dibuka.';
+        if (btnSubmit && !btnSubmit.disabled) {
+          btnSubmit.innerHTML = '<i class="fa-solid fa-clipboard-list"></i> Masuk Daftar Tunggu (Waiting List)';
+        }
+        if (heroCta) heroCta.innerHTML = '<i class="fa-solid fa-clipboard-list"></i> DAFTAR WAITING LIST';
+        if (navCta) navCta.textContent = 'Waiting List';
+        if (drawerCta) drawerCta.textContent = 'Daftar Waiting List';
+      } else {
+        if (bankCard) bankCard.style.display = 'block';
+        if (uploadWrap) uploadWrap.style.display = 'flex';
+        if (wlBanner) wlBanner.style.display = 'none';
+        if (regKicker) regKicker.textContent = 'Gabung Bersama Kami';
+        if (regTitle) regTitle.textContent = 'Formulir Pendaftaran';
+        if (regSub) regSub.textContent = 'Isi data diri Anda di bawah ini secara lengkap. E-Ticket resmi ber-QR Code akan dikirimkan panitia ke WhatsApp Anda setelah verifikasi pembayaran.';
+        if (btnSubmit && !btnSubmit.disabled) {
+          btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran';
+        }
+        if (heroCta) heroCta.innerHTML = '<i class="fa-solid fa-ticket"></i> DAFTAR SEKARANG';
+        if (navCta) navCta.textContent = 'Daftar';
+        if (drawerCta) drawerCta.textContent = 'Daftar Sekarang';
+      }
+
+      // 2. Update Sakelar Kontrol di Panel Panitia
+      var adminLbl = document.getElementById('adminRegStatusLabel');
+      var adminSub = document.getElementById('adminRegStatusSub');
+      var btnToggle = document.getElementById('btnToggleRegStatus');
+
+      if (adminLbl && adminSub && btnToggle) {
+        if (isWaitingList) {
+          adminLbl.innerHTML = '<span style="width:10px; height:10px; border-radius:50%; background:#F59E0B; display:inline-block; box-shadow:0 0 8px #F59E0B;"></span> DITUTUP (Mode Waiting List Tanpa Bayar)';
+          adminSub.textContent = 'Rekening Ziraat & upload bukti disembunyikan. Pendaftar masuk sebagai daftar tunggu (Waiting List).';
+          btnToggle.style.background = '#198754';
+          btnToggle.innerHTML = '<i class="fa-solid fa-lock-open"></i> Buka Pendaftaran Normal';
+        } else {
+          adminLbl.innerHTML = '<span style="width:10px; height:10px; border-radius:50%; background:#25D366; display:inline-block; box-shadow:0 0 8px #25D366;"></span> DIBUKA (Mode Pembayaran Normal)';
+          adminSub.textContent = 'Formulir menampilkan rekening Ziraat Bankası & mewajibkan unggah bukti transfer.';
+          btnToggle.style.background = '#DC3545';
+          btnToggle.innerHTML = '<i class="fa-solid fa-lock"></i> Tutup Pendaftaran (Waiting List)';
+        }
+      }
+    }
+
+    /**
+     * Aksi Sakelar Buka / Tutup Pendaftaran dari Panel Panitia
+     */
+    function toggleRegistrationStatusAdmin() {
+      if (isTogglingRegStatus) return;
+      isTogglingRegStatus = true;
+
+      var targetStatus = (currentRegistrationStatus === 'OPEN') ? 'CLOSED' : 'OPEN';
+      var btnToggle = document.getElementById('btnToggleRegStatus');
+      if (btnToggle) {
+        btnToggle.disabled = true;
+        btnToggle.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+      }
+
+      // Optimistic UI Update
+      applyRegistrationStatusUI(targetStatus);
+
+      // Update Cache Konfigurasi Lokal
+      try {
+        var cachedCfg = JSON.parse(localStorage.getItem('CAMPNIC_2026_CONFIG') || '{}');
+        cachedCfg.Status_Pendaftaran = targetStatus;
+        localStorage.setItem('CAMPNIC_2026_CONFIG', JSON.stringify(cachedCfg));
+      } catch(e){}
+
+      if (APPS_SCRIPT_WEBHOOK_URL) {
+        fetch(APPS_SCRIPT_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'TOGGLE_REGISTRATION_STATUS',
+            statusPendaftaran: targetStatus
+          })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(resData) {
+          isTogglingRegStatus = false;
+          if (btnToggle) btnToggle.disabled = false;
+          applyRegistrationStatusUI(targetStatus);
+          if (targetStatus === 'CLOSED') {
+            showToast('Pendaftaran Ditutup: Beralih ke Mode Waiting List!', 'fa-solid fa-clipboard-list');
+          } else {
+            showToast('Pendaftaran Dibuka Kembali (Mode Normal)!', 'fa-solid fa-circle-check');
+          }
+        })
+        .catch(function() {
+          isTogglingRegStatus = false;
+          if (btnToggle) btnToggle.disabled = false;
+          applyRegistrationStatusUI(targetStatus);
+          showToast('Status pendaftaran diperbarui!', 'fa-solid fa-check');
+        });
+      } else {
+        isTogglingRegStatus = false;
+        if (btnToggle) btnToggle.disabled = false;
+        applyRegistrationStatusUI(targetStatus);
+      }
+    }
+
     function applyWebConfig(cfg) {
+      if (cfg.Status_Pendaftaran && !isTogglingRegStatus) {
+        applyRegistrationStatusUI(cfg.Status_Pendaftaran);
+      }
+
       if (cfg.Event_Title) {
         var elNavTitle = document.getElementById('dynNavTitle');
         if (elNavTitle) elNavTitle.textContent = cfg.Event_Title;
@@ -2888,7 +3049,6 @@
     }
 
     function processCheckIn(idText) {
-      // Pola fleksibel mendukung ID 3 digit (CAMP-20261031-001) maupun lama
       var match = idText.match(/CAMP-\d{8}-\d+/i);
       var clean = match ? match[0].toUpperCase() : idText.toUpperCase().trim();
 
@@ -2918,14 +3078,12 @@
 
       var statObj = getParticipantPresenceThisSession(found);
 
-      // KUNING AMBER: JIKA PESERTA SUDAH PERNAH CHECK-IN SEBELUMNYA
       if (statObj.isHadir) {
         showToast('Peserta SUDAH check-in pada pukul ' + statObj.time, 'fa-solid fa-triangle-exclamation');
         displayParticipantBioModal(found, statObj.time, 'SUDAH CHECK-IN SEBELUMNYA', true);
         return;
       }
 
-      // HIJAU: CHECK-IN BARU BERHASIL
       var now = new Date();
       var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
 
@@ -3012,6 +3170,7 @@
       var filtered = participantsDb.filter(function(it) {
         var matchStatus = true;
         if (filter === 'PENDING' && it.statusBayar !== 'Menunggu Verifikasi') matchStatus = false;
+        if (filter === 'WAITING_LIST' && it.statusBayar !== 'Waiting List') matchStatus = false;
         if (filter === 'LUNAS' && it.statusBayar !== 'Terverifikasi Lunas') matchStatus = false;
 
         var matchQuery = true;
@@ -3023,7 +3182,7 @@
       });
 
       if (filtered.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:24px; color:#888;">Tidak ada data pendaftar.</div>';
+        container.innerHTML = '<div style="text-align:center; padding:24px; color:#888;">Tidak ada data pendaftar pada filter ini.</div>';
         return;
       }
 
@@ -3031,8 +3190,10 @@
       for (var i = 0; i < filtered.length; i++) {
         var p = filtered[i];
         var isLunas = p.statusBayar === 'Terverifikasi Lunas';
-        var badgeBg = isLunas ? '#D1E7DD' : '#FFF3CD';
-        var badgeColor = isLunas ? '#0F5132' : '#664D03';
+        var isWL = p.statusBayar === 'Waiting List';
+
+        var badgeBg = isLunas ? '#D1E7DD' : (isWL ? '#E0F2FE' : '#FFF3CD');
+        var badgeColor = isLunas ? '#0F5132' : (isWL ? '#0369A1' : '#664D03');
 
         var rawLink = (p.linkPdf || '').trim();
         var hasDriveLink = (rawLink !== '' && rawLink !== '-' && (rawLink.indexOf('http') === 0 || rawLink.indexOf('drive.google.com') !== -1));
@@ -3056,32 +3217,62 @@
               ? '<a href="' + rawLink + '" target="_blank" style="font-size:11.5px; color:#0B5ED7; text-decoration:underline; word-break:break-all; font-weight:600;">' + rawLink + '</a>'
               : (isProcessing 
                   ? '<div style="font-size:11px; color:#B88554; font-weight:700;"><i class="fa-solid fa-spinner fa-spin"></i> Sedang mencetak PDF & mengaitkan tautan Drive...</div>'
-                  : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Klik "Verifikasi Lunas" untuk buat otomatis ke Drive)</div>')) +
+                  : (isWL
+                      ? '<div style="font-size:11px; color:#0369A1; font-weight:600;"><i class="fa-solid fa-clock"></i> Peserta Daftar Tunggu (Klik "Verifikasi Lunas" jika peserta telah membayar kuota tambahan)</div>'
+                      : '<div style="font-size:11px; color:#DC3545; font-weight:600;"><i class="fa-solid fa-circle-exclamation"></i> Belum ada link (Klik "Verifikasi Lunas" untuk buat otomatis ke Drive)</div>'))) +
           '</div>' +
 
-          '<div style="display:flex; gap:8px; border-top:1px dashed #E0E5E1; padding-top:10px; margin-top:6px;">';
+          '<div style="display:flex; gap:8px; flex-wrap:wrap; border-top:1px dashed #E0E5E1; padding-top:10px; margin-top:6px;">';
 
         if (isProcessing) {
           html += '<button disabled style="flex:1; background:#6C757D; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:9px 12px; cursor:not-allowed; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
                     '<i class="fa-solid fa-spinner fa-spin"></i> Sedang Memproses PDF...' +
                   '</button>';
         } else if (!isLunas) {
-          html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:12px; font-weight:700; padding:9px 12px; cursor:pointer;">' +
-                    '<i class="fa-solid fa-check"></i> Verifikasi Lunas & Buat PDF Drive' +
+          html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; min-width:170px; background:var(--forest-dark); color:var(--gold-sand); border:1px solid var(--gold-sand); border-radius:20px; font-size:12px; font-weight:700; padding:9px 12px; cursor:pointer;">' +
+                    '<i class="fa-solid fa-check"></i> Verifikasi Lunas & Buat PDF' +
                   '</button>';
         } else if (!hasDriveLink) {
-          html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; background:#0B5ED7; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer;">' +
+          html += '<button onclick="verifyParticipantInPage(\'' + p.id + '\');" style="flex:1; min-width:170px; background:#0B5ED7; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer;">' +
                     '<i class="fa-brands fa-google-drive"></i> Buat / Tarik Link Drive' +
                   '</button>';
         }
 
-        html += '<button onclick="sendWhatsappTicketWithDriveLink(\'' + p.id + '\');" style="flex:1; background:#25D366; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
-                  '<i class="fa-brands fa-whatsapp"></i> Kirim Tiket via WA' +
-                '</button>';
+        if (isWL) {
+          html += '<button onclick="sendWhatsappWaitingListOffer(\'' + p.id + '\');" style="flex:1; min-width:150px; background:#0284C7; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
+                    '<i class="fa-brands fa-whatsapp"></i> Kabari Kuota Tersedia' +
+                  '</button>';
+        } else {
+          html += '<button onclick="sendWhatsappTicketWithDriveLink(\'' + p.id + '\');" style="flex:1; min-width:150px; background:#25D366; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
+                    '<i class="fa-brands fa-whatsapp"></i> Kirim Tiket via WA' +
+                  '</button>';
+        }
 
         html += '</div></div>';
       }
       container.innerHTML = html;
+    }
+
+    function sendWhatsappWaitingListOffer(id) {
+      var p = participantsDb.find(function(it){ return it.id === id; });
+      if (!p) return;
+
+      var cleanPhone = p.wa.replace(/[^0-9]/g, '');
+      var ibanTxt = document.getElementById('dynBankTRIban') ? document.getElementById('dynBankTRIban').textContent.trim() : 'TR53 0001 0090 1062 7977 9050 02';
+      var holderTxt = document.getElementById('dynBankTRHolder') ? document.getElementById('dynBankTRHolder').textContent.trim() : 'RARA INGRID ADMADJA';
+      var biayaTxt = document.getElementById('dynBiayaPendaftaran') ? document.getElementById('dynBiayaPendaftaran').textContent.trim() : '150 TL';
+
+      var msg = 'Halo ' + p.nama + ',\n\n' +
+        'Kabar gembira dari panitia *Camp-nic Day 2026 PPI Sivas*! Nomor antrean Waiting List Anda (*' + p.id + '*) saat ini mendapatkan kuota kursi yang tersedia.\n\n' +
+        'Bagi Anda yang ingin melanjutkan pendaftaran, silakan melakukan pembayaran biaya partisipasi sebesar *' + biayaTxt + '* ke rekening resmi berikut:\n' +
+        '• Bank: Ziraat Bankası\n' +
+        '• IBAN: *' + ibanTxt + '*\n' +
+        '• Atas Nama: *' + holderTxt + '*\n\n' +
+        'Setelah melakukan transfer, mohon kirimkan foto bukti transfer ke chat WhatsApp ini agar panitia dapat menerbitkan E-Ticket resmi Anda.\n\n' +
+        'Terima kasih,\n*PPI Sivas - Kabinet Aksara Senada*';
+
+      var url = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(msg);
+      window.open(url, '_blank');
     }
 
     function verifyParticipantInPage(id) {
@@ -3196,8 +3387,10 @@
       var statusPeserta = (statusInput.value || '').trim();
       var wilayah = (wilayahInput.value || '').trim();
 
+      var isWaitingList = (currentRegistrationStatus === 'CLOSED');
+
       if (!nama || !email || !rawNumber || !statusPeserta || !wilayah) {
-        showToast('Harap lengkapi semua kolom pendaftaran yang wajib diisi!', 'fa-solid fa-triangle-exclamation');
+        showToast('Harap lengkapi semua kolom identitas yang wajib diisi!', 'fa-solid fa-triangle-exclamation');
         return;
       }
 
@@ -3208,7 +3401,6 @@
         return;
       }
 
-      // Gabungkan kode negara (+90 / +62) dengan nomor yang diketik peserta
       var normalizedWa = buildFullWhatsAppNumber(countryCode, rawNumber);
       var digitsOnly = normalizedWa.replace(/[^\d]/g, '');
 
@@ -3218,7 +3410,8 @@
         return;
       }
 
-      if (!base64ReceiptPayload || !base64ReceiptPayload.data) {
+      // Hanya wajibkan foto bukti transfer jika pendaftaran sedang OPEN (Normal)
+      if (!isWaitingList && (!base64ReceiptPayload || !base64ReceiptPayload.data)) {
         showToast('Wajib mengunggah foto struk bukti pembayaran transfer!', 'fa-solid fa-triangle-exclamation');
         return;
       }
@@ -3227,15 +3420,14 @@
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Data...';
 
-      // GENERATOR 3 DIGIT MULAI TEPAT DARI 001
       var newSeq = getNextRegistrationSequence_();
       var newId = 'CAMP-20261031-' + newSeq;
 
       var ext = 'jpg';
-      if (base64ReceiptPayload.name && base64ReceiptPayload.name.lastIndexOf('.') !== -1) {
+      if (!isWaitingList && base64ReceiptPayload.name && base64ReceiptPayload.name.lastIndexOf('.') !== -1) {
         ext = base64ReceiptPayload.name.substring(base64ReceiptPayload.name.lastIndexOf('.') + 1);
       }
-      var cleanFileName = nama.replace(/[/\\?%*:|"<>]/g, '').trim() + '.' + ext;
+      var cleanFileName = isWaitingList ? '' : (nama.replace(/[/\\?%*:|"<>]/g, '').trim() + '.' + ext);
 
       var newRecord = {
         action: 'SUBMIT_REGISTRATION',
@@ -3246,7 +3438,8 @@
         wa: normalizedWa,
         statusPeserta: statusPeserta,
         wilayah: wilayah,
-        statusBayar: 'Menunggu Verifikasi',
+        isWaitingList: isWaitingList,
+        statusBayar: isWaitingList ? 'Waiting List' : 'Menunggu Verifikasi',
         linkPdf: '-',
         hadir1: false,
         time1: '-',
@@ -3255,7 +3448,7 @@
         hadir3: false,
         time3: '-',
         fileName: cleanFileName,
-        fileBase64: base64ReceiptPayload.data
+        fileBase64: isWaitingList ? '' : base64ReceiptPayload.data
       };
 
       participantsDb.unshift(newRecord);
@@ -3274,9 +3467,40 @@
 
       setTimeout(function() {
         btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran';
+        applyRegistrationStatusUI(currentRegistrationStatus);
 
         document.getElementById('modalRegId').textContent = newId;
+        var modalTitle = document.getElementById('modalSuccessTitle');
+        var modalDesc = document.getElementById('modalSuccessDesc');
+        var modalBadge = document.getElementById('modalRegStatusBadge');
+        var modalNote = document.getElementById('modalSuccessFooterNote');
+        var modalIconBox = document.getElementById('modalSuccessIconBox');
+        var modalIcon = document.getElementById('modalSuccessIcon');
+
+        if (isWaitingList) {
+          if (modalIconBox) { modalIconBox.style.background = '#E0F2FE'; modalIconBox.style.color = '#0369A1'; }
+          if (modalIcon) modalIcon.className = 'fa-solid fa-clipboard-check';
+          if (modalTitle) modalTitle.textContent = 'Terdaftar di Waiting List!';
+          if (modalDesc) modalDesc.textContent = 'Identitas Anda berhasil tercatat di dalam antrean Daftar Tunggu (Waiting List) PPI Sivas.';
+          if (modalBadge) {
+            modalBadge.style.background = '#E0F2FE';
+            modalBadge.style.color = '#0369A1';
+            modalBadge.textContent = 'Status: Daftar Tunggu (Waiting List)';
+          }
+          if (modalNote) modalNote.textContent = 'Anda tidak perlu melakukan pembayaran saat ini. Panitia PPI Sivas akan menghubungi Anda melalui WhatsApp apabila kuota tambahan tersedia.';
+        } else {
+          if (modalIconBox) { modalIconBox.style.background = '#D1E7DD'; modalIconBox.style.color = '#0F5132'; }
+          if (modalIcon) modalIcon.className = 'fa-solid fa-check';
+          if (modalTitle) modalTitle.textContent = 'Pendaftaran Diterima!';
+          if (modalDesc) modalDesc.textContent = 'Data dan bukti transfer Anda berhasil dikirim ke sistem panitia PPI Sivas.';
+          if (modalBadge) {
+            modalBadge.style.background = '#FFF3CD';
+            modalBadge.style.color = '#856404';
+            modalBadge.textContent = 'Status: Menunggu Verifikasi Pembayaran';
+          }
+          if (modalNote) modalNote.textContent = 'Panitia akan memeriksa pembayaran Anda di Ziraat Bankası. Setelah pembayaran terverifikasi, file PDF E-Ticket resmi akan dikirimkan langsung melalui WhatsApp Anda.';
+        }
+
         openModal('successModal');
 
         document.getElementById('participantForm').reset();
@@ -3285,7 +3509,7 @@
         document.getElementById('fileLabelText').textContent = 'Pilih Foto Struk Pembayaran (JPG/PNG)';
         base64ReceiptPayload = { name: '', data: '' };
 
-        showToast('Pendaftaran Anda berhasil dikirim ke panitia!', 'fa-solid fa-circle-check');
+        showToast(isWaitingList ? 'Data Anda berhasil masuk ke Waiting List!' : 'Pendaftaran Anda berhasil dikirim ke panitia!', 'fa-solid fa-circle-check');
       }, 500);
     }
 
