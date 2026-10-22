@@ -1054,10 +1054,11 @@
       overflow-y: auto;
     }
 
+    /* HEADER ADMIN: LEGA DI HP & BEBAS DARI TEKS TERPOTONG "PA..." */
     .admin-top-bar {
       background: var(--bg-dark);
       color: #FFFFFF;
-      padding: 14px 18px;
+      padding: 10px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -1065,6 +1066,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      gap: 8px;
     }
 
     .admin-top-left {
@@ -1072,6 +1074,7 @@
       align-items: center;
       gap: 10px;
       min-width: 0;
+      flex: 1;
     }
 
     .admin-top-right {
@@ -1081,12 +1084,49 @@
       flex-shrink: 0;
     }
 
+    .admin-icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(212, 163, 115, 0.4);
+      color: var(--gold-sand);
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .admin-icon-btn:hover {
+      background: var(--gold-sand);
+      color: #0F2318;
+    }
+
+    /* BADGE INDIKATOR ANTREAN OFFLINE */
+    .offline-queue-badge {
+      display: none;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: #FFF;
+      background: #D97706;
+      border: 1px solid #F59E0B;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      animation: pulseSync 1.8s infinite;
+    }
+
     .inpage-workflow-bar {
       background: #FFFFFF;
       display: flex;
       border-bottom: 2px solid #DCE3DE;
       position: sticky;
-      top: 64px;
+      top: 56px;
       z-index: 95;
       box-shadow: 0 3px 10px rgba(0,0,0,0.04);
     }
@@ -1265,6 +1305,12 @@
         min-width: 120px;
         font-size: 12px;
       }
+      .admin-top-bar {
+        padding: 8px 12px;
+      }
+      .inpage-workflow-bar {
+        top: 52px;
+      }
     }
   </style>
 </head>
@@ -1437,7 +1483,7 @@
         <div class="info-icon"><i class="fa-regular fa-calendar-check"></i></div>
         <div>
           <h4>Hari & Tanggal</h4>
-          <p id="dynCardTanggal">Sabtu, 31 Oktober 2026</p>
+          <p id="dynCardTanggal">Sabtu, 24 Oktober 2026</p>
         </div>
       </div>
       <div class="info-card">
@@ -1656,7 +1702,7 @@
   <footer>
     <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI Sivas" class="footer-logo">
     <div class="footer-brand" id="dynFooterBrand">CAMP-NIC DAY 2026</div>
-    <div class="footer-sub" id="dynFooterSub">Perhimpunan Pelajar Indonesia di Sivas (PPI Sivas) &bull; Kabinet Aksara Senada</div>
+    <div class="footer-sub" id="dynFooterSub">Perhimpunan Pelajar Indonesia di Sivas (PPI Sivas) &bull; Kabinet Aksara Senada &bull; 24 Oktober 2026</div>
     <div style="margin-top:14px;">
       <button onclick="openPinModal();" style="background:none; border:none; color:rgba(255,255,255,0.3); font-size:11px; cursor:pointer;" title="Akses Panitia">
         <i class="fa-solid fa-lock"></i> Portal Panitia
@@ -1676,7 +1722,7 @@
 
       <div style="background:var(--warm-beige); padding:12px; border-radius:8px; border:1px dashed var(--gold-sand); margin-bottom:14px;">
         <div style="font-size:11px; color:var(--forest-accent); font-weight:700;">ID REGISTRASI ANDA:</div>
-        <div style="font-size:18px; font-weight:800; color:var(--bg-dark);" id="modalRegId">CAMP-20261031-001</div>
+        <div style="font-size:18px; font-weight:800; color:var(--bg-dark);" id="modalRegId">CAMP-20261024-001</div>
         <div id="modalRegStatusBadge" style="font-size:11px; color:#856404; background:#FFF3CD; padding:4px 8px; border-radius:6px; margin-top:6px; font-weight:700;">
           Status: Menunggu Verifikasi Pembayaran
         </div>
@@ -1692,23 +1738,37 @@
     </div>
   </div>
 
+  <!-- PANEL UTAMA PANITIA (ADMIN OVERLAY) -->
   <div class="admin-full-overlay" id="inPageAdminPortal">
     <div class="admin-top-bar">
       <div class="admin-top-left">
-        <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI" style="width:34px; height:34px; object-fit:contain; flex-shrink:0;">
-        <div style="min-width:0;">
-          <div style="font-size:13.5px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">PANEL PANITIA PPI SIVAS</div>
-          <div style="font-size:10.5px; color:var(--gold-sand);">Camp-nic Day 2026</div>
+        <img src="https://lh3.googleusercontent.com/d/1r8VfuZ-TNEBEFarBa8GZ8ir462gDDcSd" alt="PPI" style="width:32px; height:32px; object-fit:contain; flex-shrink:0;">
+        <div style="min-width:0; flex:1;">
+          <div style="font-size:13px; font-weight:800; color:#FFFFFF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; letter-spacing:0.4px;">
+            PANEL PANITIA PPI SIVAS
+          </div>
+          <div style="font-size:10px; color:var(--gold-sand); line-height:1.2;">
+            Camp-nic Day 2026 &bull; 24 Okt 2026
+          </div>
         </div>
       </div>
+
       <div class="admin-top-right">
-        <button onclick="forcePurgeAndSync();" style="background:rgba(255,255,255,0.08); border:1px solid rgba(212,163,115,0.4); color:var(--gold-sand); padding:6px 10px; border-radius:16px; font-size:11px; font-weight:700; cursor:pointer;" title="Bersihkan cache lokal & sinkronkan dari Spreadsheet">
-          <i class="fa-solid fa-arrows-rotate"></i> Reset Cache
-        </button>
-        <span class="live-sync-indicator" title="Sinkronisasi otomatis aktif">
-          <span class="live-dot"></span> Live Sync
+        <!-- BADGE ANTREAN PRESENSI OFFLINE (MUNCUL OTOMATIS JIKA ADA ANTRIAN BELUM TERSINKRONISASI) -->
+        <span class="offline-queue-badge" id="adminOfflineQueueBadge" onclick="flushOfflineQueue();" title="Tekan untuk sinkronisasi paksa ke Spreadsheet">
+          <i class="fa-solid fa-bolt"></i> <span id="adminOfflineQueueCount">0</span> Antrean
         </span>
-        <button onclick="closeAdminPortal();" style="background:none; border:1px solid var(--gold-sand); color:var(--gold-sand); padding:6px 14px; border-radius:20px; font-size:11.5px; font-weight:700; cursor:pointer;">
+
+        <!-- TOMBOL RESET CACHE (IKON MINIMALIS 32px LEGA) -->
+        <button class="admin-icon-btn" onclick="forcePurgeAndSync();" title="Bersihkan cache lokal & sinkronkan dari Spreadsheet">
+          <i class="fa-solid fa-arrows-rotate"></i>
+        </button>
+
+        <span class="live-sync-indicator" title="Sinkronisasi otomatis aktif">
+          <span class="live-dot"></span> Live
+        </span>
+
+        <button onclick="closeAdminPortal();" class="admin-icon-btn" style="border-radius:18px; width:auto; padding:0 12px; gap:5px; font-size:11px; font-weight:700;" title="Kunci Portal">
           <i class="fa-solid fa-lock"></i> Kunci
         </button>
       </div>
@@ -1723,7 +1783,7 @@
       </button>
     </div>
 
-    <!-- MODE 1: SCANNER & PRESENSI HARI-H -->
+    <!-- MODE 1: SCANNER & PRESENSI HARI-H (OFFLINE-FIRST ENGINE) -->
     <div id="inpageSecScanner" style="padding:16px; max-width:900px; margin:0 auto; width:100%;">
       <!-- PILIH 3 SESI ABSENSI FLEKSIBEL (1, 2, 3) -->
       <div style="background:var(--forest-dark); padding:14px; border-radius:14px; border:1px solid var(--gold-sand); margin-bottom:14px;">
@@ -1795,7 +1855,7 @@
         <div style="text-align:left; margin-top:16px; border-top:1px dashed #DDD; padding-top:14px;">
           <label style="font-size:11px; font-weight:700; color:#555; text-transform:uppercase;">Input Manual ID Registrasi:</label>
           <div style="display:flex; gap:6px; margin-top:6px;">
-            <input type="text" id="inPageManualId" placeholder="CAMP-20261031-001" style="flex:1; padding:10px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
+            <input type="text" id="inPageManualId" placeholder="CAMP-20261024-001" style="flex:1; padding:10px 12px; border:1px solid #CCC; border-radius:6px; text-transform:uppercase; font-size:13px;">
             <button onclick="submitManualCheckIn();" class="btn-hero-primary" style="padding:8px 18px; font-size:12px;">Check-In</button>
           </div>
         </div>
@@ -1861,7 +1921,7 @@
         </button>
       </div>
       <p style="font-size:12.5px; color:#666; margin-bottom:14px;">
-        Klik <strong>Verifikasi Lunas</strong> untuk otomatis mencetak PDF ke Google Drive dan mengisi link di Spreadsheet, atau klik <strong>Kirim Tiket via WA</strong> setelah link terisi.
+        Klik <strong>Verifikasi Lunas</strong> untuk otomatis mencetak PDF ke Google Drive dan mengisi link di Spreadsheet, atau klik <strong>Kirim Tiket via WA</strong> setelah link terisi. Gunakan tombol <strong>Verifikasi Kehadiran</strong> untuk mengonfirmasi kepastian hadir peserta hari Sabtu, 24 Oktober 2026.
       </p>
 
       <div style="display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;">
@@ -1904,10 +1964,13 @@
     /* Database Lokal Pendaftar */
     var participantsDb = JSON.parse(localStorage.getItem('CAMPNIC_2026_DATA') || '[]');
 
+    /* Antrean Aksi Offline (Offline Queue untuk Blank Spot Danau) */
+    var offlineActionQueue = JSON.parse(localStorage.getItem('CAMPNIC_OFFLINE_QUEUE') || '[]');
+    var isFlushingQueue = false;
+
     /**
      * Generator Nomor Urut 3 Digit Murni Mulai dari 001:
-     * Memindai ID yang ada di database untuk menemukan nomor urut tertinggi.
-     * Jika database kosong, otomatis mengembalikan '001'.
+     * Format: CAMP-20261024-XXX
      */
     function getNextRegistrationSequence_() {
       var maxSeq = 0;
@@ -2154,6 +2217,59 @@
       updateInpageCounters();
     }
 
+    function saveOfflineQueue() {
+      localStorage.setItem('CAMPNIC_OFFLINE_QUEUE', JSON.stringify(offlineActionQueue));
+      updateOfflineQueueBadge();
+    }
+
+    function updateOfflineQueueBadge() {
+      var badge = document.getElementById('adminOfflineQueueBadge');
+      var countEl = document.getElementById('adminOfflineQueueCount');
+      if (!badge || !countEl) return;
+
+      if (offlineActionQueue.length > 0) {
+        badge.style.display = 'inline-flex';
+        countEl.textContent = offlineActionQueue.length;
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+    /* PENGIRIM ANTREAN OFFLINE KE GOOGLE SPREADSHEET */
+    function flushOfflineQueue() {
+      if (isFlushingQueue || offlineActionQueue.length === 0 || !APPS_SCRIPT_WEBHOOK_URL) return;
+      if (!navigator.onLine) {
+        showToast('Masih dalam kondisi offline (tanpa sinyal). Antrean disimpan aman di HP.', 'fa-solid fa-wifi');
+        return;
+      }
+
+      isFlushingQueue = true;
+      var itemToSync = offlineActionQueue[0];
+
+      fetch(APPS_SCRIPT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(itemToSync)
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(resData) {
+        offlineActionQueue.shift();
+        saveOfflineQueue();
+        isFlushingQueue = false;
+
+        if (offlineActionQueue.length > 0) {
+          setTimeout(flushOfflineQueue, 400);
+        } else {
+          showToast('Seluruh presensi offline berhasil tersinkron ke Spreadsheet!', 'fa-solid fa-cloud-arrow-up');
+          fetchSpreadsheetData(true);
+        }
+      })
+      .catch(function(err) {
+        isFlushingQueue = false;
+        console.log('Sinkronisasi antrean tertunda, menunggu sinyal stabil...', err);
+      });
+    }
+
     function forcePurgeAndSync() {
       localStorage.removeItem('CAMPNIC_2026_DATA');
       participantsDb = [];
@@ -2167,6 +2283,14 @@
       setupSecretTrigger();
       setupNavbarScroll();
       handleWaCountryChange();
+      updateOfflineQueueBadge();
+
+      // Listener deteksi sinyal online untuk sinkronisasi antrean otomatis
+      window.addEventListener('online', function() {
+        showToast('Koneksi internet terhubung kembali!', 'fa-solid fa-wifi');
+        flushOfflineQueue();
+        fetchSpreadsheetData(true);
+      });
 
       // 1. Muat Konfigurasi Teks, Foto & Status Pendaftaran dari Cache Lokal (0 Detik Instan)
       var cachedCfg = localStorage.getItem('CAMPNIC_2026_CONFIG');
@@ -2261,6 +2385,7 @@
                   var incomingP = data.participants[i];
                   var existingLocal = participantsDb.find(function(it){ return it.id === incomingP.id; });
 
+                  // ANTI-DOWNGRADE SHIELD: Pertahankan Link PDF Google Drive Lokal
                   var incomingHasLink = incomingP.linkPdf && incomingP.linkPdf !== '-' && (incomingP.linkPdf.indexOf('http') === 0 || incomingP.linkPdf.indexOf('drive.google.com') !== -1);
                   var localHasLink = existingLocal && existingLocal.linkPdf && existingLocal.linkPdf !== '-' && (existingLocal.linkPdf.indexOf('http') === 0 || existingLocal.linkPdf.indexOf('drive.google.com') !== -1);
 
@@ -2270,6 +2395,13 @@
 
                   if (existingLocal && existingLocal.statusBayar === 'Terverifikasi Lunas' && incomingP.statusBayar !== 'Terverifikasi Lunas') {
                     incomingP.statusBayar = 'Terverifikasi Lunas';
+                  }
+
+                  // Pertahankan status presensi lokal jika belum ter-flush dari antrean
+                  if (existingLocal) {
+                    if (existingLocal.hadir1 && !incomingP.hadir1) { incomingP.hadir1 = true; incomingP.time1 = existingLocal.time1; }
+                    if (existingLocal.hadir2 && !incomingP.hadir2) { incomingP.hadir2 = true; incomingP.time2 = existingLocal.time2; }
+                    if (existingLocal.hadir3 && !incomingP.hadir3) { incomingP.hadir3 = true; incomingP.time3 = existingLocal.time3; }
                   }
 
                   if (pendingPdfGeneration[incomingP.id]) {
@@ -2295,7 +2427,7 @@
           }
         })
         .catch(function(err) {
-          if (!silent) console.log('Mode lokal aktif / offline:', err);
+          if (!silent) console.log('Mode offline aktif / jaringan minim:', err);
         });
     }
 
@@ -2304,6 +2436,7 @@
       autoSyncIntervalTimer = setInterval(function() {
         var portal = document.getElementById('inPageAdminPortal');
         if (portal && portal.style.display !== 'none' && !isTogglingRegStatus) {
+          flushOfflineQueue();
           fetchSpreadsheetData(true);
         }
       }, 5000);
@@ -2456,7 +2589,7 @@
         var elHeroBadge = document.getElementById('dynHeroBadge');
         if (elHeroBadge) elHeroBadge.textContent = cfg.Kabinet_Name;
         var elFooterSub = document.getElementById('dynFooterSub');
-        if (elFooterSub) elFooterSub.textContent = 'Perhimpunan Pelajar Indonesia di Sivas (PPI Sivas) • ' + cfg.Kabinet_Name;
+        if (elFooterSub) elFooterSub.textContent = 'Perhimpunan Pelajar Indonesia di Sivas (PPI Sivas) • ' + cfg.Kabinet_Name + ' • 24 Oktober 2026';
       }
       if (cfg.Hero_Badge) {
         var elHeroB = document.getElementById('dynHeroBadge');
@@ -2704,6 +2837,7 @@
         closeModal('pinGateModal');
         document.getElementById('inPageAdminPortal').style.display = 'flex';
         updateInpageCounters();
+        updateOfflineQueueBadge();
         switchInpageWorkflow('SCANNER');
         showToast('Portal Panitia Terbuka', 'fa-solid fa-shield-halved');
         fetchSpreadsheetData(true);
@@ -3048,6 +3182,7 @@
       processCheckIn(id);
     }
 
+    /* PROSES CHECK-IN PRESENSI DENGAN MESIN ANTREAN OFFLINE (RESILIENT OFFLINE-FIRST) */
     function processCheckIn(idText) {
       var match = idText.match(/CAMP-\d{8}-\d+/i);
       var clean = match ? match[0].toUpperCase() : idText.toUpperCase().trim();
@@ -3078,6 +3213,7 @@
 
       var statObj = getParticipantPresenceThisSession(found);
 
+      // JIKA SUDAH CHECK-IN: TAMPILKAN MODAL KUNING DETEKSI RESCAN
       if (statObj.isHadir) {
         showToast('Peserta SUDAH check-in pada pukul ' + statObj.time, 'fa-solid fa-triangle-exclamation');
         displayParticipantBioModal(found, statObj.time, 'SUDAH CHECK-IN SEBELUMNYA', true);
@@ -3103,21 +3239,34 @@
         renderScannerListDetail();
       }
 
-      if (APPS_SCRIPT_WEBHOOK_URL) {
+      // BUAT PAYLOAD AKSI UNTUK SINKRONISASI
+      var syncPayload = {
+        action: 'UPDATE_PRESENSI',
+        id: found.id,
+        session: inpageSession,
+        time: timeStr,
+        queuedAt: Date.now()
+      };
+
+      // JIKA OFFLINE / GAGAL SINYAL: MASUKKAN KE ANTREAN OFFLINE
+      if (!navigator.onLine) {
+        offlineActionQueue.push(syncPayload);
+        saveOfflineQueue();
+        showToast('Tersimpan Offline: ' + found.nama + ' (Sesi ' + inpageSession + ')', 'fa-solid fa-bolt');
+      } else if (APPS_SCRIPT_WEBHOOK_URL) {
         fetch(APPS_SCRIPT_WEBHOOK_URL, {
           method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'UPDATE_PRESENSI',
-            id: found.id,
-            session: inpageSession,
-            time: timeStr
-          })
-        }).catch(function(){});
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(syncPayload)
+        })
+        .then(function(res) { return res.json(); })
+        .catch(function(err) {
+          // Jika terjadi error jaringan di lokasi, tangkap ke antrean offline
+          offlineActionQueue.push(syncPayload);
+          saveOfflineQueue();
+        });
       }
 
-      showToast('Hadir: ' + found.nama + ' (Sesi ' + inpageSession + ')', 'fa-solid fa-check');
       displayParticipantBioModal(found, timeStr, 'CHECK-IN BERHASIL!', false);
     }
 
@@ -3243,14 +3392,38 @@
                     '<i class="fa-brands fa-whatsapp"></i> Kabari Kuota Tersedia' +
                   '</button>';
         } else {
-          html += '<button onclick="sendWhatsappTicketWithDriveLink(\'' + p.id + '\');" style="flex:1; min-width:150px; background:#25D366; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
+          // TOMBOL KIRIM E-TICKET VIA WA
+          html += '<button onclick="sendWhatsappTicketWithDriveLink(\'' + p.id + '\');" style="flex:1; min-width:140px; background:#25D366; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;">' +
                     '<i class="fa-brands fa-whatsapp"></i> Kirim Tiket via WA' +
+                  '</button>';
+
+          // TOMBOL KHUSUS VERIFIKASI KEHADIRAN (RSVP HARI-H 24 OKTOBER 2026)
+          html += '<button onclick="sendWhatsappPresenceVerification(\'' + p.id + '\');" style="flex:1; min-width:150px; background:#0284C7; color:#FFF; border:none; border-radius:20px; font-size:11.5px; font-weight:700; padding:8px 12px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;" title="Kirim chat WhatsApp konfirmasi kepastian hadir hari Sabtu">' +
+                    '<i class="fa-regular fa-comment-dots"></i> Verifikasi Kehadiran' +
                   '</button>';
         }
 
         html += '</div></div>';
       }
       container.innerHTML = html;
+    }
+
+    /* FUNGSI CHAT VERIFIKASI KEHADIRAN WHATSAPP (RSVP SABTU 24 OKTOBER 2026) */
+    function sendWhatsappPresenceVerification(id) {
+      var p = participantsDb.find(function(it){ return it.id === id; });
+      if (!p) return;
+
+      var cleanPhone = p.wa.replace(/[^0-9]/g, '');
+
+      var msg = 'Halo ' + p.nama + ',\n\n' +
+        'Kami dari panitia *Camp-nic Day 2026 (PPI Sivas)* ingin melakukan verifikasi kepastian kehadiran Anda untuk kegiatan hari *Sabtu, 24 Oktober 2026* di *Hafik Gölü*.\n\n' +
+        'Mohon konfirmasikan apakah Anda dipastikan hadir pada hari Sabtu besok?\n\n' +
+        'Silakan balas pesan ini dengan: *HADIR* atau *BERHALANGAN*.\n\n' +
+        'Terima kasih banyak atas konfirmasinya!\n' +
+        '*Salam hangat, Panitia PPI Sivas (Kabinet Aksara Senada)*';
+
+      var url = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(msg);
+      window.open(url, '_blank');
     }
 
     function sendWhatsappWaitingListOffer(id) {
@@ -3263,7 +3436,7 @@
       var biayaTxt = document.getElementById('dynBiayaPendaftaran') ? document.getElementById('dynBiayaPendaftaran').textContent.trim() : '150 TL';
 
       var msg = 'Halo ' + p.nama + ',\n\n' +
-        'Kabar gembira dari panitia *Camp-nic Day 2026 PPI Sivas*! Nomor antrean Waiting List Anda (*' + p.id + '*) saat ini mendapatkan kuota kursi yang tersedia.\n\n' +
+        'Kabar gembira dari panitia *Camp-nic Day 2026 PPI Sivas*! Nomor antrean Waiting List Anda (*' + p.id + '*) saat ini mendapatkan kuota kursi yang tersedia untuk acara hari *Sabtu, 24 Oktober 2026* di Hafik Gölü.\n\n' +
         'Bagi Anda yang ingin melanjutkan pendaftaran, silakan melakukan pembayaran biaya partisipasi sebesar *' + biayaTxt + '* ke rekening resmi berikut:\n' +
         '• Bank: Ziraat Bankası\n' +
         '• IBAN: *' + ibanTxt + '*\n' +
@@ -3340,7 +3513,7 @@
       if (hasLink) {
         msg += 'Silakan unduh berkas resmi PDF E-Ticket ber-QR Code Anda melalui tautan Google Drive resmi berikut:\n' +
                rawLink + '\n\n' +
-               'Harap simpan file tiket ini di ponsel Anda dan tunjukkan barcode-nya kepada panitia saat presensi absensi kegiatan.\n\n';
+               'Harap simpan file tiket ini di ponsel Anda dan tunjukkan barcode-nya kepada panitia saat presensi absensi kegiatan pada Sabtu, 24 Oktober 2026.\n\n';
       } else {
         msg += 'Panitia sedang menyiapkan berkas PDF E-Ticket resmi ber-QR Code Anda di Google Drive. Tunjukkan ID registrasi ini saat berkumpul.\n\n';
         showToast('Catatan: Link Google Drive belum diisi di spreadsheet!', 'fa-solid fa-triangle-exclamation');
@@ -3421,7 +3594,7 @@
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Data...';
 
       var newSeq = getNextRegistrationSequence_();
-      var newId = 'CAMP-20261031-' + newSeq;
+      var newId = 'CAMP-20261024-' + newSeq;
 
       var ext = 'jpg';
       if (!isWaitingList && base64ReceiptPayload.name && base64ReceiptPayload.name.lastIndexOf('.') !== -1) {
